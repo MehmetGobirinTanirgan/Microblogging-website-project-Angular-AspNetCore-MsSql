@@ -1,0 +1,13 @@
+span {
+    font-size: 12px;
+}
+
+.btn-primary {
+ background-color: #86CDFE;
+ border: none;
+ padding:15px;
+}
+
+ .btn-primary:hover {
+  background-color: #1DA1F2;
+ }

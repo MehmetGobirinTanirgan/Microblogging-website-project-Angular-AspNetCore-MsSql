@@ -1,0 +1,80 @@
+﻿using Microsoft.EntityFrameworkCore;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Linq.Expressions;
+using System.Threading.Tasks;
+using TwitterCore.Entities.CoreEntities;
+using TwitterCore.Entities.Enums;
+using TwitterModel.Context;
+
+namespace TwitterRepository.ComplexEntityRepository
+{
+    public class ComplexEntityRepository<T> : IComplexEntityRepository<T> where T : ComplexEntity
+    {
+        private readonly TwitterContext twitterContext;
+        public ComplexEntityRepository(TwitterContext twitterContext)
+        {
+            this.twitterContext = twitterContext;
+        }
+
+        public async Task CreateAsync(T entity)
+        {
+            await twitterContext.Set<T>().AddAsync(entity);
+            await twitterContext.SaveChangesAsync();
+        }
+        public async Task UpdateAsync(T entity)
+        {
+            twitterContext.Set<T>().Update(entity);
+            await twitterContext.SaveChangesAsync();
+        }
+        public async Task DeleteAsync(T entity)
+        {
+            entity.Status = ComplexEntityStatus.Passive;
+            await UpdateAsync(entity);
+        }
+
+        public async Task DeleteAsync(Guid id)
+        {
+            T entity = await GetOneByIDAsync(id);
+            entity.Status = ComplexEntityStatus.Passive;
+            await UpdateAsync(entity);
+        }
+
+        public async Task SaveAsync()
+        {
+            await twitterContext.SaveChangesAsync();
+        }
+
+        public async Task<bool> AnyAsync(Expression<Func<T, bool>> exp)
+        {
+            return await Task.FromResult(twitterContext.Set<T>().AsNoTracking().Any(exp));
+        }
+
+        public async Task<T> GetOneByIDAsync(Guid id)
+        {
+            return await twitterContext.Set<T>().FirstOrDefaultAsync(x => x.ID == id && x.Status != ComplexEntityStatus.Passive);
+        }
+
+        public async Task<T> GetOneByExpressionAsync(Expression<Func<T, bool>> exp)
+        {
+            return await twitterContext.Set<T>().FirstOrDefaultAsync(exp);
+        }
+       
+        public IQueryable<T> GetAll()
+        {
+            return twitterContext.Set<T>();
+        }
+
+        public IQueryable<T> GetActives()
+        {
+            return twitterContext.Set<T>().Where(x => x.Status != ComplexEntityStatus.Passive);
+        }
+      
+        public IQueryable<T> GetListByExpression(Expression<Func<T, bool>> exp)
+        {
+            return GetActives().Where(exp);
+        }
+        
+    }
+}

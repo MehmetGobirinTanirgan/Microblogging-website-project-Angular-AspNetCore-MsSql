@@ -1,0 +1,51 @@
+#name, #mail, #psw, #phone {
+  margin-top: 20px;
+  width: 400px;
+  padding: 15px;
+  display: block;
+ }
+
+ form {
+  padding: 30px;
+ }
+
+ .modal-content{
+  border-radius: 50px;
+}
+
+ .modal-body {
+  width: 500px;
+  height: 650px;
+ }
+
+ .switch-btn {
+  font-size: 1em;
+  text-align: left;
+  color: #36A1E4;
+  background: none;
+  outline: 0 !important;
+  border: 0 !important;
+  cursor: pointer;
+ }
+
+
+  .switch-btn:hover {
+   text-decoration: underline;
+  }
+
+ span {
+  font-size: 12px;
+ }
+
+ .btn-outline-primary:hover {
+  background-color: #E8F5FE;
+ }
+
+ .btn-primary {
+  background-color: #86CDFE;
+  border: none;
+ }
+
+  .btn-primary:hover {
+   background-color: #1DA1F2;
+  }

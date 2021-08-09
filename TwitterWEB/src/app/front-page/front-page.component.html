@@ -1,0 +1,108 @@
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-lg-7">
+      <img src="assets/Images/FrontPagePicture.PNG" class="img-fluid" alt="front-page-picture" />
+    </div>
+    <div class="col-lg-5">
+      <div class="row" style="margin-top: 175px;">
+        <img src="assets/Images/FrontPageLogo.PNG" alt="front-page-logo" />
+      </div>
+      <div class="row mt-3">
+        <label style="font-weight: bolder; font-size: 65px;"><b>Happening now</b></label>
+      </div>
+      <div class="row mt-4">
+        <label style="font-weight: bolder; font-size: 35px;">Join Twitter today.</label>
+      </div>
+      <div class="row mt-3">
+        <a class="btn btn-primary"(click)="openModal(signupModal)"
+          style="width: 400px; border-radius:30px; color: white; padding: 15px;"><b>Sign up</b></a>
+      </div>
+      <div class="row mt-2">
+        <a class="btn btn-outline-primary" style="width: 400px; border-radius:30px; color: #0069D9; padding: 15px;"
+          routerLink="/login"><b>Log in</b></a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<ng-template #signupModal let-modal>
+    <div class="modal-body">
+      <form [formGroup]="signUpForm" (ngSubmit)="signUp()" method="POST">
+        <img src="assets/Images/LoginPagePicture.PNG" alt="login-page-picture" />
+        <h1 class="modal-title">Create your account</h1>
+        <div class="form-group">
+          <input formControlName="fullName" type="text" placeholder="Name" id="name" class="form-control" required>
+          <div *ngIf="signUpForm.get('fullName')?.invalid && signUpForm.get('fullName')?.touched" class="text-danger">
+            <span *ngIf="signUpForm.get('fullName')?.errors?.required">Fullname is required.</span>
+            <span *ngIf="signUpForm.get('fullName')?.errors?.maxlength">Max 50 characters. </span>
+          </div>
+        </div>
+        <div class="form-group" id="mail-group">
+          <input formControlName="emailAddress" type="email" placeholder="E-mail" id="mail" class="form-control"
+            required>
+          <div *ngIf="signUpForm.get('emailAddress')?.invalid && signUpForm.get('emailAddress')?.touched"
+            class="text-danger">
+            <span *ngIf="signUpForm.get('emailAddress')?.errors?.required">Email address is required.</span>
+            <span *ngIf="signUpForm.get('emailAddress')?.errors?.maxlength">Max 50 characters. </span>
+            <span *ngIf="signUpForm.get('emailAddress')?.errors?.email">Please type a valid mail. </span>
+          </div>
+        </div>
+        <div class="form-group" id="phone-group" style="display: none;">
+          <input formControlName="phoneNumber" type="tel" placeholder="Phone" id="phone" class="form-control">
+          <div *ngIf="signUpForm.get('phoneNumber')?.invalid && signUpForm.get('phoneNumber')?.touched"
+            class="text-danger">
+            <span *ngIf="signUpForm.get('phoneNumber')?.errors?.required">Phone number is required.</span>
+            <span *ngIf="signUpForm.get('phoneNumber')?.errors?.maxlength">Max 20 characters. </span>
+          </div>
+        </div>
+        <div class="form-group">
+          <input formControlName="password" type="password" placeholder="Password" id="psw" class="form-control"
+            required>
+          <div *ngIf="signUpForm.get('password')?.invalid && signUpForm.get('password')?.touched" class="text-danger">
+            <span *ngIf="signUpForm.get('password')?.errors?.required">Password is required.</span>
+            <span *ngIf="signUpForm.get('password')?.errors?.maxlength">Max 20 characters. </span>
+          </div>
+        </div>
+        <div class="form-group">
+          <button type="button" class="switch-btn" id="switch-btn">Use phone instead</button>
+        </div>
+        <h6>Date of birth</h6>
+        <div class="form-group d-flex flex-row  justify-content-start">
+            <div style="width: 150px;">
+              <select formControlName="month" class="form-select" required>
+                <option hidden value="">Month</option>
+                <option *ngFor="let item of months; let i=index;" value="{{i}}">{{item}}</option>
+              </select>
+              <div *ngIf="signUpForm.get('month')?.invalid && signUpForm.get('month')?.touched" class="text-danger">
+                <span *ngIf="signUpForm.get('month')?.errors?.required">Month is required.</span>
+              </div>
+            </div>
+            <div style="width: 150px; margin-left: 30px;">
+              <select formControlName="day" class="form-select" required>
+                <option hidden value="">Day</option>
+                <option *ngFor="let day of days; let i=index;" value="{{i}}">{{i}}</option>
+              </select>
+              <div *ngIf="signUpForm.get('day')?.invalid && signUpForm.get('day')?.touched" class="text-danger">
+                <span *ngIf="signUpForm.get('day')?.errors?.required">Day is required.</span>
+              </div>
+            </div>
+            <div style="width: 150px; margin-left: 30px;">
+              <select formControlName="year" class="form-select" required>
+                <option hidden value="">Year</option>
+                <option *ngFor="let year of years; let i=index;" value="{{i}}">{{i}}</option>
+              </select>
+              <div *ngIf="signUpForm.get('year')?.invalid && signUpForm.get('year')?.touched" class="text-danger">
+                <span *ngIf="signUpForm.get('year')?.errors?.required">Year is required.</span>
+              </div>
+            </div>
+        </div>
+        <div class="mt-2 form-group">
+          <button type="submit" class="btn btn-primary" style="width: 200px; border-radius:20px; color: white;" [disabled] = "signUpForm.invalid">Sign
+            up</button>
+          <button type="reset" class="btn btn-outline-primary" style="width: 200px; border-radius:20px; color:#0069D9;"
+          (click)="modal.close('Close click')">Cancel</button>
+        </div>
+      </form>
+    </div>
+</ng-template>
+

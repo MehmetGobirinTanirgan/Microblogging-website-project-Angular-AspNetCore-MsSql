@@ -1,0 +1,23 @@
+<div class="container-fluid">
+    <div class="row justify-content-center">
+        <form [formGroup]="loginForm" (ngSubmit)="login()" method="POST" style="width: min-content;">
+            <div class="form-group mt-5">
+                <img src="assets/Images/LoginPagePicture.PNG" />
+            </div>
+            <h1>Log in to Twitter</h1>
+            <!-- <p *ngIf = "{{error}} != null" class="text-danger" style="word-break:break-word;">{{error}}</p> -->
+            <div class="form-group mt-3">
+                <input  formControlName="usernameOrPhoneOrEmail" type="text" class="form-control" style="height: 60px;" placeholder="Phone number, e-mail or username" required/>
+            </div>
+            <div class="form-group mt-3">
+                <input  formControlName = "password" type="password" class="form-control" style="height: 60px;" placeholder="Password" required />
+            </div>
+            <div class="form-group mt-3">
+                <button  [disabled] = "loginForm.invalid" type="submit" class="btn btn-primary" style="width: 340px;
+                    border-radius:30px; color: white;">
+                    Log in
+                </button>
+            </div>
+        </form>
+    </div>
+</div>

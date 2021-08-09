@@ -1,0 +1,21 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net5.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="FollowerRepository\**" />
+    <Compile Remove="FollowingRepository\**" />
+    <EmbeddedResource Remove="FollowerRepository\**" />
+    <EmbeddedResource Remove="FollowingRepository\**" />
+    <None Remove="FollowerRepository\**" />
+    <None Remove="FollowingRepository\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\TwitterCore\TwitterCore.csproj" />
+    <ProjectReference Include="..\TwitterModel\TwitterModel.csproj" />
+  </ItemGroup>
+
+</Project>
