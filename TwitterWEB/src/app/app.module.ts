@@ -15,6 +15,7 @@ import { CustomValidatorService } from 'src/services/customValidator.service';
 import { ModalService } from 'src/services/modal.service';
 import { AuthenticationService } from 'src/services/authentication.service';
 import { FrontPageComponent } from './front-page/front-page.component';
+import { RouteGuardService } from 'src/services/route-guard.service';
 
 
 @NgModule({
@@ -43,7 +44,8 @@ import { FrontPageComponent } from './front-page/front-page.component';
     { provide: 'baseAddress', useValue: 'https://localhost:44307/' },
     CustomValidatorService,
     ModalService,
-    AuthenticationService
+    AuthenticationService,
+    RouteGuardService
   ],
   bootstrap: [AppComponent],
 })
