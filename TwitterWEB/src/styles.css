@@ -4,3 +4,20 @@
   margin: 0;
  }
 
+ html {
+  overflow-y: scroll;
+ }
+
+ .rounded-img-container {
+  display: inline-block;
+  border-radius: 50%;
+  overflow: hidden;
+ }
+
+ .rounded-img {
+  width: inherit;
+  height: inherit;
+  border-radius: inherit;
+  object-fit: cover;
+  object-position: center;
+ }

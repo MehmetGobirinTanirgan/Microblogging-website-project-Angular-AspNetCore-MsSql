@@ -16,6 +16,8 @@ import { ModalService } from 'src/services/modal.service';
 import { AuthenticationService } from 'src/services/authentication.service';
 import { FrontPageComponent } from './front-page/front-page.component';
 import { RouteGuardService } from 'src/services/route-guard.service';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 
 @NgModule({
@@ -34,6 +36,8 @@ import { RouteGuardService } from 'src/services/route-guard.service';
     AppRoutingModule,
     HttpClientModule,
     ReactiveFormsModule,
+    NgbModule,
+    BrowserAnimationsModule,
   ],
   providers: [
     {

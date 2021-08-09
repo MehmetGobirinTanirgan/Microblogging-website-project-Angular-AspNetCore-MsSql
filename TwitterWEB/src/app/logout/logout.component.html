@@ -1,15 +1,15 @@
-<div class="dropdown show" style="margin-top: 230px; position:fixed;">
-  <a class="btn btn-outline-light dropdown-toggle d-flex"
-     role="button" data-toggle="dropdown" style="width: 250px; text-decoration:none; font-size:20px; border-radius:30px;">
-      <!-- <div class="rounded-img-container">
-          <img title="user-image" class="rounded-img" style="width:50px; height:50px;" [src]="userData[2]">
+<div ngbDropdown placement="top-right" style="margin-top: 230px; position:fixed;">
+  <button class="btn btn-outline-light d-flex"  ngbDropdownToggle
+     role="button" style="width: 250px; text-decoration:none; font-size:20px; border-radius:30px;">
+      <div class="rounded-img-container">
+          <img title="user-image" class="rounded-img" style="width:50px; height:50px;" [src]="userData.profilePicPath">
       </div>
-      <div class="ml-3">
-          <h6 style="font-weight:bold; color:black;">{{userData[1]}} </h6>
-          <h6 style="opacity: 0.9; color:#6D7F90 ;">{{userData[0]}} </h6>
-      </div> -->
-  </a>
-  <div class="dropdown-menu" style="width:250px; text-align:center; border-radius:20px;">
-      <a class="dropdown-item" (click) = "logOut()">Log out</a>
+      <div style="margin-left: 10px;">
+          <h6 style="font-weight:bold; color:black;">{{userData.fullname}} </h6>
+          <h6 style="opacity: 0.9; color:#6D7F90 ;">{{userData.username}} </h6>
+      </div>
+  </button>
+  <div ngbDropdownMenu  style="width:250px; text-align:center; border-radius:20px;">
+      <a ngbDropdownItem (click) = "logOut()">Log out</a>
   </div>
 </div>
