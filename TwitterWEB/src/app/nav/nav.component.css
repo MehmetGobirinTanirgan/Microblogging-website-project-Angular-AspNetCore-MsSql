@@ -21,6 +21,7 @@
      border-radius: 0.8rem;
      font-size: 25px;
      font-weight: bold;
+     text-decoration: none;
     }
 
      #navbar ul li a:hover {

@@ -1,11 +1,15 @@
 ﻿using AutoMapper;
+using CloudinaryDotNet;
+using CloudinaryDotNet.Actions;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Options;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using TwitterAPI.Models;
+using TwitterAPI.Upload;
 using TwitterCore.Entities.Enums;
 using TwitterModel.DTO;
 using TwitterModel.Models;
@@ -20,10 +24,13 @@ namespace TwitterAPI.Controllers
     {
         private readonly ITweetService tweetService;
         private readonly IMapper mapper;
-        public TweetController(ITweetService tweetService, IMapper mapper)
+        private readonly IOptions<CloudinarySettings> cloudinarySettings;
+
+        public TweetController(ITweetService tweetService, IMapper mapper, IOptions<CloudinarySettings> cloudinarySettings)
         {
             this.tweetService = tweetService;
             this.mapper = mapper;
+            this.cloudinarySettings = cloudinarySettings;
         }
 
         [HttpGet("{id}")]
@@ -73,12 +80,25 @@ namespace TwitterAPI.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> AddNewTweet([FromBody] NewTweetDTO newTweetDTO)
+        public async Task<IActionResult> AddNewTweet([FromForm] NewTweetDTO newTweetDTO)
         {
             if (ModelState.IsValid)
             {
+                var upload = new FileUpload(cloudinarySettings);
+                var uploadResult = new List<string>();
+
+                if (newTweetDTO.ImageFiles != null)
+                {
+                    uploadResult = upload.ImageUpload(newTweetDTO.ImageFiles);
+
+                    if (uploadResult == null)
+                    {
+                        return BadRequest();
+                    }
+                }
+                
                 var newTweet = mapper.Map<Tweet>(newTweetDTO);
-                var newTweetID = await tweetService.AddNewTweetAsync(newTweet, newTweetDTO.ImagePaths);
+                var newTweetID = await tweetService.AddNewTweetAsync(newTweet, uploadResult);
                 var newTweetWithUserAndImages = await tweetService.GetTweetAsync(newTweetID);
                 var tweetDTO = mapper.Map<TweetDTO>(newTweetWithUserAndImages);
                 tweetDTO.OwnershipStatus = true;
@@ -101,7 +121,7 @@ namespace TwitterAPI.Controllers
                     {
                         replyToThisTweet.ReplyCounter = replyToThisTweet.ReplyCounter - 1;
                         await tweetService.UpdateTweetAsync(replyToThisTweet);
-                    }                   
+                    }
                 }
                 await tweetService.DeleteTweetAsync(id);
                 return Ok();
@@ -109,7 +129,7 @@ namespace TwitterAPI.Controllers
             return BadRequest();
         }
 
-        
+
         [HttpPost]
         public async Task<IActionResult> AddLike([FromBody] LikeDTO likeDTO)
         {
@@ -157,7 +177,7 @@ namespace TwitterAPI.Controllers
                 var newReplyTweetID = await tweetService.AddNewTweetAsync(newReplyTweet, newReplyTweetDTO.ImagePaths);
                 var newReplyTweetWithUserAndImages = await tweetService.GetTweetAsync(newReplyTweetID);
                 newReplyTweetWithUserAndImages.OwnershipStatus = true;
-                newReplyTweetWithUserAndImages.LikeFlag = false;   
+                newReplyTweetWithUserAndImages.LikeFlag = false;
                 var tweetDTO = mapper.Map<TweetDTO>(newReplyTweetWithUserAndImages);
                 tweetDTO.MainTweetOwnerID = mainTweet.UserID;
                 tweetDTO.MainTweetOwnerUsername = mainTweet.User.Username;
@@ -177,7 +197,7 @@ namespace TwitterAPI.Controllers
             if (tweet != null)
             {
                 var mainTweetDTO = mapper.Map<TweetDTO>(tweet);
-               
+
                 var tweetDTOs = new List<TweetDTO>()
                     {
                         mainTweetDTO
@@ -194,13 +214,13 @@ namespace TwitterAPI.Controllers
                             activeReplyTweets.Where(x => x.ID.Equals(likes.First().TweetID)).ToList().ForEach(x => x.LikeFlag = likes.Any(x => x.UserID.Equals(userID)));
                         }
                     }
-                    
-                    var replyTweetDTOsOfMainTweet = mapper.Map<List<TweetDTO>>(activeReplyTweets);                    
+
+                    var replyTweetDTOsOfMainTweet = mapper.Map<List<TweetDTO>>(activeReplyTweets);
                     tweetDTOs.AddRange(replyTweetDTOsOfMainTweet);
                     return Ok(tweetDTOs.OrderBy(x => x.CreatedDate));
                 }
                 return Ok(tweetDTOs);
-            }           
+            }
             return NoContent();
         }
 
@@ -213,7 +233,7 @@ namespace TwitterAPI.Controllers
                 var tweetImageDTO = mapper.Map<TweetImageDTO>(tweetImage);
                 return Ok(tweetImageDTO);
             }
-            return NoContent();         
+            return NoContent();
         }
     }
 }

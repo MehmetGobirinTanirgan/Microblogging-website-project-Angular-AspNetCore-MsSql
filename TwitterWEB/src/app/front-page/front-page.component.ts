@@ -39,7 +39,6 @@ export class FrontPageComponent implements OnInit {
   ];
   signUpForm: FormGroup;
   signUpModel: SignUpModel = new SignUpModel();
-
   ngOnInit() {
     this.createSignUpForm();
   }
@@ -60,6 +59,7 @@ export class FrontPageComponent implements OnInit {
     if (this.signUpForm.valid) {
       this.signUpModel = Object.assign({}, this.signUpForm.value);
       this.userService.signUp(this.signUpModel).subscribe(success => {
+
         this.router.navigate(['login']);
       },error =>{
         alert("Signup failed")
@@ -69,5 +69,9 @@ export class FrontPageComponent implements OnInit {
 
   openModal(signupModal: any) {
     this.modalService.openModal(signupModal);
+  }
+
+  closeModal(signupModal:any){
+    this.modalService.closeModal(signupModal);
   }
 }

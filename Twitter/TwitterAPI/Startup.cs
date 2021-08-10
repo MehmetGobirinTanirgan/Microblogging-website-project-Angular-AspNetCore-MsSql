@@ -62,6 +62,8 @@ namespace TwitterAPI
             services.AddScoped<IFollowService, FollowService>();
             services.AddScoped<IAuthenticationService, AuthenticationService>();
 
+            services.Configure<CloudinarySettings>(Configuration.GetSection("CloudinarySettings"));
+
             var appSettingsSection = Configuration.GetSection("AppSettings");
             services.Configure<AppSettings>(appSettingsSection);
             var appSettings = appSettingsSection.Get<AppSettings>();

@@ -97,7 +97,7 @@
             </div>
         </div>
         <div class="mt-2 form-group">
-          <button type="submit" class="btn btn-primary" style="width: 200px; border-radius:20px; color: white;" [disabled] = "signUpForm.invalid">Sign
+          <button type="submit" class="btn btn-primary" style="width: 200px; border-radius:20px; color: white;" (click)="modal.close('Close click')"  [disabled] = "signUpForm.invalid">Sign
             up</button>
           <button type="reset" class="btn btn-outline-primary" style="width: 200px; border-radius:20px; color:#0069D9;"
           (click)="modal.close('Close click')">Cancel</button>
@@ -105,4 +105,3 @@
       </form>
     </div>
 </ng-template>
-

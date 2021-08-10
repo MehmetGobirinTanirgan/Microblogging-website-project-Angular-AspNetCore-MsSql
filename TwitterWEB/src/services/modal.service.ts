@@ -7,4 +7,8 @@ export class ModalService {
   openModal(modalName:any) {
     this.ngbModal.open(modalName,{ centered: true });
   }
+
+  closeModal(modalName:any){
+    this.ngbModal.dismissAll();
+  }
 }

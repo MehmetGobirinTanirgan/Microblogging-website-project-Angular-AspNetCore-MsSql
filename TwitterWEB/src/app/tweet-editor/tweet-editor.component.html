@@ -1,1 +1,28 @@
-<p>tweet-editor works!</p>
+<div class="row border-bottom mt-3">
+  <div class="col-lg-2">
+      <a routerLink="/user-profile">
+          <div class="rounded-img-container">
+              <img class="rounded-img" style="width:80px; height:80px;" [src]="userData.profilePicPath" alt="user-profile-picture">
+          </div>
+      </a>
+  </div>
+  <div class="col-lg-10">
+      <form [formGroup]="tweetSubmitForm" (ngSubmit)="tweetSubmit()" method="post" enctype="multipart/form-data">
+          <input type="hidden" asp-for="@id" id="user-id"/>
+          <div class="form-group mb-2">
+              <textarea formControlName = "tweetDetail" id="new-tweet-text" class="form-control"
+                        style="resize: none; border-radius:10px; border: 0px;  width:490px; height:100px;" placeholder="What's happening?"></textarea>
+          </div>
+          <div class="form-group d-flex justify-content-between">
+              <label style="color:#1DA1F2;" for="image-files">
+                  <i class="far fa-images fa-lg"></i><input formControlName = "imageFiles" (change)="addFiles($any($event.target).files)" id="image-files" title="image-files" class="form-control-file" type="file" name="files" hidden multiple>
+              </label>
+              <div class="mb-3">
+                  <span id="current-ct">0</span>
+                  <span style="margin-right: 10px;">/ 280</span>
+                  <button [disabled] = "tweetSubmitForm.invalid" class="btn btn-primary" id="add-new-tweet-btn" style="border-radius:20px;" type="submit">Tweet</button>
+              </div>
+          </div>
+      </form>
+  </div>
+</div>

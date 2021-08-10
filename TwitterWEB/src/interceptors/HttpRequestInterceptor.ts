@@ -21,14 +21,7 @@ export class HttpRequestInterceptor implements HttpInterceptor {
     if(token != null){
       request = request.clone({
         setHeaders: {
-          'Content-Type': 'application/json',
           'Authorization': `Bearer ${this.authenticationService.getToken()}`,
-        },
-      });
-    }else{
-      request = request.clone({
-        setHeaders: {
-          'Content-Type': 'application/json',
         },
       });
     }

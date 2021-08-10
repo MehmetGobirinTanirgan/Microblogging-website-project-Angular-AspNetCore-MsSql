@@ -18,7 +18,8 @@ import { FrontPageComponent } from './front-page/front-page.component';
 import { RouteGuardService } from 'src/services/route-guard.service';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-
+import { SearchBarComponent } from './search-bar/search-bar.component';
+import { TweetStreamComponent } from './tweet-stream/tweet-stream.component';
 
 @NgModule({
   declarations: [
@@ -30,6 +31,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     LogoutComponent,
     HomeComponent,
     TweetEditorComponent,
+    SearchBarComponent,
+    TweetStreamComponent,
   ],
   imports: [
     BrowserModule,

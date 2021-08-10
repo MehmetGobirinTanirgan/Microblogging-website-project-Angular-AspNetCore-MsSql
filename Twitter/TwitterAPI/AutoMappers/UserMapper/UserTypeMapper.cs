@@ -19,8 +19,8 @@ namespace TwitterAPI.AutoMappers.UserMapper
                 .ForMember(u => u.Birthday, m => m.MapFrom(s => new DateTime(s.Year, s.Month, s.Day)))
                 .ForMember(u => u.CreatedDate, m => m.MapFrom(s => DateTime.Now))
                 .ForMember(u => u.Status, m => m.MapFrom(s => ComplexEntityStatus.Active))
-                .ForMember(u => u.ProfilePicPath, m => m.MapFrom(s => @"assets\Uploads\ProfilePictures\Default.jpg"))
-                .ForMember(u => u.BackgroundPath, m => m.MapFrom(s => @"assets/Uploads/BackgroundImages/Default.jpg"))
+                .ForMember(u => u.ProfilePicPath, m => m.MapFrom(s => "https://res.cloudinary.com/dt107fl3n/image/upload/v1628593796/Default_klqavt.jpg"))
+                .ForMember(u => u.BackgroundPath, m => m.MapFrom(s => "https://res.cloudinary.com/dt107fl3n/image/upload/v1628593807/Default_ir2ky0.jpg"))
                 .ForMember(u => u.Username, m => m.MapFrom(s => SplitString(s.Fullname) + defaultUsernamePart));
 
             CreateMap<User, UserProfileDTO>();
