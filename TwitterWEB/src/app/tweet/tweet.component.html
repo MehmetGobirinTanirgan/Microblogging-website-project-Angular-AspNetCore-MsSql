@@ -1,0 +1,86 @@
+<article class="border">
+  <div class="row position-relative">
+    <div class="col-lg-2 mt-3">
+      <a routerLink="/UserProfile/tweet.userID" class="tweet-link">
+        <div class="rounded-img-container mx-3 mb-4">
+          <img class="rounded-img" style="width:60px; height:60px;" [src]="tweet.profilePicPath"
+            alt="tweet-user-profile-picture">
+        </div>
+      </a>
+    </div>
+    <div class="col-lg-10 position-static">
+      <div class="row justify-content-between d-flex flex-column">
+        <div class="d-flex justify-content-between">
+          <div>
+            <a routerLink="/UserProfile/tweet.userID" class="tweet-link"
+              style="font-weight:bold; color:black;">{{tweet.fullname}} </a>
+            <label style="margin-left:2px; opacity: 0.9; color:#6D7F90 ;">@{{tweet.username}} </label>
+            <a routerLink ="/tweetStream/tweet.id" class="tweet-link"
+              style="margin-left:2px; opacity: 0.9; color: #6D7F90;"><span>&#183;</span> {{tweet.createdDate |
+              date:'dd.MM.yyyy'}}</a>
+          </div>
+          <div class="dropdown show mr-5">
+            <a aria-hidden="true" class="dropdown-toggle tweet-link" style="color:#5B7092; text-decoration:none;"
+              role="button" data-toggle="dropdown"></a>
+            <div class="dropdown-menu">
+              <a *ngIf="tweet.ownershipStatus == true && tweet.followFlag == false" style="color:#E0245E;"
+                class="tweet-delete-btn dropdown-item tweet-link" data-id="@Model.ID"><i class="far fa-trash-alt"></i>
+                Delete</a>
+              <a *ngIf="tweet.ownershipStatus == false && tweet.followFlag == true"
+                class="dropdown-item tweet-link follow-unfollow-btn" data-id="@Model.UserID"><i
+                  class="fas fa-user-times"></i> Unfollow</a>
+              <a *ngIf="tweet.ownershipStatus == false && tweet.followFlag == false"
+                class="dropdown-item tweet-link follow-unfollow-btn" data-id="@Model.UserID"><i
+                  class="fas fa-user-plus"></i> Follow</a>
+            </div>
+          </div>
+        </div>
+
+        <div *ngIf = "tweet.mainTweetOwnerID != null && tweet.mainTweetOwnerUsername != null" >
+          <label style="opacity: 0.9; color:#6D7F90 ;">Replying to </label>
+          <a routerLink="/UserProfile/tweet.mainTweetOwnerID"
+            class="tweet-link">@{{tweet.mainTweetOwnerUsername}} </a>
+        </div>
+
+      </div>
+      <div *ngIf="tweet.tweetDetail != null" class="row" style="word-break:break-word; width:500px; margin-left:0;">
+        {{tweet.tweetDetail}}
+      </div>
+
+      <div *ngIf = "tweet.tweetImageInfos.length > 0" class="row mb-4" style="display: inline-block;">
+        <a *ngIf="tweet.tweetImageInfos.length == 1" class="twt-img-link" aria-label="first-image-link">
+          <img [src]="tweet.tweetImageInfos[0].imagePath" style="width: 490px; border-radius: 20px;"
+            alt="tweet-first-image" />
+        </a>
+          <div *ngIf="tweet.tweetImageInfos.length == 2">
+            <a class="twt-img-link" aria-label="first-image-link">
+              <img [src]="tweet.tweetImageInfos[0].imagePath" style="width: 240px; border-radius: 10px 0 0 10px"
+                alt="tweet-first-image" />
+            </a>
+            <a class="twt-img-link" aria-label="second-image-link">
+              <img [src]="tweet.tweetImageInfos[1].imagePath"
+                style="width: 240px; margin-left:3px; border-radius: 0 10px 10px 0;" alt="tweet-second-image" />
+            </a>
+          </div>
+      </div>
+
+      <div class="mt-3 tweet-btns">
+        <a class="reply-btn tweet-link" aria-label="reply-link">
+          <i class="far fa-comment fa-lg"></i>
+          <input type="hidden" asp-for="@Model.ID" class="tweet-id" />
+          <span> {{tweet.replyCounter}}</span>
+        </a>
+        <a class="retweet-btn tweet-link"><i class="fas fa-retweet fa-lg"></i><span> {{tweet.retweetCounter}}</span></a>
+
+        <a *ngIf="tweet.likeFlag == true" class="dislike-btn tweet-link" style="color: #E44878;"><i
+            class="fas fa-heart fa-lg"></i><span> {{tweet.likeCounter}}</span></a>
+        <a *ngIf="tweet.likeFlag == false" class="like-btn tweet-link" ><i class="far fa-heart fa-lg"></i><span>
+          {{tweet.likeCounter}}</span></a>
+
+        <a class="share-btn tweet-link" data-id="@Model.ID"><i class="fas fa-share fa-lg"></i></a>
+      </div>
+
+      <a routerLink="/UserProfile/tweet.userID"></a>
+    </div>
+  </div>
+</article>

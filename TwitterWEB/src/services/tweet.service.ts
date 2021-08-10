@@ -6,17 +6,27 @@ import { TweetModel } from 'src/models/TweetModel';
 
 @Injectable()
 export class TweetService {
+  constructor(
+    private httpClient: HttpClient,
+    @Inject('baseAddress') private baseAddress: string
+  ) {}
 
-constructor(private httpClient: HttpClient, @Inject("baseAddress") private baseAddress:string) { }
+  addNewTweet(newTweet: FormData): Observable<TweetModel> {
+    let HttpOptions: Object = {
+      headers: new Headers({
+        Accept: 'text/html',
+        'Content-Type': 'multipart/form-data',
+      }),
+      responseType: 'text' as 'json',
+    };
+    return this.httpClient.post<TweetModel>(
+      this.baseAddress + 'api/Tweet/AddNewTweet',
+      newTweet,
+      HttpOptions
+    );
+  }
 
-addNewTweet(newTweet:FormData) : Observable<TweetModel>{
-  let HttpOptions : Object= {
-    headers: new Headers({
-      'Accept': 'text/html',
-      'Content-Type': 'multipart/form-data'
-    }),
-    responseType: 'text' as 'json'
-  };
-return this.httpClient.post<TweetModel>(this.baseAddress + "api/Tweet/AddNewTweet",newTweet, HttpOptions);
-}
+  getAllTweets(id:string){
+    return this.httpClient.get<TweetModel[]>(this.baseAddress + "api/Tweet/GetAllRelationalTweets/" + id);
+  }
 }

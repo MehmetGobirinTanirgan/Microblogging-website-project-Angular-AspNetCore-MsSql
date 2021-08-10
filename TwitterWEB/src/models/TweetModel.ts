@@ -4,7 +4,7 @@ export class TweetModel {
   id:string;
   createdDate:Date;
   tweetDetail:string;
-  TweetImageInfos:TweetImageModel[];
+  tweetImageInfos:TweetImageModel[];
   userID:string;
   profilePicPath:string;
   fullname:string;

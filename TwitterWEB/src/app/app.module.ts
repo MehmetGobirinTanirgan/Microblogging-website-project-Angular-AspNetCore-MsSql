@@ -20,6 +20,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { SearchBarComponent } from './search-bar/search-bar.component';
 import { TweetStreamComponent } from './tweet-stream/tweet-stream.component';
+import { TweetComponent } from './tweet/tweet.component';
 
 @NgModule({
   declarations: [
@@ -33,6 +34,7 @@ import { TweetStreamComponent } from './tweet-stream/tweet-stream.component';
     TweetEditorComponent,
     SearchBarComponent,
     TweetStreamComponent,
+    TweetComponent,
   ],
   imports: [
     BrowserModule,
