@@ -69,7 +69,7 @@
         <h6>Date of birth</h6>
         <div class="form-group d-flex flex-row  justify-content-start">
             <div style="width: 150px;">
-              <select formControlName="month" class="form-select" required>
+              <select formControlName="month" (change)="checkMonth($any($event.target).value)" class="form-select" required>
                 <option hidden value="">Month</option>
                 <option *ngFor="let item of months; let i=index;" value="{{i}}">{{item}}</option>
               </select>
@@ -80,16 +80,16 @@
             <div style="width: 150px; margin-left: 30px;">
               <select formControlName="day" class="form-select" required>
                 <option hidden value="">Day</option>
-                <option *ngFor="let day of days; let i=index;" value="{{i}}">{{i}}</option>
+                <option *ngFor="let day of days; let i=index;" value="{{i+1}}">{{i+1}}</option>
               </select>
               <div *ngIf="signUpForm.get('day')?.invalid && signUpForm.get('day')?.touched" class="text-danger">
                 <span *ngIf="signUpForm.get('day')?.errors?.required">Day is required.</span>
               </div>
             </div>
             <div style="width: 150px; margin-left: 30px;">
-              <select formControlName="year" class="form-select" required>
+              <select formControlName="year" (change)="checkYear($any($event.target).value)" class="form-select" required>
                 <option hidden value="">Year</option>
-                <option *ngFor="let year of years; let i=index;" value="{{i}}">{{i}}</option>
+                <option *ngFor="let year of years; let i=index;" value="{{i+1970}}">{{i+1970}}</option>
               </select>
               <div *ngIf="signUpForm.get('year')?.invalid && signUpForm.get('year')?.touched" class="text-danger">
                 <span *ngIf="signUpForm.get('year')?.errors?.required">Year is required.</span>

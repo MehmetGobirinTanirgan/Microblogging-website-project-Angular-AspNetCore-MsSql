@@ -48,7 +48,7 @@
             <ng-template #shortVer>{{userProfileCard.personalWebSiteURL}}</ng-template>
           </a>
         </h6>
-        <h6 class="text-muted ml-1"><i class="far fa-calendar-alt"></i> Joined {{userProfileCard.createdDate | date:'MMM d, y'}}</h6>
+        <h6 class="text-muted ml-1"><i class="far fa-calendar-alt"></i> Joined {{userProfileCard.createdDate | date:'MMM y'}}</h6>
       </li>
       <li class="list-inline-item">
         <a asp-controller="Follow" asp-action="FollowList" asp-route-userID="@Model.ID" asp-route-signal="following"

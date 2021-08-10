@@ -20,9 +20,9 @@ export class FrontPageComponent implements OnInit {
     private modalService: ModalService,
     private router: Router
   ) {}
-
   days = new Array(31);
-  years = new Array(100);
+  currentYear = new Date().getFullYear();
+  years = new Array(this.currentYear - 1969);
   months: string[] = [
     'January',
     'February',
@@ -37,10 +37,14 @@ export class FrontPageComponent implements OnInit {
     'November',
     'December',
   ];
+  isLeapYear:boolean;
+  selectedMonth:string;
   signUpForm: FormGroup;
   signUpModel: SignUpModel = new SignUpModel();
+
   ngOnInit() {
     this.createSignUpForm();
+    this.checkYear(this.currentYear);
   }
 
   createSignUpForm() {
@@ -58,12 +62,14 @@ export class FrontPageComponent implements OnInit {
   signUp() {
     if (this.signUpForm.valid) {
       this.signUpModel = Object.assign({}, this.signUpForm.value);
-      this.userService.signUp(this.signUpModel).subscribe(success => {
-
-        this.router.navigate(['login']);
-      },error =>{
-        alert("Signup failed")
-      });
+      this.userService.signUp(this.signUpModel).subscribe(
+        (success) => {
+          this.router.navigate(['login']);
+        },
+        (error) => {
+          alert('Signup failed');
+        }
+      );
     }
   }
 
@@ -71,7 +77,35 @@ export class FrontPageComponent implements OnInit {
     this.modalService.openModal(signupModal);
   }
 
-  closeModal(signupModal:any){
+  closeModal(signupModal: any) {
     this.modalService.closeModal(signupModal);
+  }
+
+  checkMonth(month: string) {
+    this.selectedMonth = month;
+    if (
+      month == '0' ||
+      month == '2' ||
+      month == '4' ||
+      month == '6' ||
+      month == '7' ||
+      month == '9' ||
+      month == '11'
+    ) {
+      this.days = new Array(31);
+    } else if (month == '1') {
+      if (this.isLeapYear) {
+        this.days = new Array(29);
+      } else {
+        this.days = new Array(28);
+      }
+    } else {
+      this.days = new Array(30);
+    }
+  }
+
+  checkYear(year: number) {
+    this.isLeapYear = (year % 4 == 0 && year % 100 != 0) || year % 400 == 0;
+    this.checkMonth(this.selectedMonth);
   }
 }

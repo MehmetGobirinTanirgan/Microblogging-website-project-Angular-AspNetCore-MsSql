@@ -17,7 +17,7 @@ const routes: Routes = [
     children: [{ path: '', component: HomeComponent }],
   },
   {
-    path:':id',
+    path:':id', // => it's gonna be username
     component: MainLayoutComponent,
     canActivate:[RouteGuardService],
     children:[{path:'',component:ProfileComponent}]
