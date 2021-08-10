@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { TweetModel } from 'src/models/TweetModel';
 import { AuthenticationService } from 'src/services/authentication.service';
 import { TweetService } from 'src/services/tweet.service';
@@ -10,19 +10,7 @@ import { TweetService } from 'src/services/tweet.service';
   providers: [TweetService],
 })
 export class TweetStreamComponent implements OnInit {
-  constructor(
-    private tweetService: TweetService,
-    private authService: AuthenticationService
-  ) {}
-tweets:TweetModel[] = [];
-  ngOnInit(): void {
-    this.getAllTweets();
-  }
-
-  getAllTweets() {
-    this.tweetService.getAllTweets(this.authService.getUserData().id).subscribe(
-      (data) => this.tweets = data,
-      (error) => alert("Error: Can't load tweets")
-    );
-  }
+  constructor() {}
+  @Input() tweets: TweetModel[];
+  ngOnInit(): void {}
 }

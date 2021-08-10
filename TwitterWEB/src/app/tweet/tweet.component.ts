@@ -4,13 +4,10 @@ import { TweetModel } from 'src/models/TweetModel';
 @Component({
   selector: 'app-tweet',
   templateUrl: './tweet.component.html',
-  styleUrls: ['./tweet.component.css']
+  styleUrls: ['./tweet.component.css'],
 })
 export class TweetComponent implements OnInit {
-
-  constructor() { }
+  constructor() {}
   @Input() tweet: TweetModel;
-  ngOnInit(): void {
-  }
-
+  ngOnInit(): void {}
 }
