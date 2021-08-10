@@ -1,0 +1,42 @@
+<div class="row justify-content-center" style="width: 1100px;">
+  <div class="col-lg-7 border-right">
+    <app-profile-card [userProfileCard]="userProfileCard" *ngIf="userProfileCard != null"></app-profile-card>
+    <div class="btn-group d-flex" role="group">
+      <button type="button" id="nav-btn1" class="btn nav-btn" (click)="show1()"><b>Tweet</b></button>
+      <button type="button" id="nav-btn2" class="btn nav-btn" (click)="show2()"><b>Tweetler & replies</b></button>
+      <button type="button" id="nav-btn3" class="btn nav-btn" (click)="show3()"><b>Media</b></button>
+      <button type="button" id="nav-btn4" class="btn nav-btn" (click)="show4()"><b>Likes</b></button>
+    </div>
+    <div *ngIf="ownTweets != null">
+      <div *ngIf="toggle1" class="scrollable1" style="height:700px;" id="tw-1">
+        <div class="scrollable2">
+          <app-tweet-stream [tweets]="ownTweets"></app-tweet-stream>
+        </div>
+      </div>
+    </div>
+    <div *ngIf="nonReplyOwnTweets != null">
+      <div *ngIf="toggle2" class="scrollable1" style="height:700px;" id="tw-2">
+        <div class="scrollable2">
+          <app-tweet-stream [tweets]="nonReplyOwnTweets"></app-tweet-stream>
+        </div>
+      </div>
+    </div>
+    <div *ngIf="mediaTypeTweets != null">
+      <div *ngIf="toggle3" class="scrollable1" id="tw-3" style="height: 700px;">
+        <div class="scrollable2">
+          <app-tweet-stream [tweets]="mediaTypeTweets"></app-tweet-stream>
+        </div>
+      </div>
+    </div>
+    <div *ngIf="likedTweets != null">
+      <div *ngIf="toggle4" class="scrollable1" id="tw-4" style="height: 700px;">
+        <div class="scrollable2">
+          <app-tweet-stream [tweets]="likedTweets"></app-tweet-stream>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-lg-5">
+    <app-search-bar></app-search-bar>
+  </div>
+</div>

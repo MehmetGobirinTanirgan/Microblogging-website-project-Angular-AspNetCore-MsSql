@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { AuthenticationService } from 'src/services/authentication.service';
 
 @Component({
   selector: 'app-nav',
@@ -7,9 +8,10 @@ import { Component, OnInit } from '@angular/core';
 })
 export class NavComponent implements OnInit {
 
-  constructor() { }
-
+  constructor(private authService:AuthenticationService) { }
+  id:string;
   ngOnInit(): void {
+    this.id = this.authService.getUserData().id;
   }
 
 }

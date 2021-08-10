@@ -1,0 +1,67 @@
+<div class="row border-bottom ">
+  <header>
+    <h4 style="margin-left: 40px;">{{userProfileCard.fullname}}</h4>
+  </header>
+</div>
+<div class="row px-4 pt-0 pb-4 cover" id="user-bg-image" style="background-image: url({{userProfileCard.backgroundPath}});">
+  <div class="media profile-head" style="width: 200px;">
+    <div class="rounded-img-container mr-3 mt-3">
+      <a asp-controller="Profile" asp-action="UserProfile">
+        <img id="user-profile-picture" [src]="userProfileCard.profilePicPath"
+          style="width:150px; height:150px; border:5px solid white; border-radius: 50%;" class="rounded-img">
+      </a>
+    </div>
+  </div>
+</div>
+<div class="px-4 pt-4">
+  <div class="row justify-content-end">
+    <button *ngIf="userProfileCard.followFlag == null" class="btn btn-outline-primary" data-toggle="modal" data-target="#edit-modal"
+      style="width: max-content; border-radius:20px;">
+      <b>Set up profile</b>
+    </button>
+    <button *ngIf="userProfileCard.followFlag == true" class="btn btn-primary" id="unfollow-btn" data-id="@Model.ID" style="width: max-content; border-radius:20px;">
+      <b>Following</b>
+  </button>
+  <button *ngIf="userProfileCard.followFlag == false" class="btn btn-outline-primary" id="follow-btn" data-id="@Model.ID" style="width: max-content; border-radius:20px; ">
+      <b>Follow</b>
+  </button>
+  </div>
+
+  <div class="row justify-content-start">
+    <ul class="list-inline" id="profile-list">
+      <li>
+        <h5 id="user-fullname" class="mb-0">{{userProfileCard.fullname}}</h5>
+      </li>
+      <li>
+        <h6 class="text-muted">@{{userProfileCard.username}}</h6>
+      </li>
+      <li *ngIf="userProfileCard.personalInfo != null" id="user-personal-info" class="mt-2"
+        style="word-break:break-word;">{{userProfileCard.personalInfo}}</li>
+      <li class="mt-2 d-flex" id="multiple-data-list-el">
+
+        <h6 *ngIf="userProfileCard.location != null" class="text-muted" id="user-location">
+          <i class="fas fa-map-marker-alt"></i> {{userProfileCard.location}}
+        </h6>
+        <h6 *ngIf="userProfileCard.personalWebSiteURL != null" class="ml-1" id="user-personal-url">
+          <i class="fas fa-link mr-1"></i><a href="userProfileCard.personalWebSiteURL">
+            <label *ngIf="userProfileCard.personalWebSiteURL.length > 30; else shortVer">{{userProfileCard.personalWebSiteURL | slice:0:27}}...</label>
+            <ng-template #shortVer>{{userProfileCard.personalWebSiteURL}}</ng-template>
+          </a>
+        </h6>
+        <h6 class="text-muted ml-1"><i class="far fa-calendar-alt"></i> Joined {{userProfileCard.createdDate | date:'MMM d, y'}}</h6>
+      </li>
+      <li class="list-inline-item">
+        <a asp-controller="Follow" asp-action="FollowList" asp-route-userID="@Model.ID" asp-route-signal="following"
+          style="text-decoration-color: black;">
+          <h6 class="text-muted"><b class="text-dark">{{userProfileCard.followingCounter}}</b> Following </h6>
+        </a>
+      </li>
+      <li class="list-inline-item">
+        <a asp-controller="Follow" asp-action="FollowList" asp-route-userID="@Model.ID" asp-route-signal="follower"
+          style="text-decoration-color: black;">
+          <h6 class="text-muted"><b class="text-dark">{{userProfileCard.followerCounter}}</b> Follower </h6>
+        </a>
+      </li>
+    </ul>
+  </div>
+</div>

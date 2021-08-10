@@ -21,6 +21,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { SearchBarComponent } from './search-bar/search-bar.component';
 import { TweetStreamComponent } from './tweet-stream/tweet-stream.component';
 import { TweetComponent } from './tweet/tweet.component';
+import { ProfileCardComponent } from './profile-card/profile-card.component';
+import { ProfileComponent } from './profile/profile.component';
 
 @NgModule({
   declarations: [
@@ -35,6 +37,8 @@ import { TweetComponent } from './tweet/tweet.component';
     SearchBarComponent,
     TweetStreamComponent,
     TweetComponent,
+    ProfileCardComponent,
+    ProfileComponent,
   ],
   imports: [
     BrowserModule,

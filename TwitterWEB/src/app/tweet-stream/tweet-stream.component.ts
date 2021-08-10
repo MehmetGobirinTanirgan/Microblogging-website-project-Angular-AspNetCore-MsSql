@@ -1,6 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { TweetModel } from 'src/models/TweetModel';
-import { AuthenticationService } from 'src/services/authentication.service';
 import { TweetService } from 'src/services/tweet.service';
 
 @Component({
