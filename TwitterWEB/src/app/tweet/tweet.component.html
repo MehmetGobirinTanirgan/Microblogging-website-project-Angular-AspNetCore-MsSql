@@ -15,22 +15,22 @@
             <a routerLink="/{{tweet.userID}}" class="tweet-link"
               style="font-weight:bold; color:black;">{{tweet.fullname}} </a>
             <label style="margin-left:2px; opacity: 0.9; color:#6D7F90 ;">@{{tweet.username}} </label>
-            <a routerLink ="/tweetStream/tweet.id" class="tweet-link"
-              style="margin-left:2px; opacity: 0.9; color: #6D7F90;"><span>&#183;</span> {{tweet.createdDate |
+            <span style="margin-left: 6px;">&#183;</span><a routerLink ="/tweetStream/tweet.id" class="tweet-link"
+              style="margin-left:2px; opacity: 0.9; color: #6D7F90;">{{tweet.createdDate |
               date:'dd.MM.yyyy'}}</a>
           </div>
-          <div class="dropdown show mr-5">
-            <a aria-hidden="true" class="dropdown-toggle tweet-link" style="color:#5B7092; text-decoration:none;"
-              role="button" data-toggle="dropdown"></a>
-            <div class="dropdown-menu">
-              <a *ngIf="tweet.ownershipStatus == true && tweet.followFlag == false" style="color:#E0245E;"
-                class="tweet-delete-btn dropdown-item tweet-link" data-id="@Model.ID"><i class="far fa-trash-alt"></i>
+          <div ngbDropdown #dropDown="ngbDropdown" style="margin-right: 20px;">
+            <a (click)="$event.stopPropagation(); dropDown.open();" class="tweet-link" style="color:#5B7092; text-decoration:none;"
+              role="button"><i class="fas fa-ellipsis-h"></i></a>
+            <div ngbDropdownMenu style="position: relative;">
+              <a ngbDropdownItem *ngIf="tweet.ownershipStatus == true && tweet.followFlag == false" (click) = "deleteTweet()" style="color:#E0245E;"
+                class="tweet-delete-btn tweet-link"><i class="far fa-trash-alt"></i>
                 Delete</a>
-              <a *ngIf="tweet.ownershipStatus == false && tweet.followFlag == true"
-                class="dropdown-item tweet-link follow-unfollow-btn" data-id="@Model.UserID"><i
+              <a ngbDropdownItem *ngIf="tweet.ownershipStatus == false && tweet.followFlag == true"
+                class="tweet-link follow-unfollow-btn"><i
                   class="fas fa-user-times"></i> Unfollow</a>
-              <a *ngIf="tweet.ownershipStatus == false && tweet.followFlag == false"
-                class="dropdown-item tweet-link follow-unfollow-btn" data-id="@Model.UserID"><i
+              <a ngbDropdownItem *ngIf="tweet.ownershipStatus == false && tweet.followFlag == false"
+                class="tweet-link follow-unfollow-btn"><i
                   class="fas fa-user-plus"></i> Follow</a>
             </div>
           </div>

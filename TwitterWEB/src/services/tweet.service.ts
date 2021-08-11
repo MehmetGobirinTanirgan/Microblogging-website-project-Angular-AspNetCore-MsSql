@@ -31,6 +31,10 @@ export class TweetService {
     return this.httpClient.get<TweetModel[]>(this.baseAddress + "api/Tweet/GetAllRelationalTweets/" + id);
   }
 
+  delete(id:string){
+    return  this.httpClient.delete(this.baseAddress + "api/Tweet/DeleteTweet/" + id);
+  }
+
   addLike(like:LikeModel){
     return this.httpClient.post(this.baseAddress + "api/Tweet/AddLike",like);
   }
@@ -38,4 +42,6 @@ export class TweetService {
   removeLike(tweetID:string, userID:string){
     return this.httpClient.delete(this.baseAddress +"api/Tweet/RemoveLike/"+ tweetID + "/" + userID);
   }
+
+
 }

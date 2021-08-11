@@ -21,6 +21,13 @@ export class TweetComponent implements OnInit {
     this.userID = this.authService.getUserData().id;
   }
 
+  deleteTweet(){
+    this.tweetService.delete(this.tweet.id).subscribe(
+      (data) => console.log(data),
+      (error) => alert('Deletion failed')
+    );
+  }
+
   like() {
     const like = new LikeModel();
     like.TweetID = this.tweet.id;
