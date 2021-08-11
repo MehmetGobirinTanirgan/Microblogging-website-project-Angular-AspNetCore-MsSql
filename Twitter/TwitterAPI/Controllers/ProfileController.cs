@@ -2,10 +2,13 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Options;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using TwitterAPI.Models;
+using TwitterAPI.Upload;
 using TwitterModel.DTO;
 using TwitterModel.Models;
 using TwitterService.TweetService;
@@ -21,12 +24,14 @@ namespace TwitterAPI.Controllers
         private readonly IUserService userService;
         private readonly ITweetService tweetService;
         private readonly IMapper mapper;
+        private readonly IOptions<CloudinarySettings> cloudinarySettings;
 
-        public ProfileController(IUserService userService, ITweetService tweetService, IMapper mapper)
+        public ProfileController(IUserService userService, ITweetService tweetService, IMapper mapper, IOptions<CloudinarySettings> cloudinarySettings)
         {
             this.userService = userService;
             this.tweetService = tweetService;
             this.mapper = mapper;
+            this.cloudinarySettings = cloudinarySettings;
         }
 
         [HttpGet("{userID}")]
@@ -130,12 +135,36 @@ namespace TwitterAPI.Controllers
         }
 
         [HttpPut]
-        public async Task<IActionResult> UpdateProfile([FromBody] ProfileEditDTO profileEditDTO)
+        public async Task<IActionResult> UpdateProfile([FromForm] ProfileEditDTO profileEditDTO)
         {
             if (ModelState.IsValid)
             {
+                var upload = new FileUpload(cloudinarySettings);
+                string profilePicPath = null;
+                string bgImagePath = null;
+
+                if(profileEditDTO.ProfilePic != null)
+                {
+                    profilePicPath = upload.ImageUpload(profileEditDTO.ProfilePic);
+                }
+                if(profileEditDTO.BackgroundImage != null)
+                {
+                    bgImagePath = upload.ImageUpload(profileEditDTO.BackgroundImage);
+                }
+
                 var user = await userService.GetUserByIDAsync(profileEditDTO.ID);
                 mapper.Map<ProfileEditDTO, User>(profileEditDTO, user);
+
+                if(profilePicPath != null)
+                {
+                    user.ProfilePicPath = profilePicPath;
+                }
+
+                if(bgImagePath != null)
+                {
+                    user.BackgroundPath = bgImagePath;
+                }
+
                 await userService.UpdateUserAsync(user);
                 return Ok();
             }

@@ -77,10 +77,6 @@ export class FrontPageComponent implements OnInit {
     this.modalService.openModal(signupModal);
   }
 
-  closeModal(signupModal: any) {
-    this.modalService.closeModal(signupModal);
-  }
-
   checkMonth(month: string) {
     this.selectedMonth = month;
     if (

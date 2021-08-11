@@ -9,19 +9,18 @@ import { TweetService } from 'src/services/tweet.service';
   selector: 'app-tweet-editor',
   templateUrl: './tweet-editor.component.html',
   styleUrls: ['./tweet-editor.component.css'],
-  providers: [TweetService]
+  providers: [TweetService],
 })
 export class TweetEditorComponent implements OnInit {
   constructor(
     private authService: AuthenticationService,
     private formBuilder: FormBuilder,
-    private tweetService:TweetService,
+    private tweetService: TweetService,
     @Inject('baseAddress') private baseAddress: string
   ) {}
   tweetSubmitForm: FormGroup;
   userData: UserStoreModel;
-  formData: FormData = new FormData();
-  newTweet:NewTweetModel;
+  newTweet: NewTweetModel;
   imageFiles: FileList;
   ngOnInit(): void {
     this.userData = this.authService.getUserData();
@@ -31,34 +30,38 @@ export class TweetEditorComponent implements OnInit {
   createTweetSubmitForm() {
     this.tweetSubmitForm = this.formBuilder.group({
       tweetDetail: ['', [Validators.maxLength(280)]],
-      imageFiles:[]
+      imageFiles: [],
     });
   }
 
-  addFiles(files: FileList){
-    if(files != null){
+  addFiles(files: FileList) {
+    if (files != null) {
       this.imageFiles = files;
     }
   }
 
   tweetSubmit() {
-    if(this.tweetSubmitForm.valid){
-      this.newTweet = Object.assign({},this.tweetSubmitForm.value);
-      this.formData.append("UserID",this.userData.id);
-      this.formData.append("TweetDetail",this.newTweet.tweetDetail);
+    if (this.tweetSubmitForm.valid) {
+      this.newTweet = Object.assign({}, this.tweetSubmitForm.value);
+      const formData = new FormData();
+      formData.append('UserID', this.userData.id);
+      formData.append('TweetDetail', this.newTweet.tweetDetail);
 
-      if(this.imageFiles != null){
-        for(let i = 0; i <this.imageFiles.length; i++){
-          this.formData.append("ImageFiles",this.imageFiles[i]);
+      if (this.imageFiles != null) {
+        for (let i = 0; i < this.imageFiles.length; i++) {
+          formData.append('ImageFiles', this.imageFiles[i]);
         }
       }
 
-      this.tweetService.addNewTweet(this.formData).subscribe(success =>{
-        alert("Succes");
-        this.tweetSubmitForm.reset();
-      },error =>{
-        alert("Error");
-      });
+      this.tweetService.addNewTweet(formData).subscribe(
+        (success) => {
+          alert('Succes');
+          this.tweetSubmitForm.reset();
+        },
+        (error) => {
+          alert('Error');
+        }
+      );
     }
   }
 }

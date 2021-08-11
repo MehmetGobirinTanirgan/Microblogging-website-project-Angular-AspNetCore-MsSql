@@ -1,0 +1,52 @@
+<ng-template #editModal let-c="close" let-d="dismiss">
+  <div class="modal-body">
+    <div class="modal-content" style="border-radius: 30px;">
+      <div class="modal-header">
+        <h2 class="modal-title">Set up profile</h2>
+      </div>
+      <div>
+        <form [formGroup]="profileEditForm" (ngSubmit)="editProfile()" id="edit-form" method="post">
+          <div class="form-group">
+            <input formControlName="fullname" type="text" placeholder="Name" id="name" class="form-control"
+              [ngModel]="profileData.fullname">
+          </div>
+          <div class="form-group">
+            <textarea formControlName="personalInfo" class="form-control" id="info" style="resize: none;"
+              placeholder="Bio" [ngModel]="profileData.personalInfo"></textarea>
+          </div>
+          <div class="form-group">
+            <input formControlName="location" type="text" placeholder="Location" id="loc" class="form-control"
+              [ngModel]="profileData.location">
+          </div>
+          <div class="form-group">
+            <input formControlName="personalWebSiteURL" type="text" placeholder="Website" id="site" class="form-control"
+              [ngModel]="profileData.personalWebSiteURL">
+          </div>
+          <div class="form-group d-flex">
+            <h6>Pick a profile picture </h6>
+            <label for="profile-pic" style="margin-left:5px; color:#1DA1F2;"><i class="fas fa-upload fa-lg"></i>
+              <input formControlName="profilePic" (change)="addProfilePic($any($event.target).files)"
+                class="form-control-file" type="file" id="profile-pic" hidden>
+            </label>
+          </div>
+          <div class="form-group d-flex">
+            <h6>Pick a header </h6>
+            <label for="bg-image" style="margin-left:5px; color:#1DA1F2;">
+              <i class="fas fa-upload fa-lg"></i>
+              <input formControlName="bgImage" (change)="addBgImage($any($event.target).files)"
+                class="form-control-file" type="file" id="bg-image" hidden>
+            </label>
+          </div>
+          <div class="modal-footer row justify-content-center">
+            <button type="button" class="btn btn-primary" id="edit-profile-btn"
+              style="width: 170px; border-radius:20px; color: white;" (click)="editProfile()">Save</button>
+            <button type="reset" id="cancel" class="btn btn-outline-primary" style="width: 170px; border-radius:20px;"
+              (click)="d('Close click')">
+              Cancel
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</ng-template>

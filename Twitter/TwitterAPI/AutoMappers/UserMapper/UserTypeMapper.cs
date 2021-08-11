@@ -38,8 +38,9 @@ namespace TwitterAPI.AutoMappers.UserMapper
 
             CreateMap<User, ProfileEditModalDTO>();
             CreateMap<ProfileEditDTO, User>()
-                .ForMember(u => u.BackgroundPath, m => m.MapFrom((p, u) => p.BackgroundPath != null ? p.BackgroundPath : u.BackgroundPath))
-                .ForMember(u => u.ProfilePicPath, m => m.MapFrom((p, u) => p.ProfilePicPath != null ? p.ProfilePicPath : u.ProfilePicPath));
+                .ForMember(u => u.PersonalInfo, m => m.MapFrom(p => p.PersonalInfo == "null" ? null : p.PersonalInfo))
+                .ForMember(u => u.PersonalWebSiteURL, m => m.MapFrom(p => p.PersonalWebSiteURL == "null" ? null : p.PersonalWebSiteURL))
+                .ForMember(u => u.Location, m => m.MapFrom(p => p.Location == "null" ? null : p.Location));
 
             CreateMap<User, ForeignUserProfileDTO>()
                 .ForPath(f => f.ForeignUserProfileCard.ID, m => m.MapFrom(u => u.ID))

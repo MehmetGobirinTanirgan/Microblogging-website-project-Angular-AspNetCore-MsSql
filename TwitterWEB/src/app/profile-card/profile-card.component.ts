@@ -1,5 +1,6 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { UserProfileCardModel } from 'src/models/UserProfileCardModel';
+import { ProfileEditModalComponent } from '../profile-edit-modal/profile-edit-modal.component';
 
 @Component({
   selector: 'app-profile-card',
@@ -9,5 +10,9 @@ import { UserProfileCardModel } from 'src/models/UserProfileCardModel';
 export class ProfileCardComponent implements OnInit {
   constructor() {}
   @Input() userProfileCard: UserProfileCardModel;
+  @ViewChild('editModal') private modalComponent: ProfileEditModalComponent;
   ngOnInit(): void {}
+  openModal() {
+    this.modalComponent.open();
+  }
 }

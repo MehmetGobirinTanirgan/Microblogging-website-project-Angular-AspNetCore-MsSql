@@ -25,8 +25,26 @@ export class UserService {
 
   getForeignUserProfile(userID: string, foreignUserID: string) {
     return this.httpClient.get<UserProfileModel>(
-      this.baseAddress + "api/Profile/GetForeignUserProfile/" + foreignUserID + "/" + userID
+      this.baseAddress +
+        'api/Profile/GetForeignUserProfile/' +
+        foreignUserID +
+        '/' +
+        userID
     );
   }
 
+  updateProfile(updatedProfile: FormData) {
+    let HttpOptions: Object = {
+      headers: new Headers({
+        'Content-Type': 'multipart/form-data',
+      }),
+      responseType: 'text' as 'json',
+    };
+
+    return this.httpClient.put(
+      this.baseAddress + 'api/Profile/UpdateProfile',
+      updatedProfile,
+      HttpOptions
+    );
+  }
 }

@@ -23,6 +23,7 @@ import { TweetStreamComponent } from './tweet-stream/tweet-stream.component';
 import { TweetComponent } from './tweet/tweet.component';
 import { ProfileCardComponent } from './profile-card/profile-card.component';
 import { ProfileComponent } from './profile/profile.component';
+import { ProfileEditModalComponent } from './profile-edit-modal/profile-edit-modal.component';
 
 @NgModule({
   declarations: [
@@ -39,6 +40,7 @@ import { ProfileComponent } from './profile/profile.component';
     TweetComponent,
     ProfileCardComponent,
     ProfileComponent,
+    ProfileEditModalComponent,
   ],
   imports: [
     BrowserModule,
@@ -58,7 +60,7 @@ import { ProfileComponent } from './profile/profile.component';
     CustomValidatorService,
     ModalService,
     AuthenticationService,
-    RouteGuardService
+    RouteGuardService,
   ],
   bootstrap: [AppComponent],
 })

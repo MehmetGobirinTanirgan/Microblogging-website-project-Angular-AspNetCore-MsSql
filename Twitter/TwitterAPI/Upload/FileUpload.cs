@@ -56,5 +56,37 @@ namespace TwitterAPI.Upload
             }
             return null;
         }
+
+        public string ImageUpload(IFormFile ImageFile)
+        {
+            Account account = new Account()
+            {
+                ApiKey = cloudinarySettings.Value.ApiKey,
+                ApiSecret = cloudinarySettings.Value.ApiSecret,
+                Cloud = cloudinarySettings.Value.CloudName
+            };
+
+            var cloudinary = new Cloudinary(account);
+            var uploadResult = new ImageUploadResult();
+
+            if (ImageFile != null)
+            {
+                using (var fileStream = ImageFile.OpenReadStream())
+                {
+                    var uploadParams = new ImageUploadParams
+                    {
+                        File = new FileDescription(ImageFile.FileName, fileStream)
+                    };
+                    uploadResult = cloudinary.Upload(uploadParams);
+                }
+
+                if (uploadResult == null)
+                {
+                    return null;
+                }
+                return uploadResult.Url.ToString();
+            }
+            return null;
+        }
     }
 }
