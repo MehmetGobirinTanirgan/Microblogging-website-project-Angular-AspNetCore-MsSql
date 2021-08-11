@@ -166,15 +166,28 @@ namespace TwitterAPI.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> AddReplyTweet([FromBody] NewReplyTweetDTO newReplyTweetDTO)
+        public async Task<IActionResult> AddReplyTweet([FromForm] NewReplyTweetDTO newReplyTweetDTO)
         {
             if (ModelState.IsValid)
             {
+                var upload = new FileUpload(cloudinarySettings);
+                var uploadResult = new List<string>();
+
+                if (newReplyTweetDTO.ImageFiles != null)
+                {
+                    uploadResult = upload.ImageUpload(newReplyTweetDTO.ImageFiles);
+
+                    if (uploadResult == null)
+                    {
+                        return BadRequest();
+                    }
+                }
+
                 var newReplyTweet = mapper.Map<Tweet>(newReplyTweetDTO);
                 var mainTweet = await tweetService.GetTweetAsync(newReplyTweetDTO.MainTweetID);
                 mainTweet.ReplyCounter++;
                 await tweetService.UpdateTweetAsync(mainTweet);
-                var newReplyTweetID = await tweetService.AddNewTweetAsync(newReplyTweet, newReplyTweetDTO.ImagePaths);
+                var newReplyTweetID = await tweetService.AddNewTweetAsync(newReplyTweet, uploadResult);
                 var newReplyTweetWithUserAndImages = await tweetService.GetTweetAsync(newReplyTweetID);
                 newReplyTweetWithUserAndImages.OwnershipStatus = true;
                 newReplyTweetWithUserAndImages.LikeFlag = false;

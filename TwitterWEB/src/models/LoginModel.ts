@@ -1,4 +1,7 @@
 export class LoginModel {
-  UsernameOrPhoneOrEmail: string;
-  Password: string;
+  constructor(source?: Partial<LoginModel>){
+    Object.assign(this, source);
+  }
+  usernameOrPhoneOrEmail: string;
+  password: string;
 }

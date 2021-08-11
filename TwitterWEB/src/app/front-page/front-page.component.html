@@ -25,7 +25,7 @@
   </div>
 </div>
 
-<ng-template #signupModal let-modal>
+<ng-template #signupModal let-c="close" let-d="dismiss">
     <div class="modal-body">
       <form [formGroup]="signUpForm" (ngSubmit)="signUp()" method="POST">
         <img src="assets/Images/LoginPagePicture.PNG" alt="login-page-picture" />
@@ -97,10 +97,10 @@
             </div>
         </div>
         <div class="mt-2 form-group">
-          <button type="submit" class="btn btn-primary" style="width: 200px; border-radius:20px; color: white;" (click)="modal.close('Close click')"  [disabled] = "signUpForm.invalid">Sign
+          <button type="submit" class="btn btn-primary" style="width: 200px; border-radius:20px; color: white;" (click)="c('Save click')"  [disabled] = "signUpForm.invalid">Sign
             up</button>
           <button type="reset" class="btn btn-outline-primary" style="width: 200px; border-radius:20px; color:#0069D9;"
-          (click)="modal.close('Close click')">Cancel</button>
+          (click)="d('Close click')">Cancel</button>
         </div>
       </form>
     </div>

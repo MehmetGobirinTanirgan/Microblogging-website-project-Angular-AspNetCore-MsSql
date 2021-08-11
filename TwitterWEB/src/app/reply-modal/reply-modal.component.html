@@ -46,11 +46,11 @@
           <div class="form-group d-flex justify-content-between mt-2">
             <label style="color:#1DA1F2;" for="reply-image-files">
               <i class="far fa-images fa-lg"></i>
-              <input formControlName = "replyTweetImageFiles" type="file" name="reply-image-files" id="reply-image-files" title="reply-image-files"
+              <input formControlName = "replyTweetImageFiles" (change)="addFiles($any($event.target).files)" type="file" name="reply-image-files" id="reply-image-files" title="reply-image-files"
                 class="form-control-file" hidden multiple>
             </label>
             <button id="add-reply-tweet-btn" class="btn btn-primary"
-              style="border-radius:20px;  margin-top:10px; margin-right: 0px;" type="button" [disabled] = "replyForm.invalid">Tweet</button>
+              style="border-radius:20px;  margin-top:10px; margin-right: 0px;" type="submit" [disabled] = "replyForm.invalid">Tweet</button>
           </div>
         </form>
       </div>

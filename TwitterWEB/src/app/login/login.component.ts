@@ -16,7 +16,6 @@ export class LoginComponent implements OnInit {
     private authService: AuthenticationService
   ) {}
   loginForm: FormGroup;
-  loginModel: LoginModel = new LoginModel();
   ngOnInit() {
     this.createLoginForm();
   }
@@ -30,8 +29,8 @@ export class LoginComponent implements OnInit {
 
   login(){
     if(this.loginForm.valid){
-      this.loginModel = Object.assign({}, this.loginForm.value);
-      this.authService.login(this.loginModel).subscribe(success =>
+      const loginModel = new LoginModel(this.loginForm.value);
+      this.authService.login(loginModel).subscribe(success =>
         {
           this.router.navigate(["home"]);
         },error =>{

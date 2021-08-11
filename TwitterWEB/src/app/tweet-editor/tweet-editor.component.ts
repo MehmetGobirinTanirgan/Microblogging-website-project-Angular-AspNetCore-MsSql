@@ -1,6 +1,5 @@
 import { Component, Inject, Input, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { NewTweetModel } from 'src/models/NewTweetModel';
 import { UserStoreModel } from 'src/models/UserStoreModel';
 import { AuthenticationService } from 'src/services/authentication.service';
 import { TweetService } from 'src/services/tweet.service';
@@ -19,7 +18,6 @@ export class TweetEditorComponent implements OnInit {
   ) {}
   tweetSubmitForm: FormGroup;
   userData: UserStoreModel;
-  newTweet: NewTweetModel;
   imageFiles: FileList;
   ngOnInit(): void {
     this.userData = this.authService.getUserData();
@@ -41,10 +39,10 @@ export class TweetEditorComponent implements OnInit {
 
   tweetSubmit() {
     if (this.tweetSubmitForm.valid) {
-      this.newTweet = Object.assign({}, this.tweetSubmitForm.value);
+      const newTweet = Object.assign({}, this.tweetSubmitForm.value);
       const formData = new FormData();
       formData.append('UserID', this.userData.id);
-      formData.append('TweetDetail', this.newTweet.tweetDetail);
+      formData.append('TweetDetail', newTweet.tweetDetail);
 
       if (this.imageFiles != null) {
         for (let i = 0; i < this.imageFiles.length; i++) {

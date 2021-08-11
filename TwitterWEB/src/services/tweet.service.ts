@@ -2,7 +2,6 @@ import { HttpClient } from '@angular/common/http';
 import { Inject, Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { LikeModel } from 'src/models/LikeModel';
-import { NewTweetModel } from 'src/models/NewTweetModel';
 import { TweetModel } from 'src/models/TweetModel';
 
 @Injectable()
@@ -12,18 +11,19 @@ export class TweetService {
     @Inject('baseAddress') private baseAddress: string
   ) {}
 
+  HttpOptions: Object = {
+    headers: new Headers({
+      Accept: 'text/html',
+      'Content-Type': 'multipart/form-data',
+    }),
+    responseType: 'text' as 'json',
+  };
+
   addNewTweet(newTweet: FormData): Observable<TweetModel> {
-    let HttpOptions: Object = {
-      headers: new Headers({
-        Accept: 'text/html',
-        'Content-Type': 'multipart/form-data',
-      }),
-      responseType: 'text' as 'json',
-    };
     return this.httpClient.post<TweetModel>(
       this.baseAddress + 'api/Tweet/AddNewTweet',
       newTweet,
-      HttpOptions
+      this.HttpOptions
     );
   }
 
@@ -43,5 +43,12 @@ export class TweetService {
     return this.httpClient.delete(this.baseAddress +"api/Tweet/RemoveLike/"+ tweetID + "/" + userID);
   }
 
+  addReplyTweet(ReplyTweet: FormData): Observable<TweetModel> {
+    return this.httpClient.post<TweetModel>(
+      this.baseAddress + 'api/Tweet/AddReplyTweet',
+      ReplyTweet,
+      this.HttpOptions
+    );
+  }
 
 }

@@ -8,7 +8,6 @@ import {
 } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
-import { ProfileEditModel } from 'src/models/ProfileEditModel';
 import { UserProfileCardModel } from 'src/models/UserProfileCardModel';
 import { AuthenticationService } from 'src/services/authentication.service';
 import { UserService } from 'src/services/user.service';
@@ -31,7 +30,6 @@ export class ProfileEditModalComponent implements OnInit {
   profileEditForm: FormGroup;
   @ViewChild('editModal') private modalContent: TemplateRef<ProfileEditModalComponent>;
   private modalRef: NgbModalRef;
-  updatedProfile: ProfileEditModel;
   profilePic: File;
   bgImage: File;
   ngOnInit(): void {
@@ -66,15 +64,15 @@ export class ProfileEditModalComponent implements OnInit {
   }
   editProfile() {
     if (this.profileEditForm.valid) {
-      this.updatedProfile = Object.assign({}, this.profileEditForm.value);
+      const updatedProfile = Object.assign({}, this.profileEditForm.value);
       const formdata = new FormData();
       formdata.append('ID', this.authService.getUserData().id);
-      formdata.append('Fullname', this.updatedProfile.fullname);
-      formdata.append('PersonalInfo', this.updatedProfile.personalInfo);
-      formdata.append('Location', this.updatedProfile.location);
+      formdata.append('Fullname', updatedProfile.fullname);
+      formdata.append('PersonalInfo', updatedProfile.personalInfo);
+      formdata.append('Location', updatedProfile.location);
       formdata.append(
         'PersonalWebSiteURL',
-        this.updatedProfile.personalWebSiteURL
+        updatedProfile.personalWebSiteURL
       );
       formdata.append('ProfilePic', this.profilePic);
       formdata.append('BackgroundImage', this.bgImage);

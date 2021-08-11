@@ -40,7 +40,6 @@ export class FrontPageComponent implements OnInit {
   isLeapYear:boolean;
   selectedMonth:string;
   signUpForm: FormGroup;
-  signUpModel: SignUpModel = new SignUpModel();
 
   ngOnInit() {
     this.createSignUpForm();
@@ -61,8 +60,8 @@ export class FrontPageComponent implements OnInit {
 
   signUp() {
     if (this.signUpForm.valid) {
-      this.signUpModel = Object.assign({}, this.signUpForm.value);
-      this.userService.signUp(this.signUpModel).subscribe(
+      const signUpModel = new SignUpModel(this.signUpForm.value);
+      this.userService.signUp(signUpModel).subscribe(
         (success) => {
           this.router.navigate(['login']);
         },

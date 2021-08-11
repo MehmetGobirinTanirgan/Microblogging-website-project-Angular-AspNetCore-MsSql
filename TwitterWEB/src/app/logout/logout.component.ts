@@ -19,6 +19,6 @@ userData:UserStoreModel;
 
   logOut(){
     this.authService.logOut();
-    this.router.navigate(["login"]);
+    this.router.navigate([""]);
   }
 }

@@ -37,7 +37,7 @@
         </div>
 
         <div *ngIf = "tweet.mainTweetOwnerID != null && tweet.mainTweetOwnerUsername != null" >
-          <label style="opacity: 0.9; color:#6D7F90 ;">Replying to </label>
+          <label style="opacity: 0.9; color:#6D7F90 ; margin-right: 5px;">Replying to </label>
           <a routerLink="/{{tweet.mainTweetOwnerID}}"
             class="tweet-link">@{{tweet.mainTweetOwnerUsername}} </a>
         </div>

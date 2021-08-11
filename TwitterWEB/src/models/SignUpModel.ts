@@ -1,9 +1,13 @@
 export class SignUpModel {
-  Fullname: string;
-  EmailAddress: string;
-  PhoneNumber: string;
-  Day: number;
-  Month: number;
-  Year: number;
-  Password: string;
+  constructor(source?: Partial<SignUpModel>){
+    Object.assign(this, source);
+  }
+
+  fullname: string;
+  emailAddress: string;
+  phoneNumber: string;
+  day: number;
+  month: number;
+  year: number;
+  password: string;
 }

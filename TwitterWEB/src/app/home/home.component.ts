@@ -15,7 +15,7 @@ export class HomeComponent implements OnInit {
     private authService: AuthenticationService
   ) {}
 
-  tweets: TweetModel[];
+  tweets: TweetModel[] = [];
   ngOnInit(): void {
     this.getAllTweets();
   }
