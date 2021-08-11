@@ -1,4 +1,4 @@
-import { Component, Inject, OnInit } from '@angular/core';
+import { Component, Inject, Input, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NewTweetModel } from 'src/models/NewTweetModel';
 import { UserStoreModel } from 'src/models/UserStoreModel';
@@ -16,7 +16,6 @@ export class TweetEditorComponent implements OnInit {
     private authService: AuthenticationService,
     private formBuilder: FormBuilder,
     private tweetService: TweetService,
-    @Inject('baseAddress') private baseAddress: string
   ) {}
   tweetSubmitForm: FormGroup;
   userData: UserStoreModel;

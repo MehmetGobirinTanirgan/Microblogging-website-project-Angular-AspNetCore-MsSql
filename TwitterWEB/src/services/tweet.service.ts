@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Inject, Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { LikeModel } from 'src/models/LikeModel';
 import { NewTweetModel } from 'src/models/NewTweetModel';
 import { TweetModel } from 'src/models/TweetModel';
 
@@ -28,5 +29,13 @@ export class TweetService {
 
   getAllTweets(id:string){
     return this.httpClient.get<TweetModel[]>(this.baseAddress + "api/Tweet/GetAllRelationalTweets/" + id);
+  }
+
+  addLike(like:LikeModel){
+    return this.httpClient.post(this.baseAddress + "api/Tweet/AddLike",like);
+  }
+
+  removeLike(tweetID:string, userID:string){
+    return this.httpClient.delete(this.baseAddress +"api/Tweet/RemoveLike/"+ tweetID + "/" + userID);
   }
 }

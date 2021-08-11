@@ -7,7 +7,7 @@
   style="background-image: url({{userProfileCard.backgroundPath}});">
   <div class="media profile-head" style="width: 200px;">
     <div class="rounded-img-container mr-3 mt-3">
-      <a asp-controller="Profile" asp-action="UserProfile">
+      <a routerLink="/{{userProfileCard.id}}">
         <img id="user-profile-picture" [src]="userProfileCard.profilePicPath"
           style="width:150px; height:150px; border:5px solid white; border-radius: 50%;" class="rounded-img">
       </a>

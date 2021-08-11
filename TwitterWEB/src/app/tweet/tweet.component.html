@@ -1,7 +1,7 @@
 <article class="border">
   <div class="row position-relative">
     <div class="col-lg-2 mt-3">
-      <a routerLink="/UserProfile/tweet.userID" class="tweet-link">
+      <a routerLink="/{{tweet.userID}}" class="tweet-link">
         <div class="rounded-img-container mx-3 mb-4">
           <img class="rounded-img" style="width:60px; height:60px;" [src]="tweet.profilePicPath"
             alt="tweet-user-profile-picture">
@@ -12,7 +12,7 @@
       <div class="row justify-content-between d-flex flex-column">
         <div class="d-flex justify-content-between">
           <div>
-            <a routerLink="/UserProfile/tweet.userID" class="tweet-link"
+            <a routerLink="/{{tweet.userID}}" class="tweet-link"
               style="font-weight:bold; color:black;">{{tweet.fullname}} </a>
             <label style="margin-left:2px; opacity: 0.9; color:#6D7F90 ;">@{{tweet.username}} </label>
             <a routerLink ="/tweetStream/tweet.id" class="tweet-link"
@@ -38,7 +38,7 @@
 
         <div *ngIf = "tweet.mainTweetOwnerID != null && tweet.mainTweetOwnerUsername != null" >
           <label style="opacity: 0.9; color:#6D7F90 ;">Replying to </label>
-          <a routerLink="/UserProfile/tweet.mainTweetOwnerID"
+          <a routerLink="/{{tweet.mainTweetOwnerID}}"
             class="tweet-link">@{{tweet.mainTweetOwnerUsername}} </a>
         </div>
 
@@ -67,20 +67,19 @@
       <div class="mt-3 tweet-btns">
         <a class="reply-btn tweet-link" aria-label="reply-link">
           <i class="far fa-comment fa-lg"></i>
-          <input type="hidden" asp-for="@Model.ID" class="tweet-id" />
           <span> {{tweet.replyCounter}}</span>
         </a>
         <a class="retweet-btn tweet-link"><i class="fas fa-retweet fa-lg"></i><span> {{tweet.retweetCounter}}</span></a>
 
-        <a *ngIf="tweet.likeFlag == true" class="dislike-btn tweet-link" style="color: #E44878;"><i
+        <a *ngIf="tweet.likeFlag == true" (click) = "removeLike()" class="dislike-btn tweet-link" style="color: #E44878;"><i
             class="fas fa-heart fa-lg"></i><span> {{tweet.likeCounter}}</span></a>
-        <a *ngIf="tweet.likeFlag == false" class="like-btn tweet-link" ><i class="far fa-heart fa-lg"></i><span>
+        <a *ngIf="tweet.likeFlag == false" (click) = "like()" class="like-btn tweet-link" ><i class="far fa-heart fa-lg"></i><span>
           {{tweet.likeCounter}}</span></a>
 
-        <a class="share-btn tweet-link" data-id="@Model.ID"><i class="fas fa-share fa-lg"></i></a>
+        <a class="share-btn tweet-link"><i class="fas fa-share fa-lg"></i></a>
       </div>
 
-      <a routerLink="/UserProfile/tweet.userID"></a>
+      <a class="stretched-link" routerLink="/{{tweet.userID}}"></a>
     </div>
   </div>
 </article>
