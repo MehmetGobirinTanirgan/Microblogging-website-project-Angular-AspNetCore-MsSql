@@ -65,7 +65,7 @@
       </div>
 
       <div class="mt-3 tweet-btns">
-        <a class="reply-btn tweet-link" aria-label="reply-link">
+        <a class="reply-btn tweet-link" (click) = "openModal()" aria-label="reply-link">
           <i class="far fa-comment fa-lg"></i>
           <span> {{tweet.replyCounter}}</span>
         </a>
@@ -83,3 +83,5 @@
     </div>
   </div>
 </article>
+
+<app-reply-modal #replyModal></app-reply-modal>

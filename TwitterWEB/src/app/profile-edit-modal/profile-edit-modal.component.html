@@ -1,10 +1,8 @@
 <ng-template #editModal let-c="close" let-d="dismiss">
+  <div class="modal-header">
+    <h2 class="modal-title">Set up profile</h2>
+  </div>
   <div class="modal-body">
-    <div class="modal-content" style="border-radius: 30px;">
-      <div class="modal-header">
-        <h2 class="modal-title">Set up profile</h2>
-      </div>
-      <div>
         <form [formGroup]="profileEditForm" (ngSubmit)="editProfile()" id="edit-form" method="post">
           <div class="form-group">
             <input formControlName="fullname" type="text" placeholder="Name" id="name" class="form-control"
@@ -39,14 +37,12 @@
           </div>
           <div class="modal-footer row justify-content-center">
             <button type="button" class="btn btn-primary" id="edit-profile-btn"
-              style="width: 170px; border-radius:20px; color: white;" (click)="editProfile()">Save</button>
+              style="width: 170px; border-radius:20px; color: white;" (click)="editProfile()" [disabled] = "profileEditForm.invalid" >Save</button>
             <button type="reset" id="cancel" class="btn btn-outline-primary" style="width: 170px; border-radius:20px;"
               (click)="d('Close click')">
               Cancel
             </button>
           </div>
         </form>
-      </div>
-    </div>
   </div>
 </ng-template>

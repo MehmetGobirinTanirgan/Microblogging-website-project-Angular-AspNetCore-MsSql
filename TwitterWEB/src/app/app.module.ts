@@ -24,6 +24,8 @@ import { TweetComponent } from './tweet/tweet.component';
 import { ProfileCardComponent } from './profile-card/profile-card.component';
 import { ProfileComponent } from './profile/profile.component';
 import { ProfileEditModalComponent } from './profile-edit-modal/profile-edit-modal.component';
+import { ReplyModalComponent } from './reply-modal/reply-modal.component';
+import { DataService } from 'src/services/data.service';
 
 @NgModule({
   declarations: [
@@ -41,6 +43,7 @@ import { ProfileEditModalComponent } from './profile-edit-modal/profile-edit-mod
     ProfileCardComponent,
     ProfileComponent,
     ProfileEditModalComponent,
+    ReplyModalComponent,
   ],
   imports: [
     BrowserModule,
@@ -61,6 +64,7 @@ import { ProfileEditModalComponent } from './profile-edit-modal/profile-edit-mod
     ModalService,
     AuthenticationService,
     RouteGuardService,
+    DataService
   ],
   bootstrap: [AppComponent],
 })

@@ -29,8 +29,7 @@ export class ProfileEditModalComponent implements OnInit {
   ) {}
   @Input() profileData: UserProfileCardModel;
   profileEditForm: FormGroup;
-  @ViewChild('editModal')
-  private modalContent: TemplateRef<ProfileEditModalComponent>;
+  @ViewChild('editModal') private modalContent: TemplateRef<ProfileEditModalComponent>;
   private modalRef: NgbModalRef;
   updatedProfile: ProfileEditModel;
   profilePic: File;
