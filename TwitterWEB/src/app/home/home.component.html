@@ -8,7 +8,7 @@
     <app-tweet-editor></app-tweet-editor>
     <div class="scrollable1" style="height:1000px;">
       <div class="scrollable2">
-        <app-tweet-stream [tweets]="tweets" *ngIf="tweets.length > 0"></app-tweet-stream>
+        <app-tweet-stream [tweets]="tweets" *ngIf="[tweets].length > 0"></app-tweet-stream>
       </div>
     </div>
   </div>
