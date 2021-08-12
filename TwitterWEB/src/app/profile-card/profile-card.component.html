@@ -20,11 +20,11 @@
       style="width: max-content; border-radius:20px;">
       <b>Set up profile</b>
     </button>
-    <button *ngIf="userProfileCard.followFlag == true" class="btn btn-primary" id="unfollow-btn"
+    <button *ngIf="userProfileCard.followFlag == true" class="btn btn-primary" id="unfollow-btn" (click)="unfollow()"
       style="width: max-content; border-radius:20px;">
       <b>Following</b>
     </button>
-    <button *ngIf="userProfileCard.followFlag == false" class="btn btn-outline-primary" id="follow-btn"
+    <button *ngIf="userProfileCard.followFlag == false" class="btn btn-outline-primary" id="follow-btn" (click)="follow()"
       style="width: max-content; border-radius:20px; ">
       <b>Follow</b>
     </button>

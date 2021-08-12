@@ -26,10 +26,10 @@
               <a ngbDropdownItem *ngIf="tweet.ownershipStatus == true && tweet.followFlag == false" (click) = "deleteTweet()" style="color:#E0245E;"
                 class="tweet-delete-btn tweet-link"><i class="far fa-trash-alt"></i>
                 Delete</a>
-              <a ngbDropdownItem *ngIf="tweet.ownershipStatus == false && tweet.followFlag == true"
+              <a ngbDropdownItem *ngIf="tweet.ownershipStatus == false && tweet.followFlag == true" (click)="unfollow()"
                 class="tweet-link follow-unfollow-btn"><i
                   class="fas fa-user-times"></i> Unfollow</a>
-              <a ngbDropdownItem *ngIf="tweet.ownershipStatus == false && tweet.followFlag == false"
+              <a ngbDropdownItem *ngIf="tweet.ownershipStatus == false && tweet.followFlag == false" (click)="follow()"
                 class="tweet-link follow-unfollow-btn"><i
                   class="fas fa-user-plus"></i> Follow</a>
             </div>

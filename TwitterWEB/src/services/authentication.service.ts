@@ -33,7 +33,7 @@ export class AuthenticationService {
   }
 
   saveData(user: UserStoreModel) {
-    localStorage.clear();
+    localStorage.c
     localStorage.setItem('user', JSON.stringify(user));
   }
 
