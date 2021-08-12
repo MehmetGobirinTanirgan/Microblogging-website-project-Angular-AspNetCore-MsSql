@@ -26,6 +26,7 @@ import { ProfileComponent } from './profile/profile.component';
 import { ProfileEditModalComponent } from './profile-edit-modal/profile-edit-modal.component';
 import { ReplyModalComponent } from './reply-modal/reply-modal.component';
 import { DataService } from 'src/services/data.service';
+import { FollowListComponent } from './follow-list/follow-list.component';
 
 @NgModule({
   declarations: [
@@ -44,6 +45,7 @@ import { DataService } from 'src/services/data.service';
     ProfileComponent,
     ProfileEditModalComponent,
     ReplyModalComponent,
+    FollowListComponent,
   ],
   imports: [
     BrowserModule,
@@ -64,7 +66,7 @@ import { DataService } from 'src/services/data.service';
     ModalService,
     AuthenticationService,
     RouteGuardService,
-    DataService
+    DataService,
   ],
   bootstrap: [AppComponent],
 })

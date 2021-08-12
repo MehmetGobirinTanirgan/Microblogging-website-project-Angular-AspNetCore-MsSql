@@ -2,9 +2,6 @@ import { Injectable } from '@angular/core';
 
 @Injectable()
 export class DataService {
-
-constructor() { }
-replyModaldata:string;
-
-
+  constructor() {}
+  replyModaldata: string;
 }

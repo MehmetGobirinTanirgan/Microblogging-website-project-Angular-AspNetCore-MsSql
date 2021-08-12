@@ -24,8 +24,8 @@
       style="width: max-content; border-radius:20px;">
       <b>Following</b>
     </button>
-    <button *ngIf="userProfileCard.followFlag == false" class="btn btn-outline-primary" id="follow-btn" (click)="follow()"
-      style="width: max-content; border-radius:20px; ">
+    <button *ngIf="userProfileCard.followFlag == false" class="btn btn-outline-primary" id="follow-btn"
+      (click)="follow()" style="width: max-content; border-radius:20px; ">
       <b>Follow</b>
     </button>
   </div>
@@ -56,15 +56,16 @@
         <h6 class="text-muted"
           ng-style="(userProfileCard.personalInfo != null || userProfileCard.location != null || userProfileCard.personalWebSiteURL != null) && 'margin-left':'10px'">
           <i class="far fa-calendar-alt"></i> Joined
-          {{userProfileCard.createdDate | date:'MMM y'}}</h6>
+          {{userProfileCard.createdDate | date:'MMM y'}}
+        </h6>
       </li>
       <li class="list-inline-item">
-        <a style="text-decoration-color: black;">
+        <a  (click)="followList(true)">
           <h6 class="text-muted"><b class="text-dark">{{userProfileCard.followingCounter}}</b> Following </h6>
         </a>
       </li>
       <li class="list-inline-item">
-        <a style="text-decoration-color: black;">
+        <a  (click)="followList(false)">
           <h6 class="text-muted"><b class="text-dark">{{userProfileCard.followerCounter}}</b> Follower </h6>
         </a>
       </li>

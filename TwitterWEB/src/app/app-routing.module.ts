@@ -1,6 +1,7 @@
 import { Component, NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { RouteGuardService } from 'src/services/route-guard.service';
+import { FollowListComponent } from './follow-list/follow-list.component';
 import { FrontPageComponent } from './front-page/front-page.component';
 import { HomeComponent } from './home/home.component';
 import { LoginComponent } from './login/login.component';
@@ -21,6 +22,12 @@ const routes: Routes = [
     component: MainLayoutComponent,
     canActivate:[RouteGuardService],
     children:[{path:'',component:ProfileComponent}]
+  },
+  {
+    path:':id', // => username/
+    component: MainLayoutComponent,
+    canActivate:[RouteGuardService],
+    children:[{path:':section',component:FollowListComponent}]
   }
 ];
 
