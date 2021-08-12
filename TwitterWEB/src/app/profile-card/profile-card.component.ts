@@ -16,7 +16,8 @@ export class ProfileCardComponent implements OnInit {
   constructor(
     private followService: FollowService,
     private authService: AuthenticationService,
-    private router:Router
+    private router: Router,
+    private dataService: DataService
   ) {}
   @Input() userProfileCard: UserProfileCardModel;
   @ViewChild('editModal') private modalComponent: ProfileEditModalComponent;
@@ -54,14 +55,12 @@ export class ProfileCardComponent implements OnInit {
   followList(flag: boolean) {
     this.followService.getFollowList(this.userProfileCard.id).subscribe(
       (data) => {
-        localStorage.setItem("followList",JSON.stringify(data));
+        this.dataService.followList = data;
+        this.followService.setDisplayFlag(flag);
+        this.followService.setUserID(this.userProfileCard.id);
         if (flag) {
-          localStorage.setItem("followingFlag","true");
-          localStorage.setItem("followerFlag","false");
           this.router.navigate([`${this.userProfileCard.id}/following`]);
         } else if (!flag) {
-          localStorage.setItem("followingFlag","false");
-          localStorage.setItem("followerFlag","true");
           this.router.navigate([`${this.userProfileCard.id}/followers`]);
         }
       },

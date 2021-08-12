@@ -31,4 +31,19 @@ export class FollowService {
       this.baseAddress + 'api/Follow/GetAllFollowersFollowings/' + userID
     );
   }
+
+  setDisplayFlag(flag:boolean){
+    localStorage.setItem('displayFlag',flag.toString())
+  }
+
+  getDisplayFlag():boolean{
+    return JSON.parse(localStorage.getItem('displayFlag')!);
+  }
+
+  setUserID(id:string){
+    localStorage.setItem('userID',id);
+  }
+  getUserID():string{
+    return localStorage.getItem('userID')!;
+  }
 }

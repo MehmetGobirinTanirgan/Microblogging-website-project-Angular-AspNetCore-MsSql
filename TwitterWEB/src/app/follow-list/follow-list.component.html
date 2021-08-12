@@ -9,7 +9,7 @@
   <button type="button" id="nav-btn-following" class="btn nav-btn" (click)="showFollowings()"><b>Following</b></button>
 </div>
 
-<div *ngIf="followerFlag == 'true'" class="scrollable1" style="height:700px;" id="follower">
+<div *ngIf="!displayFlag" class="scrollable1" style="height:700px;" id="follower">
   <div class="scrollable2">
     <div *ngIf="followList.followers.length > 0">
       <article *ngFor="let follower of followList.followers" class="container-fluid" style="width: 600px;">
@@ -32,7 +32,7 @@
   </div>
 </div>
 
-<div *ngIf="followingFlag == 'true'" class="scrollable1" style="height:700px;" id="following">
+<div *ngIf="displayFlag" class="scrollable1" style="height:700px;" id="following">
   <div class="scrollable2">
     <div *ngIf="followList.followings.length > 0">
       <article *ngFor="let following of followList.followings" class="container-fluid" style="width: 600px;">
