@@ -19,7 +19,6 @@ import { RouteGuardService } from 'src/services/route-guard.service';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { SearchBarComponent } from './search-bar/search-bar.component';
-import { TweetStreamComponent } from './tweet-stream/tweet-stream.component';
 import { TweetComponent } from './tweet/tweet.component';
 import { ProfileCardComponent } from './profile-card/profile-card.component';
 import { ProfileComponent } from './profile/profile.component';
@@ -40,7 +39,6 @@ import { TweetReplyStreamComponent } from './tweet-reply-stream/tweet-reply-stre
     HomeComponent,
     TweetEditorComponent,
     SearchBarComponent,
-    TweetStreamComponent,
     TweetComponent,
     ProfileCardComponent,
     ProfileComponent,

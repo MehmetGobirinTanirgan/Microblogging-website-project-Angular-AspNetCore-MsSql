@@ -8,28 +8,28 @@
 <div *ngIf="ownTweets != null">
   <div *ngIf="toggle1" class="scrollable1" style="height:700px;" id="tw-1">
     <div class="scrollable2">
-      <app-tweet-stream [tweets]="ownTweets"></app-tweet-stream>
+      <app-tweet *ngFor="let tweet of ownTweets" [tweet]="tweet"></app-tweet>
     </div>
   </div>
 </div>
 <div *ngIf="nonReplyOwnTweets != null">
   <div *ngIf="toggle2" class="scrollable1" style="height:700px;" id="tw-2">
     <div class="scrollable2">
-      <app-tweet-stream [tweets]="nonReplyOwnTweets"></app-tweet-stream>
+      <app-tweet *ngFor="let tweet of nonReplyOwnTweets" [tweet]="tweet"></app-tweet>
     </div>
   </div>
 </div>
 <div *ngIf="mediaTypeTweets != null">
   <div *ngIf="toggle3" class="scrollable1" id="tw-3" style="height: 700px;">
     <div class="scrollable2">
-      <app-tweet-stream [tweets]="mediaTypeTweets"></app-tweet-stream>
+      <app-tweet *ngFor="let tweet of mediaTypeTweets" [tweet]="tweet"></app-tweet>
     </div>
   </div>
 </div>
 <div *ngIf="likedTweets != null">
   <div *ngIf="toggle4" class="scrollable1" id="tw-4" style="height: 700px;">
     <div class="scrollable2">
-      <app-tweet-stream [tweets]="likedTweets"></app-tweet-stream>
+      <app-tweet *ngFor="let tweet of likedTweets" [tweet]="tweet"></app-tweet>
     </div>
   </div>
 </div>

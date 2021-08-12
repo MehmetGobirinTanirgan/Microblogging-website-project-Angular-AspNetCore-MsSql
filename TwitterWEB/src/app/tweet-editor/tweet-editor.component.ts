@@ -1,4 +1,4 @@
-import { Component, Inject, Input, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { UserStoreModel } from 'src/models/UserStoreModel';
 import { AuthenticationService } from 'src/services/authentication.service';
@@ -51,12 +51,11 @@ export class TweetEditorComponent implements OnInit {
       }
 
       this.tweetService.addNewTweet(formData).subscribe(
-        (success) => {
-          alert('Succes');
+        (data) => {
           this.tweetSubmitForm.reset();
         },
         (error) => {
-          alert('Error');
+          alert('Error: Tweet posting failed');
         }
       );
     }

@@ -39,8 +39,8 @@ export class TweetComponent implements OnInit {
   @ViewChild('likeBtn') private likeBtn: ElementRef;
   @ViewChild('dislikeBtn') private dislikeBtn: ElementRef;
   @ViewChild('heart') private heart: ElementRef;
-  likeBtnFlag:boolean;
   replyModalModel: ReplyModalModel = new ReplyModalModel();
+  tweetFlag:boolean=true;
   ngOnInit(): void {
     const data = this.authService.getUserData();
     this.userID = data.id;
@@ -69,7 +69,9 @@ export class TweetComponent implements OnInit {
 
   deleteTweet() {
     this.tweetService.delete(this.tweet.id).subscribe(
-      (data) => {},
+      (success) => {
+        this.tweetFlag = false;
+      },
       (error) => alert('Deletion failed')
     );
   }

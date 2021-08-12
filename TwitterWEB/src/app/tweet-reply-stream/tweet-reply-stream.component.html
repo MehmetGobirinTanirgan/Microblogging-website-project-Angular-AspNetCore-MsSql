@@ -11,7 +11,7 @@
       </div>
       <div *ngIf="tweetReplyStream.length > 1" class="scrollable1" style="height:1000px;">
           <div class="scrollable2">
-              <app-tweet-stream [tweets] = "tweetReplyStream | slice:1"></app-tweet-stream>
+              <app-tweet *ngFor="let tweet of tweetReplyStream | slice:1" [tweet]="tweet"></app-tweet>
           </div>
       </div>
 
