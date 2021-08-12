@@ -27,20 +27,26 @@ export class TweetService {
     );
   }
 
-  getAllTweets(id:string){
-    return this.httpClient.get<TweetModel[]>(this.baseAddress + "api/Tweet/GetAllRelationalTweets/" + id);
+  getAllTweets(id: string) {
+    return this.httpClient.get<TweetModel[]>(
+      this.baseAddress + 'api/Tweet/GetAllRelationalTweets/' + id
+    );
   }
 
-  delete(id:string){
-    return  this.httpClient.delete(this.baseAddress + "api/Tweet/DeleteTweet/" + id);
+  delete(id: string) {
+    return this.httpClient.delete(
+      this.baseAddress + 'api/Tweet/DeleteTweet/' + id
+    );
   }
 
-  addLike(like:LikeModel){
-    return this.httpClient.post(this.baseAddress + "api/Tweet/AddLike",like);
+  addLike(like: LikeModel) {
+    return this.httpClient.post(this.baseAddress + 'api/Tweet/AddLike', like);
   }
 
-  removeLike(tweetID:string, userID:string){
-    return this.httpClient.delete(this.baseAddress +"api/Tweet/RemoveLike/"+ tweetID + "/" + userID);
+  removeLike(tweetID: string, userID: string) {
+    return this.httpClient.delete(
+      this.baseAddress + 'api/Tweet/RemoveLike/' + tweetID + '/' + userID
+    );
   }
 
   addReplyTweet(ReplyTweet: FormData): Observable<TweetModel> {
@@ -51,4 +57,21 @@ export class TweetService {
     );
   }
 
+  getTweetReplyStream(tweetID: string, userID: string) {
+    return this.httpClient.get<TweetModel[]>(
+      this.baseAddress +
+        'api/Tweet/GetTweetWithReplyTweets/' +
+        tweetID +
+        '/' +
+        userID
+    );
+  }
+
+  setTweetID(id:string){
+    localStorage.setItem('tweetID',id.toString());
+  }
+
+  getTweetID():string{
+    return localStorage.getItem('tweetID')!;
+  }
 }

@@ -15,7 +15,7 @@
             <a routerLink="/{{tweet.userID}}" class="tweet-link"
               style="font-weight:bold; color:black;">{{tweet.fullname}} </a>
             <label style="margin-left:2px; opacity: 0.9; color:#6D7F90 ;">@{{tweet.username}} </label>
-            <span style="margin-left: 6px;">&#183;</span><a routerLink ="/tweetStream/tweet.id" class="tweet-link"
+            <span style="margin-left: 6px;">&#183;</span><a (click) = "tweetReplyStream()" class="tweet-link"
               style="margin-left:2px; opacity: 0.9; color: #6D7F90;">{{tweet.createdDate |
               date:'dd.MM.yyyy'}}</a>
           </div>
@@ -79,7 +79,7 @@
         <a class="share-btn tweet-link"><i class="fas fa-share fa-lg"></i></a>
       </div>
 
-      <a class="stretched-link" routerLink="/{{tweet.userID}}"></a>
+      <a class="stretched-link" (click) = "tweetReplyStream()" ></a>
     </div>
   </div>
 </article>

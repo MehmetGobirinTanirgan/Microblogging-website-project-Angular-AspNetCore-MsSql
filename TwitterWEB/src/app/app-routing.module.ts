@@ -7,6 +7,7 @@ import { HomeComponent } from './home/home.component';
 import { LoginComponent } from './login/login.component';
 import { MainLayoutComponent } from './main-layout/main-layout.component';
 import { ProfileComponent } from './profile/profile.component';
+import { TweetReplyStreamComponent } from './tweet-reply-stream/tweet-reply-stream.component';
 
 const routes: Routes = [
   { path: '', component: FrontPageComponent },
@@ -28,6 +29,12 @@ const routes: Routes = [
     component: MainLayoutComponent,
     canActivate:[RouteGuardService],
     children:[{path:':section',component:FollowListComponent}]
+  },
+  {
+    path:':ownerID', // => username/
+    component: MainLayoutComponent,
+    canActivate:[RouteGuardService],
+    children:[{path:'status/:tweetID',component:TweetReplyStreamComponent}]
   }
 ];
 

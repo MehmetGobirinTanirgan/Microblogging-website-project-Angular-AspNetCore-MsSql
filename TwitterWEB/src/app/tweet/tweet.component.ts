@@ -1,4 +1,5 @@
 import { Component, Input, OnInit, Output, ViewChild } from '@angular/core';
+import { Router } from '@angular/router';
 import { LikeModel } from 'src/models/LikeModel';
 import { ReplyModalModel } from 'src/models/ReplyModalModel';
 import { TweetModel } from 'src/models/TweetModel';
@@ -12,22 +13,23 @@ import { ReplyModalComponent } from '../reply-modal/reply-modal.component';
   selector: 'app-tweet',
   templateUrl: './tweet.component.html',
   styleUrls: ['./tweet.component.css'],
-  providers: [TweetService,FollowService],
+  providers: [TweetService, FollowService],
 })
 export class TweetComponent implements OnInit {
   constructor(
     private tweetService: TweetService,
     private authService: AuthenticationService,
-    private dataService:DataService,
-    private followService: FollowService
+    private dataService: DataService,
+    private followService: FollowService,
+    private router:Router
   ) {}
   userID: string;
-  userProfilePicPath:string;
+  userProfilePicPath: string;
   @Input() tweet: TweetModel;
   @ViewChild('replyModal') private modalComponent: ReplyModalComponent;
-  replyModalModel:ReplyModalModel = new ReplyModalModel();
+  replyModalModel: ReplyModalModel = new ReplyModalModel();
   ngOnInit(): void {
-    const data  = this.authService.getUserData();
+    const data = this.authService.getUserData();
     this.userID = data.id;
     this.userProfilePicPath = data.profilePicPath;
   }
@@ -37,19 +39,22 @@ export class TweetComponent implements OnInit {
     this.replyModalModel.MainTweetDetail = this.tweet.tweetDetail;
     this.replyModalModel.MainTweetID = this.tweet.id;
     this.replyModalModel.MainTweetImagePaths = [];
-    for(let i = 0; i < this.tweet.tweetImageInfos.length; i++){
-      this.replyModalModel.MainTweetImagePaths.push(this.tweet.tweetImageInfos[i].imagePath)
+    for (let i = 0; i < this.tweet.tweetImageInfos.length; i++) {
+      this.replyModalModel.MainTweetImagePaths.push(
+        this.tweet.tweetImageInfos[i].imagePath
+      );
     }
     this.replyModalModel.MainTweetUserFullname = this.tweet.fullname;
     this.replyModalModel.MainTweetUserUsername = this.tweet.username;
-    this.replyModalModel.ReplyTweetUserProfilePicPath = this.tweet.profilePicPath
+    this.replyModalModel.ReplyTweetUserProfilePicPath =
+      this.tweet.profilePicPath;
     this.replyModalModel.MainTweetUserProfilePicPath = this.userProfilePicPath;
     this.replyModalModel.UserID = this.userID;
-    this.dataService.replyModaldata  = JSON.stringify(this.replyModalModel);
+    this.dataService.replyModaldata = JSON.stringify(this.replyModalModel);
     this.modalComponent.open();
   }
 
-  deleteTweet(){
+  deleteTweet() {
     this.tweetService.delete(this.tweet.id).subscribe(
       (data) => console.log(data),
       (error) => alert('Deletion failed')
@@ -74,28 +79,37 @@ export class TweetComponent implements OnInit {
   }
 
   follow() {
-    this.followService
-      .follow(this.tweet.userID ,this.userID)
-      .subscribe(
-        (success) => {
-          alert('Success');
-        },
-        (error) => {
-          alert('Error');
-        }
-      );
+    this.followService.follow(this.tweet.userID, this.userID).subscribe(
+      (success) => {
+        alert('Success');
+      },
+      (error) => {
+        alert('Error');
+      }
+    );
   }
 
   unfollow() {
-    this.followService
-      .unfollow(this.tweet.userID, this.userID)
-      .subscribe(
-        (success) => {
-          alert('Success');
-        },
-        (error) => {
-          alert('Error');
-        }
-      );
+    this.followService.unfollow(this.tweet.userID, this.userID).subscribe(
+      (success) => {
+        alert('Success');
+      },
+      (error) => {
+        alert('Error');
+      }
+    );
+  }
+
+  tweetReplyStream() {
+    this.tweetService.getTweetReplyStream(this.tweet.id, this.userID).subscribe(
+      (data) => {
+        this.dataService.tweetReplyStream = data;
+        this.tweetService.setTweetID(this.tweet.id);
+        this.router.navigate([`${data[0].userID}/status/${this.tweet.id}`])
+      },
+      (error) => {
+        alert('Error: Cant load tweet reply stream');
+      }
+    );
   }
 }

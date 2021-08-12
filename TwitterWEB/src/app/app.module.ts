@@ -27,6 +27,7 @@ import { ProfileEditModalComponent } from './profile-edit-modal/profile-edit-mod
 import { ReplyModalComponent } from './reply-modal/reply-modal.component';
 import { DataService } from 'src/services/data.service';
 import { FollowListComponent } from './follow-list/follow-list.component';
+import { TweetReplyStreamComponent } from './tweet-reply-stream/tweet-reply-stream.component';
 
 @NgModule({
   declarations: [
@@ -46,6 +47,7 @@ import { FollowListComponent } from './follow-list/follow-list.component';
     ProfileEditModalComponent,
     ReplyModalComponent,
     FollowListComponent,
+    TweetReplyStreamComponent,
   ],
   imports: [
     BrowserModule,
