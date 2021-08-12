@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { TweetModel } from 'src/models/TweetModel';
 import { UserProfileCardModel } from 'src/models/UserProfileCardModel';
 import { UserProfileModel } from 'src/models/UserProfileModel';
@@ -16,8 +16,11 @@ export class ProfileComponent implements OnInit {
   constructor(
     private userService: UserService,
     private authService: AuthenticationService,
-    private activatedRoute: ActivatedRoute
-  ) {}
+    private activatedRoute: ActivatedRoute,
+    private router:Router
+  ) {
+    this.router.routeReuseStrategy.shouldReuseRoute = () => false;
+  }
   userID: string;
   upcomingUserID: string;
   userProfile: UserProfileModel = new UserProfileModel();

@@ -20,12 +20,12 @@
       style="width: max-content; border-radius:20px;">
       <b>Set up profile</b>
     </button>
-    <button *ngIf="userProfileCard.followFlag == true" class="btn btn-primary" id="unfollow-btn" data-id="@Model.ID"
+    <button *ngIf="userProfileCard.followFlag == true" class="btn btn-primary" id="unfollow-btn"
       style="width: max-content; border-radius:20px;">
       <b>Following</b>
     </button>
     <button *ngIf="userProfileCard.followFlag == false" class="btn btn-outline-primary" id="follow-btn"
-      data-id="@Model.ID" style="width: max-content; border-radius:20px; ">
+      style="width: max-content; border-radius:20px; ">
       <b>Follow</b>
     </button>
   </div>
@@ -38,7 +38,7 @@
       <li>
         <h6 class="text-muted">@{{userProfileCard.username}}</h6>
       </li>
-      <li *ngIf="userProfileCard.personalInfo !== null" id="user-personal-info" class="mt-2"
+      <li *ngIf="userProfileCard.personalInfo != null" id="user-personal-info" class="mt-2"
         style="word-break:break-word;">{{userProfileCard.personalInfo}}</li>
       <li class="mt-2 d-flex" id="multiple-data-list-el">
 
@@ -53,18 +53,18 @@
             <ng-template #shortVer>{{userProfileCard.personalWebSiteURL}}</ng-template>
           </a>
         </h6>
-        <h6 class="text-muted" style="margin-left:10px;"><i class="far fa-calendar-alt"></i> Joined
+        <h6 class="text-muted"
+          ng-style="(userProfileCard.personalInfo != null || userProfileCard.location != null || userProfileCard.personalWebSiteURL != null) && 'margin-left':'10px'">
+          <i class="far fa-calendar-alt"></i> Joined
           {{userProfileCard.createdDate | date:'MMM y'}}</h6>
       </li>
       <li class="list-inline-item">
-        <a asp-controller="Follow" asp-action="FollowList" asp-route-userID="@Model.ID" asp-route-signal="following"
-          style="text-decoration-color: black;">
+        <a style="text-decoration-color: black;">
           <h6 class="text-muted"><b class="text-dark">{{userProfileCard.followingCounter}}</b> Following </h6>
         </a>
       </li>
       <li class="list-inline-item">
-        <a asp-controller="Follow" asp-action="FollowList" asp-route-userID="@Model.ID" asp-route-signal="follower"
-          style="text-decoration-color: black;">
+        <a style="text-decoration-color: black;">
           <h6 class="text-muted"><b class="text-dark">{{userProfileCard.followerCounter}}</b> Follower </h6>
         </a>
       </li>

@@ -43,18 +43,18 @@ namespace TwitterAPI.AutoMappers.UserMapper
                 .ForMember(u => u.Location, m => m.MapFrom(p => p.Location == "null" ? null : p.Location));
 
             CreateMap<User, ForeignUserProfileDTO>()
-                .ForPath(f => f.ForeignUserProfileCard.ID, m => m.MapFrom(u => u.ID))
-                .ForPath(f => f.ForeignUserProfileCard.CreatedDate, m => m.MapFrom(u => u.CreatedDate))
-                .ForPath(f => f.ForeignUserProfileCard.Fullname, m => m.MapFrom(u => u.Fullname))
-                .ForPath(f => f.ForeignUserProfileCard.Username, m => m.MapFrom(u => u.Username))
-                .ForPath(f => f.ForeignUserProfileCard.Location, m => m.MapFrom(u => u.Location))
-                .ForPath(f => f.ForeignUserProfileCard.ProfilePicPath, m => m.MapFrom(u => u.ProfilePicPath))
-                .ForPath(f => f.ForeignUserProfileCard.BackgroundPath, m => m.MapFrom(u => u.BackgroundPath))
-                .ForPath(f => f.ForeignUserProfileCard.PersonalInfo, m => m.MapFrom(u => u.PersonalInfo))
-                .ForPath(f => f.ForeignUserProfileCard.PersonalWebSiteURL, m => m.MapFrom(u => u.PersonalWebSiteURL))
-                .ForPath(f => f.ForeignUserProfileCard.FollowerCounter, m => m.MapFrom(u => u.FollowerCounter))
-                .ForPath(f => f.ForeignUserProfileCard.FollowingCounter, m => m.MapFrom(u => u.FollowingCounter))
-                .ForPath(f => f.ForeignUserProfileCard.FollowFlag, m => m.MapFrom(u => u.FollowFlag));
+                .ForPath(f => f.UserProfileCard.ID, m => m.MapFrom(u => u.ID))
+                .ForPath(f => f.UserProfileCard.CreatedDate, m => m.MapFrom(u => u.CreatedDate))
+                .ForPath(f => f.UserProfileCard.Fullname, m => m.MapFrom(u => u.Fullname))
+                .ForPath(f => f.UserProfileCard.Username, m => m.MapFrom(u => u.Username))
+                .ForPath(f => f.UserProfileCard.Location, m => m.MapFrom(u => u.Location))
+                .ForPath(f => f.UserProfileCard.ProfilePicPath, m => m.MapFrom(u => u.ProfilePicPath))
+                .ForPath(f => f.UserProfileCard.BackgroundPath, m => m.MapFrom(u => u.BackgroundPath))
+                .ForPath(f => f.UserProfileCard.PersonalInfo, m => m.MapFrom(u => u.PersonalInfo))
+                .ForPath(f => f.UserProfileCard.PersonalWebSiteURL, m => m.MapFrom(u => u.PersonalWebSiteURL))
+                .ForPath(f => f.UserProfileCard.FollowerCounter, m => m.MapFrom(u => u.FollowerCounter))
+                .ForPath(f => f.UserProfileCard.FollowingCounter, m => m.MapFrom(u => u.FollowingCounter))
+                .ForPath(f => f.UserProfileCard.FollowFlag, m => m.MapFrom(u => u.FollowFlag));
                 
             CreateMap<User, SearchUserDTO>();
             CreateMap<FollowDTO, Follow>();

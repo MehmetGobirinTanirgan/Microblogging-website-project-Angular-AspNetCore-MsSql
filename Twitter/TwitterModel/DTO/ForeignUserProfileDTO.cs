@@ -8,7 +8,7 @@ namespace TwitterModel.DTO
 {
     public class ForeignUserProfileDTO
     {
-        public ForeignUserProfileCardDTO ForeignUserProfileCard { get; set; }
+        public ForeignUserProfileCardDTO UserProfileCard { get; set; }
         public List<TweetDTO> OwnTweets { get; set; }
         public List<TweetDTO> NonReplyOwnTweets { get; set; }
         public List<TweetDTO> MediaTypeTweets { get; set; }
