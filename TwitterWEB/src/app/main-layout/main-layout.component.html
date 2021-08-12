@@ -1,10 +1,17 @@
 <div class="container-fluid" style="width: 1500px;">
-    <div class="row justify-content-center">
-        <div class="col-lg-3 border-right">
-           <app-nav></app-nav>
-        </div>
-        <div class="col-lg-9">
+  <div class="row justify-content-center">
+    <div class="col-lg-3 border-right">
+      <app-nav></app-nav>
+    </div>
+    <div class="col-lg-9">
+      <div class="row justify-content-center" style="width: 1100px;">
+        <div class="col-lg-7 border">
           <router-outlet></router-outlet>
         </div>
+        <div class="col-lg-5">
+          <app-search-bar></app-search-bar>
+        </div>
+      </div>
     </div>
+  </div>
 </div>
