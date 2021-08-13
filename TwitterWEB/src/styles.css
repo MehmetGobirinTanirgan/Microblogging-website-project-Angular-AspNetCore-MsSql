@@ -24,7 +24,6 @@
 
  /*Scrollable part css*/
 .scrollable1 {
-  overflow: hidden;
   position: relative;
  }
 
@@ -34,7 +33,6 @@
   bottom: 0px;
   left: 0px;
   right: -15px;
-  overflow: auto;
   width: max-content;
  }
 

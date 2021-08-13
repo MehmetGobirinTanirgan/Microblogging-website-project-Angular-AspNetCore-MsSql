@@ -24,13 +24,13 @@
               style="color:#5B7092; text-decoration:none;" role="button"><i class="fas fa-ellipsis-h"></i></a>
             <div ngbDropdownMenu style="position: relative;">
               <a ngbDropdownItem *ngIf="tweet.ownershipStatus == true && tweet.followFlag == false"
-                (click)="deleteTweet()" style="color:#E0245E;" class="tweet-delete-btn tweet-link"><i
+                (click)="deleteTweet()" style="color:#E0245E; text-decoration:none;" class="tweet-delete-btn tweet-link"><i
                   class="far fa-trash-alt"></i>
                 Delete</a>
               <a ngbDropdownItem *ngIf="tweet.ownershipStatus == false && tweet.followFlag == true" (click)="unfollow()"
-                class="tweet-link follow-unfollow-btn"><i class="fas fa-user-times"></i> Unfollow</a>
+                class="tweet-link follow-unfollow-btn" style="text-decoration:none;"><i class="fas fa-user-times"></i> Unfollow</a>
               <a ngbDropdownItem *ngIf="tweet.ownershipStatus == false && tweet.followFlag == false" (click)="follow()"
-                class="tweet-link follow-unfollow-btn"><i class="fas fa-user-plus"></i> Follow</a>
+                class="tweet-link follow-unfollow-btn" style="text-decoration:none;"><i class="fas fa-user-plus"></i> Follow</a>
             </div>
           </div>
         </div>
