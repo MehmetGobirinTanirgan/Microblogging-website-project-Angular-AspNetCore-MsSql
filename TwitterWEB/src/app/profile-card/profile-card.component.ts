@@ -21,35 +21,39 @@ export class ProfileCardComponent implements OnInit {
   ) {}
   @Input() userProfileCard: UserProfileCardModel;
   @ViewChild('editModal') private modalComponent: ProfileEditModalComponent;
-  ngOnInit(): void {}
+  userID: string;
+  ngOnInit(): void {
+    const id = this.authService.getUserData()?.id;
+    if (id != null) {
+      this.userID = id;
+    } else {
+      alert('Local storage error');
+    }
+  }
   openModal() {
     this.modalComponent.open();
   }
 
   follow() {
-    this.followService
-      .follow(this.userProfileCard.id, this.authService.getUserData().id)
-      .subscribe(
-        (success) => {
-          alert('Success');
-        },
-        (error) => {
-          alert('Error');
-        }
-      );
+    this.followService.follow(this.userProfileCard.id, this.userID).subscribe(
+      (success) => {
+        alert('Success');
+      },
+      (error) => {
+        alert('Error');
+      }
+    );
   }
 
   unfollow() {
-    this.followService
-      .unfollow(this.userProfileCard.id, this.authService.getUserData().id)
-      .subscribe(
-        (success) => {
-          alert('Success');
-        },
-        (error) => {
-          alert('Error');
-        }
-      );
+    this.followService.unfollow(this.userProfileCard.id, this.userID).subscribe(
+      (success) => {
+        alert('Success');
+      },
+      (error) => {
+        alert('Error');
+      }
+    );
   }
 
   followList(flag: boolean) {

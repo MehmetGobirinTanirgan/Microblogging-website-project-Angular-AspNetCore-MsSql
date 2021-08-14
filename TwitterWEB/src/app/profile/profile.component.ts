@@ -17,7 +17,7 @@ export class ProfileComponent implements OnInit {
     private userService: UserService,
     private authService: AuthenticationService,
     private activatedRoute: ActivatedRoute,
-    private router:Router
+    private router: Router
   ) {
     this.router.routeReuseStrategy.shouldReuseRoute = () => false;
   }
@@ -34,16 +34,23 @@ export class ProfileComponent implements OnInit {
   toggle3: boolean = false;
   toggle4: boolean = false;
   ngOnInit(): void {
-    this.userID = this.authService.getUserData().id;
+    const id = this.authService.getUserData()?.id;
+    if (id != null) {
+      this.userID = id;
+    } else {
+      alert('Local storage error');
+    }
     this.activatedRoute.params.subscribe(
       (params) => (this.upcomingUserID = params['id'])
     );
-    if (this.userID != null && this.upcomingUserID != null) {
-      if (this.userID == this.upcomingUserID) {
+    if (this.userID !== null && this.upcomingUserID !== null) {
+      if (this.userID === this.upcomingUserID) {
         this.getUserProfile(this.userID);
       } else {
         this.getForeignUserProfile(this.userID, this.upcomingUserID);
       }
+    } else {
+      alert('Error');
     }
   }
 

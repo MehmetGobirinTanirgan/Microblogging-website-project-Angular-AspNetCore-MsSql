@@ -12,17 +12,22 @@ import { TweetService } from 'src/services/tweet.service';
 export class HomeComponent implements OnInit {
   constructor(
     private tweetService: TweetService,
-    private authService: AuthenticationService
+    private authService: AuthenticationService,
   ) {}
-
   tweets: TweetModel[] = [] as TweetModel[];
   ngOnInit(): void {
     this.getAllTweets();
   }
+
   getAllTweets() {
-    this.tweetService.getAllTweets(this.authService.getUserData().id).subscribe(
-      (data) => (this.tweets = data),
-      (error) => alert("Error: Can't load tweets")
-    );
+    const userID = this.authService.getUserData()?.id;
+    if(userID != null){
+      this.tweetService.getAllTweets(userID).subscribe(
+        (data) => (this.tweets = data),
+        (error) => alert("Error: Can't load tweets")
+      );
+    }else{
+      alert("Local storage error");
+    }
   }
 }

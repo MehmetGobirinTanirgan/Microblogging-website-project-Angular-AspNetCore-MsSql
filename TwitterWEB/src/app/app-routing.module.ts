@@ -1,4 +1,4 @@
-import { Component, NgModule } from '@angular/core';
+import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { RouteGuardService } from 'src/services/route-guard.service';
 import { FollowListComponent } from './follow-list/follow-list.component';

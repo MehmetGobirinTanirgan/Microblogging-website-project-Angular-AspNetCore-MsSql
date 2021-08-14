@@ -1,6 +1,5 @@
 import { HttpClient } from '@angular/common/http';
 import { Inject, Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
 import { LikeModel } from 'src/models/LikeModel';
 import { TweetModel } from 'src/models/TweetModel';
 
@@ -19,7 +18,7 @@ export class TweetService {
     responseType: 'text' as 'json',
   };
 
-  addNewTweet(newTweet: FormData): Observable<TweetModel> {
+  addNewTweet(newTweet: FormData){
     return this.httpClient.post<TweetModel>(
       this.baseAddress + 'api/Tweet/AddNewTweet',
       newTweet,
@@ -49,7 +48,7 @@ export class TweetService {
     );
   }
 
-  addReplyTweet(ReplyTweet: FormData): Observable<TweetModel> {
+  addReplyTweet(ReplyTweet: FormData){
     return this.httpClient.post<TweetModel>(
       this.baseAddress + 'api/Tweet/AddReplyTweet',
       ReplyTweet,

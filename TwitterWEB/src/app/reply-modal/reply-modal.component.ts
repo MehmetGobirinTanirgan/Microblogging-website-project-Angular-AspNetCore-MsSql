@@ -29,7 +29,7 @@ export class ReplyModalComponent implements OnInit {
   ngOnInit(): void {}
 
   open() {
-    this.replyModalData = JSON.parse(this.dataService.replyModaldata);
+    this.replyModalData = JSON.parse(this.dataService.replyModalData);
     this.createReplyForm();
     this.modalRef = this.modalService.open(this.modalContent);
     this.modalRef.result.then();
@@ -49,21 +49,30 @@ export class ReplyModalComponent implements OnInit {
   }
 
   addReply() {
-    if (this.replyForm.valid) {
-      const replyData = Object.assign({}, this.replyForm.value);
-      const formData = new FormData();
-      formData.append('TweetDetail', replyData.replyTweetDetail);
-      formData.append('UserID', this.authService.getUserData().id);
-      formData.append('MainTweetID', this.replyModalData.MainTweetID);
-      if (this.imageFiles != null) {
-        for (let i = 0; i < this.imageFiles.length; i++) {
-          formData.append('ImageFiles', this.imageFiles[i]);
+    const userID = this.authService.getUserData()?.id;
+    if (userID != null) {
+      if (this.replyForm.valid) {
+        const replyData = Object.assign({}, this.replyForm.value);
+        const formData = new FormData();
+        formData.append('TweetDetail', replyData.replyTweetDetail);
+        formData.append('UserID', userID);
+        formData.append('MainTweetID', this.replyModalData.MainTweetID);
+        if (this.imageFiles != null) {
+          for (let i = 0; i < this.imageFiles.length; i++) {
+            formData.append('ImageFiles', this.imageFiles[i]);
+          }
         }
+        this.tweetService.addReplyTweet(formData).subscribe(
+          (data) => {
+            this.modalRef.close();
+          },
+          (error) => {
+            alert('Reply process failed');
+          }
+        );
       }
-      this.tweetService.addReplyTweet(formData).subscribe(
-        data => {this.modalRef.close();},
-        error => {alert('Reply process failed')}
-      );
+    } else {
+      alert('Local storage error');
     }
   }
 }

@@ -26,18 +26,20 @@ export class TweetReplyStreamComponent implements OnInit {
   }
 
   refreshPage() {
-    this.tweetService
-      .getTweetReplyStream(
-        this.tweetService.getTweetID(),
-        this.authService.getUserData().id
-      )
-      .subscribe(
-        (data) => {
-          this.tweetReplyStream = data;
-        },
-        (error) => {
-          alert('Error: Cant load tweet reply stream');
-        }
-      );
+    const userID = this.authService.getUserData()?.id;
+    if (userID != null) {
+      this.tweetService
+        .getTweetReplyStream(this.tweetService.getTweetID(), userID)
+        .subscribe(
+          (data) => {
+            this.tweetReplyStream = data;
+          },
+          (error) => {
+            alert('Error: Cant load tweet reply stream');
+          }
+        );
+    } else {
+      alert('Local storage error');
+    }
   }
 }

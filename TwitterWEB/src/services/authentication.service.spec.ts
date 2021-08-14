@@ -1,12 +1,14 @@
 /* tslint:disable:no-unused-variable */
 
-import { TestBed, async, inject } from '@angular/core/testing';
+import { HttpClientModule } from '@angular/common/http';
+import { TestBed, inject } from '@angular/core/testing';
 import { AuthenticationService } from './authentication.service';
 
 describe('Service: Authentication', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
-      providers: [AuthenticationService]
+      providers: [AuthenticationService,{provide: 'baseAddress',useValue:'mockURL'}],
+      imports:[HttpClientModule],
     });
   });
 

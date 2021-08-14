@@ -1,76 +1,78 @@
-<div class="row border-bottom ">
-  <header>
-    <h4 style="margin-left: 40px;">{{userProfileCard.fullname}}</h4>
-  </header>
-</div>
-<div class="row px-4 pt-0 pb-4 cover" id="user-bg-image"
-  style="background-image: url({{userProfileCard.backgroundPath}});">
-  <div class="media profile-head" style="width: 200px;">
-    <div class="rounded-img-container mr-3 mt-3">
-      <a routerLink="/{{userProfileCard.id}}">
-        <img id="user-profile-picture" [src]="userProfileCard.profilePicPath"
-          style="width:150px; height:150px; border:5px solid white; border-radius: 50%;" class="rounded-img">
-      </a>
+<div *ngIf="userProfileCard != null">
+  <div class="row border-bottom ">
+    <header>
+      <h4 style="margin-left: 40px;">{{userProfileCard.fullname}}</h4>
+    </header>
+  </div>
+  <div class="row px-4 pt-0 pb-4 cover" id="user-bg-image"
+    style="background-image: url({{userProfileCard.backgroundPath}});">
+    <div class="media profile-head" style="width: 200px;">
+      <div class="rounded-img-container mr-3 mt-3">
+        <a routerLink="/{{userProfileCard.id}}">
+          <img id="user-profile-picture" [src]="userProfileCard.profilePicPath"
+            style="width:150px; height:150px; border:5px solid white; border-radius: 50%;" class="rounded-img">
+        </a>
+      </div>
     </div>
   </div>
-</div>
-<div class="px-4 pt-4">
-  <div class="row justify-content-end">
-    <button *ngIf="userProfileCard.followFlag == null" class="btn btn-outline-primary" (click)="openModal()"
-      style="width: max-content; border-radius:20px;">
-      <b>Set up profile</b>
-    </button>
-    <button *ngIf="userProfileCard.followFlag == true" class="btn btn-primary" id="unfollow-btn" (click)="unfollow()"
-      style="width: max-content; border-radius:20px;">
-      <b>Following</b>
-    </button>
-    <button *ngIf="userProfileCard.followFlag == false" class="btn btn-outline-primary" id="follow-btn"
-      (click)="follow()" style="width: max-content; border-radius:20px; ">
-      <b>Follow</b>
-    </button>
-  </div>
+  <div class="px-4 pt-4">
+    <div class="row justify-content-end">
+      <button *ngIf="userProfileCard.followFlag == null" class="btn btn-outline-primary" (click)="openModal()"
+        style="width: max-content; border-radius:20px;">
+        <b>Set up profile</b>
+      </button>
+      <button *ngIf="userProfileCard.followFlag === true" class="btn btn-primary" id="unfollow-btn" (click)="unfollow()"
+        style="width: max-content; border-radius:20px;">
+        <b>Following</b>
+      </button>
+      <button *ngIf="userProfileCard.followFlag === false" class="btn btn-outline-primary" id="follow-btn"
+        (click)="follow()" style="width: max-content; border-radius:20px; ">
+        <b>Follow</b>
+      </button>
+    </div>
 
-  <div class="row justify-content-start">
-    <ul class="list-inline" id="profile-list">
-      <li>
-        <h5 id="user-fullname" class="mb-0">{{userProfileCard.fullname}}</h5>
-      </li>
-      <li>
-        <h6 class="text-muted">@{{userProfileCard.username}}</h6>
-      </li>
-      <li *ngIf="userProfileCard.personalInfo != null" id="user-personal-info" class="mt-2"
-        style="word-break:break-word;">{{userProfileCard.personalInfo}}</li>
-      <li class="mt-2 d-flex" id="multiple-data-list-el">
+    <div class="row justify-content-start">
+      <ul class="list-inline" id="profile-list">
+        <li>
+          <h5 id="user-fullname" class="mb-0">{{userProfileCard.fullname}}</h5>
+        </li>
+        <li>
+          <h6 class="text-muted">@{{userProfileCard.username}}</h6>
+        </li>
+        <li *ngIf="userProfileCard.personalInfo !== null" id="user-personal-info" class="mt-2"
+          style="word-break:break-word;">{{userProfileCard.personalInfo}}</li>
+        <li class="mt-2 d-flex" id="multiple-data-list-el">
 
-        <h6 *ngIf="userProfileCard.location != null" class="text-muted" id="user-location">
-          <i class="fas fa-map-marker-alt"></i> {{userProfileCard.location}}
-        </h6>
-        <h6 *ngIf="userProfileCard.personalWebSiteURL != null" style="margin-left:5px;" id="user-personal-url">
-          <i class="fas fa-link" style="margin-right: 2px;"></i><a href="userProfileCard.personalWebSiteURL">
-            <label
-              *ngIf="userProfileCard.personalWebSiteURL.length > 30; else shortVer">{{userProfileCard.personalWebSiteURL
-              | slice:0:27}}...</label>
-            <ng-template #shortVer>{{userProfileCard.personalWebSiteURL}}</ng-template>
+          <h6 *ngIf="userProfileCard.location !== null" class="text-muted" id="user-location">
+            <i class="fas fa-map-marker-alt"></i> {{userProfileCard.location}}
+          </h6>
+          <h6 *ngIf="userProfileCard.personalWebSiteURL !== null" style="margin-left:5px;" id="user-personal-url">
+            <i class="fas fa-link" style="margin-right: 2px;"></i><a href="userProfileCard.personalWebSiteURL">
+              <label
+                *ngIf="userProfileCard.personalWebSiteURL.length > 30; else shortVer">{{userProfileCard.personalWebSiteURL
+                | slice:0:27}}...</label>
+              <ng-template #shortVer>{{userProfileCard.personalWebSiteURL}}</ng-template>
+            </a>
+          </h6>
+          <h6 class="text-muted">
+            <i class="far fa-calendar-alt"></i> Joined
+            {{userProfileCard.createdDate | date:'MMM y'}}
+          </h6>
+        </li>
+        <li class="list-inline-item">
+          <a (click)="followList(true)">
+            <h6 class="text-muted"><b class="text-dark">{{userProfileCard.followingCounter}}</b> Following </h6>
           </a>
-        </h6>
-        <h6 class="text-muted"
-          ng-style="(userProfileCard.personalInfo != null || userProfileCard.location != null || userProfileCard.personalWebSiteURL != null) && 'margin-left':'10px'">
-          <i class="far fa-calendar-alt"></i> Joined
-          {{userProfileCard.createdDate | date:'MMM y'}}
-        </h6>
-      </li>
-      <li class="list-inline-item">
-        <a  (click)="followList(true)">
-          <h6 class="text-muted"><b class="text-dark">{{userProfileCard.followingCounter}}</b> Following </h6>
-        </a>
-      </li>
-      <li class="list-inline-item">
-        <a  (click)="followList(false)">
-          <h6 class="text-muted"><b class="text-dark">{{userProfileCard.followerCounter}}</b> Follower </h6>
-        </a>
-      </li>
-    </ul>
+        </li>
+        <li class="list-inline-item">
+          <a (click)="followList(false)">
+            <h6 class="text-muted"><b class="text-dark">{{userProfileCard.followerCounter}}</b> Follower </h6>
+          </a>
+        </li>
+      </ul>
+    </div>
   </div>
+  <app-profile-edit-modal #editModal *ngIf="userProfileCard.followFlag === null" [profileData]="userProfileCard">
+  </app-profile-edit-modal>
+
 </div>
-<app-profile-edit-modal #editModal *ngIf="userProfileCard.followFlag == null" [profileData]="userProfileCard">
-</app-profile-edit-modal>

@@ -1,56 +1,58 @@
-<div class="row border-bottom ">
-  <header>
-    <h3 style="margin-left: 40px;" class="mb-0">{{followList.fullname}}</h3>
-    <h6 style="margin-left: 40px; opacity: 0.9; color:#6D7F90 ;">@{{followList.username}}</h6>
-  </header>
-</div>
-<div class="btn-group container-fluid" role="group">
-  <button type="button" id="nav-btn-follower" class="btn nav-btn" (click)="showFollowers()"><b>Followers</b></button>
-  <button type="button" id="nav-btn-following" class="btn nav-btn" (click)="showFollowings()"><b>Following</b></button>
-</div>
+<div *ngIf="followList != null">
+  <div class="row border-bottom ">
+    <header>
+      <h3 style="margin-left: 40px;" class="mb-0">{{followList.fullname}}</h3>
+      <h6 style="margin-left: 40px; opacity: 0.9; color:#6D7F90 ;">@{{followList.username}}</h6>
+    </header>
+  </div>
+  <div class="btn-group container-fluid" role="group">
+    <button type="button" id="nav-btn-follower" class="btn nav-btn" (click)="showFollowers()"><b>Followers</b></button>
+    <button type="button" id="nav-btn-following" class="btn nav-btn" (click)="showFollowings()"><b>Following</b></button>
+  </div>
 
-<div *ngIf="!displayFlag" class="scrollable1" style="height:700px;" id="follower">
-  <div class="scrollable2">
-    <div *ngIf="followList.followers.length > 0">
-      <article *ngFor="let follower of followList.followers" class="container-fluid" style="width: 600px;">
-        <div class="row mt-3 border position-relative">
-          <div class="col-lg-2">
-            <a routerLink="/{{follower.id}}" id="tw-links">
-              <div class="rounded-img-container mt-2 mb-2">
-                <img class="rounded-img" style="width:60px; height:60px;" [src]="follower.profilePicPath">
-              </div>
-            </a>
+  <div *ngIf="!displayFlag" class="scrollable1" style="height:700px;" id="follower">
+    <div class="scrollable2">
+      <div *ngIf="followList.followers.length > 0">
+        <article *ngFor="let follower of followList.followers" class="container-fluid" style="width: 600px;">
+          <div class="row mt-3 border position-relative">
+            <div class="col-lg-2">
+              <a routerLink="/{{follower.id}}" id="tw-links">
+                <div class="rounded-img-container mt-2 mb-2">
+                  <img class="rounded-img" style="width:60px; height:60px;" [src]="follower.profilePicPath">
+                </div>
+              </a>
+            </div>
+            <div class="col-lg-10 position-static mt-3">
+              <label style="font-weight:bold; color:black;">{{follower.fullname}} </label>
+              <label style="opacity: 0.9; color:#6D7F90 ; margin-left:5px;"> @{{follower.username}} </label>
+              <a class="stretched-link" routerLink="/{{follower.id}}"></a>
+            </div>
           </div>
-          <div class="col-lg-10 position-static mt-3">
-            <label style="font-weight:bold; color:black;">{{follower.fullname}} </label>
-            <label style="opacity: 0.9; color:#6D7F90 ; margin-left:5px;"> @{{follower.username}} </label>
-            <a class="stretched-link" routerLink="/{{follower.id}}"></a>
-          </div>
-        </div>
-      </article>
+        </article>
+      </div>
     </div>
   </div>
-</div>
 
-<div *ngIf="displayFlag" class="scrollable1" style="height:700px;" id="following">
-  <div class="scrollable2">
-    <div *ngIf="followList.followings.length > 0">
-      <article *ngFor="let following of followList.followings" class="container-fluid" style="width: 600px;">
-        <div class="row mt-3 border position-relative">
-          <div class="col-lg-2">
-            <a routerLink="/{{following.id}}" id="tw-links">
-              <div class="rounded-img-container mt-2 mb-2">
-                <img class="rounded-img" style="width:60px; height:60px;" [src]="following.profilePicPath">
-              </div>
-            </a>
+  <div *ngIf="displayFlag" class="scrollable1" style="height:700px;" id="following">
+    <div class="scrollable2">
+      <div *ngIf="followList.followings.length > 0">
+        <article *ngFor="let following of followList.followings" class="container-fluid" style="width: 600px;">
+          <div class="row mt-3 border position-relative">
+            <div class="col-lg-2">
+              <a routerLink="/{{following.id}}" id="tw-links">
+                <div class="rounded-img-container mt-2 mb-2">
+                  <img class="rounded-img" style="width:60px; height:60px;" [src]="following.profilePicPath">
+                </div>
+              </a>
+            </div>
+            <div class="col-lg-10 position-static mt-3">
+              <label style="font-weight:bold; color:black;">{{following.fullname}} </label>
+              <label style="opacity: 0.9; color:#6D7F90 ; margin-left:5px;"> @{{following.username}} </label>
+              <a class="stretched-link" routerLink="/{{following.id}}"></a>
+            </div>
           </div>
-          <div class="col-lg-10 position-static mt-3">
-            <label style="font-weight:bold; color:black;">{{following.fullname}} </label>
-            <label style="opacity: 0.9; color:#6D7F90 ; margin-left:5px;"> @{{following.username}} </label>
-            <a class="stretched-link" routerLink="/{{following.id}}"></a>
-          </div>
-        </div>
-      </article>
+        </article>
+      </div>
     </div>
   </div>
 </div>

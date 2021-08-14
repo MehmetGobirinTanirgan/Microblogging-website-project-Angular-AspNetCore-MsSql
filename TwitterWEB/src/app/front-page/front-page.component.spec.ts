@@ -1,4 +1,8 @@
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
+import { RouterTestingModule } from '@angular/router/testing';
+import { ModalService } from 'src/services/modal.service';
 
 import { FrontPageComponent } from './front-page.component';
 
@@ -8,9 +12,18 @@ describe('FrontPageComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ FrontPageComponent ]
-    })
-    .compileComponents();
+      declarations: [FrontPageComponent],
+      imports: [
+        HttpClientTestingModule,
+        RouterTestingModule,
+        ReactiveFormsModule,
+      ],
+      providers: [
+        { provide: 'baseAddress', useValue: 'mockURL' },
+        FormBuilder,
+        ModalService,
+      ],
+    }).compileComponents();
   });
 
   beforeEach(() => {

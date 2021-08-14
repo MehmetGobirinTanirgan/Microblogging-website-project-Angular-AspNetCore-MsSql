@@ -17,7 +17,8 @@ export class SearchBarComponent implements OnInit {
   }
 
   search(searchText:string){
-    if(searchText != ""){
+    searchText = searchText.trim();
+    if(searchText !== ""){
       this.searchService.getSearchResults(searchText).subscribe(data =>{
         this.searchResults = data;
         this.dropdown.open();

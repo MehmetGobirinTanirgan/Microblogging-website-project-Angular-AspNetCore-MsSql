@@ -34,6 +34,7 @@ export class FollowListComponent implements OnInit {
       }
     );
   }
+
   showFollowers() {
     this.displayFlag = false;
     this.followService.setDisplayFlag(false);

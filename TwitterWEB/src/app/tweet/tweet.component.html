@@ -1,4 +1,4 @@
-<article *ngIf="tweetFlag" class="border">
+<article *ngIf="tweetFlag && tweet != null" class="border">
   <div class="row position-relative">
     <div class="col-lg-2 mt-3">
       <a routerLink="/{{tweet.userID}}" class="tweet-link">
@@ -23,41 +23,41 @@
             <a (click)="$event.stopPropagation(); dropDown.open();" class="tweet-link"
               style="color:#5B7092; text-decoration:none;" role="button"><i class="fas fa-ellipsis-h"></i></a>
             <div ngbDropdownMenu style="position: relative;">
-              <a ngbDropdownItem *ngIf="tweet.ownershipStatus == true && tweet.followFlag == false"
+              <a ngbDropdownItem *ngIf="tweet.ownershipStatus === true && tweet.followFlag === false"
                 (click)="deleteTweet()" style="color:#E0245E; text-decoration:none;" class="tweet-delete-btn tweet-link"><i
                   class="far fa-trash-alt"></i>
                 Delete</a>
-              <a ngbDropdownItem *ngIf="tweet.ownershipStatus == false && tweet.followFlag == true" (click)="unfollow()"
+              <a ngbDropdownItem *ngIf="tweet.ownershipStatus === false && tweet.followFlag === true" (click)="unfollow()"
                 class="tweet-link follow-unfollow-btn" style="text-decoration:none;"><i class="fas fa-user-times"></i> Unfollow</a>
-              <a ngbDropdownItem *ngIf="tweet.ownershipStatus == false && tweet.followFlag == false" (click)="follow()"
+              <a ngbDropdownItem *ngIf="tweet.ownershipStatus === false && tweet.followFlag === false" (click)="follow()"
                 class="tweet-link follow-unfollow-btn" style="text-decoration:none;"><i class="fas fa-user-plus"></i> Follow</a>
             </div>
           </div>
         </div>
 
-        <div *ngIf="tweet.mainTweetOwnerID != null && tweet.mainTweetOwnerUsername != null">
+        <div *ngIf="tweet.mainTweetOwnerID !== null && tweet.mainTweetOwnerUsername !== null">
           <label style="opacity: 0.9; color:#6D7F90 ; margin-right: 5px;">Replying to </label>
           <a routerLink="/{{tweet.mainTweetOwnerID}}" class="tweet-link">@{{tweet.mainTweetOwnerUsername}} </a>
         </div>
 
       </div>
-      <div *ngIf="tweet.tweetDetail != null" class="row" style="word-break:break-word; width:500px; margin-left:0;">
+      <div *ngIf="tweet.tweetDetail !== null" class="row" style="word-break:break-word; width:500px; margin-left:0;">
         {{tweet.tweetDetail}}
       </div>
 
       <div *ngIf="tweet.tweetImageInfos.length > 0" class="row mb-4" style="display: inline-block;">
-        <a *ngIf="tweet.tweetImageInfos.length == 1" class="twt-img-link" aria-label="first-image-link">
+        <a *ngIf="tweet.tweetImageInfos.length === 1" class="twt-img-link" aria-label="first-image-link">
           <img [src]="tweet.tweetImageInfos[0].imagePath" style="width: 490px; border-radius: 20px;"
             alt="tweet-first-image" />
         </a>
-        <div *ngIf="tweet.tweetImageInfos.length == 2">
+        <div *ngIf="tweet.tweetImageInfos.length === 2">
           <a class="twt-img-link" aria-label="first-image-link">
-            <img [src]="tweet.tweetImageInfos[0].imagePath" style="width: 240px; border-radius: 10px 0 0 10px"
+            <img [src]="tweet.tweetImageInfos[0].imagePath" style="width: 240px; height: 200px; border-radius: 10px 0 0 10px"
               alt="tweet-first-image" />
           </a>
           <a class="twt-img-link" aria-label="second-image-link">
             <img [src]="tweet.tweetImageInfos[1].imagePath"
-              style="width: 240px; margin-left:3px; border-radius: 0 10px 10px 0;" alt="tweet-second-image" />
+              style="width: 240px; height: 200px; margin-left:3px; border-radius: 0 10px 10px 0;" alt="tweet-second-image" />
           </a>
         </div>
       </div>

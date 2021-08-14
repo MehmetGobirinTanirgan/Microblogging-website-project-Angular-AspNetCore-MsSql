@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { SignUpModel } from 'src/models/SignUpModel';
-import { CustomValidatorService } from 'src/services/customValidator.service';
 import { ModalService } from 'src/services/modal.service';
 import { UserService } from 'src/services/user.service';
 
@@ -16,7 +15,6 @@ export class FrontPageComponent implements OnInit {
   constructor(
     private userService: UserService,
     private formBuilder: FormBuilder,
-    private customValidatorService: CustomValidatorService,
     private modalService: ModalService,
     private router: Router
   ) {}
@@ -79,16 +77,16 @@ export class FrontPageComponent implements OnInit {
   checkMonth(month: string) {
     this.selectedMonth = month;
     if (
-      month == '0' ||
-      month == '2' ||
-      month == '4' ||
-      month == '6' ||
-      month == '7' ||
-      month == '9' ||
-      month == '11'
+      month === '0' ||
+      month === '2' ||
+      month === '4' ||
+      month === '6' ||
+      month === '7' ||
+      month === '9' ||
+      month === '11'
     ) {
       this.days = new Array(31);
-    } else if (month == '1') {
+    } else if (month === '1') {
       if (this.isLeapYear) {
         this.days = new Array(29);
       } else {
@@ -100,7 +98,7 @@ export class FrontPageComponent implements OnInit {
   }
 
   checkYear(year: number) {
-    this.isLeapYear = (year % 4 == 0 && year % 100 != 0) || year % 400 == 0;
+    this.isLeapYear = (year % 4 === 0 && year % 100 !== 0) || year % 400 === 0;
     this.checkMonth(this.selectedMonth);
   }
 }

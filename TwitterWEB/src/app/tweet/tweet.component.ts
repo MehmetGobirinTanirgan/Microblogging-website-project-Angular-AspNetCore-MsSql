@@ -42,8 +42,12 @@ export class TweetComponent implements OnInit {
   tweetFlag:boolean=true;
   ngOnInit(): void {
     const data = this.authService.getUserData();
-    this.userID = data.id;
-    this.userProfilePicPath = data.profilePicPath;
+    if(data != null){
+      this.userID = data.id;
+      this.userProfilePicPath = data.profilePicPath;
+    }else{
+      alert("Error: Tweet loading failed");
+    }
   }
 
   openModal() {
@@ -62,7 +66,7 @@ export class TweetComponent implements OnInit {
       this.tweet.profilePicPath;
     this.replyModalModel.MainTweetUserProfilePicPath = this.userProfilePicPath;
     this.replyModalModel.UserID = this.userID;
-    this.dataService.replyModaldata = JSON.stringify(this.replyModalModel);
+    this.dataService.replyModalData = JSON.stringify(this.replyModalModel);
     this.modalComponent.open();
   }
 

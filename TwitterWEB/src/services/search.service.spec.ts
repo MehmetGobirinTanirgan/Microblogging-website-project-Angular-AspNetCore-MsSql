@@ -1,12 +1,14 @@
 /* tslint:disable:no-unused-variable */
 
-import { TestBed, async, inject } from '@angular/core/testing';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { TestBed, inject } from '@angular/core/testing';
 import { SearchService } from './search.service';
 
 describe('Service: Search', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
-      providers: [SearchService]
+      imports:[HttpClientTestingModule],
+      providers: [SearchService, { provide: 'baseAddress', useValue: 'mockURL' }]
     });
   });
 

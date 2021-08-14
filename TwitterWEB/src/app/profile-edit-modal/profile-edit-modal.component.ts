@@ -63,26 +63,31 @@ export class ProfileEditModalComponent implements OnInit {
     }
   }
   editProfile() {
-    if (this.profileEditForm.valid) {
-      const updatedProfile = Object.assign({}, this.profileEditForm.value);
-      const formdata = new FormData();
-      formdata.append('ID', this.authService.getUserData().id);
-      formdata.append('Fullname', updatedProfile.fullname);
-      formdata.append('PersonalInfo', updatedProfile.personalInfo);
-      formdata.append('Location', updatedProfile.location);
-      formdata.append(
-        'PersonalWebSiteURL',
-        updatedProfile.personalWebSiteURL
-      );
-      formdata.append('ProfilePic', this.profilePic);
-      formdata.append('BackgroundImage', this.bgImage);
-      this.userService.updateProfile(formdata).subscribe(
-        (data) => {
-          alert('Success');
-          this.modalRef.close();
-        },
-        (error) => alert('Profile update failed')
-      );
+    const userID = this.authService.getUserData()?.id;
+    if(userID != null){
+      if (this.profileEditForm.valid) {
+        const updatedProfile = Object.assign({}, this.profileEditForm.value);
+        const formdata = new FormData();
+        formdata.append('ID', userID);
+        formdata.append('Fullname', updatedProfile.fullname);
+        formdata.append('PersonalInfo', updatedProfile.personalInfo);
+        formdata.append('Location', updatedProfile.location);
+        formdata.append(
+          'PersonalWebSiteURL',
+          updatedProfile.personalWebSiteURL
+        );
+        formdata.append('ProfilePic', this.profilePic);
+        formdata.append('BackgroundImage', this.bgImage);
+        this.userService.updateProfile(formdata).subscribe(
+          (data) => {
+            alert('Success');
+            this.modalRef.close();
+          },
+          (error) => alert('Profile update failed')
+        );
+      }
+    }else{
+      alert("Local storage error");
     }
   }
 }

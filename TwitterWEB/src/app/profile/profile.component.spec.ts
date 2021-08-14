@@ -1,16 +1,27 @@
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { RouterTestingModule } from '@angular/router/testing';
+import { AuthenticationService } from 'src/services/authentication.service';
 
 import { ProfileComponent } from './profile.component';
 
 describe('ProfileComponent', () => {
   let component: ProfileComponent;
   let fixture: ComponentFixture<ProfileComponent>;
-
+  let mockAuthService: jasmine.SpyObj<AuthenticationService>;
   beforeEach(async () => {
+    const authServiceSpyObj = jasmine.createSpyObj('AuthenticationService', [
+      'getUserData',
+    ]);
     await TestBed.configureTestingModule({
-      declarations: [ ProfileComponent ]
-    })
-    .compileComponents();
+      declarations: [ProfileComponent],
+      imports: [HttpClientTestingModule, RouterTestingModule],
+      providers: [
+        { provide: 'baseAddress', useValue: 'mockURL' },
+        { provide: AuthenticationService, useValue: authServiceSpyObj },
+      ],
+    }).compileComponents();
+    mockAuthService = TestBed.inject(AuthenticationService) as jasmine.SpyObj<AuthenticationService>;
   });
 
   beforeEach(() => {

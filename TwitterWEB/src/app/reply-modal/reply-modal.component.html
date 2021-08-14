@@ -20,12 +20,12 @@
         <div *ngIf="replyModalData.MainTweetDetail != null" style="word-break:break-word;">
           <p>{{replyModalData.MainTweetDetail}}</p>
         </div>
-        <div *ngIf="replyModalData.MainTweetImagePaths != null" class="mb-2">
-          <img *ngIf="replyModalData.MainTweetImagePaths.length == 1" [src]="replyModalData.MainTweetImagePaths[0]" style="margin:0; width: 200px; border-radius: 20px;" />
-            <div *ngIf="replyModalData.MainTweetImagePaths.length == 2">
-              <img  [src]="replyModalData.MainTweetImagePaths[0]" style="margin:0; width: 175px; border-radius: 10px 0 0 10px" />
+        <div *ngIf="replyModalData.MainTweetImagePaths !== null" class="mb-2">
+          <img *ngIf="replyModalData.MainTweetImagePaths.length === 1" [src]="replyModalData.MainTweetImagePaths[0]" style="margin:0; width: 200px; border-radius: 20px;" />
+            <div *ngIf="replyModalData.MainTweetImagePaths.length === 2">
+              <img  [src]="replyModalData.MainTweetImagePaths[0]" style="margin:0; width: 175px; height: 150px; border-radius: 10px 0 0 10px" />
               <img  [src]="replyModalData.MainTweetImagePaths[1]"
-                style="margin:0; width: 175px; margin-left:3px; border-radius: 0 10px 10px 0;" />
+                style="margin:0; width: 175px; height: 150px; margin-left:3px; border-radius: 0 10px 10px 0;" />
             </div>
         </div>
       </div>

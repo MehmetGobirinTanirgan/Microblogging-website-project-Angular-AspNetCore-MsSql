@@ -1,12 +1,14 @@
 /* tslint:disable:no-unused-variable */
 
-import { TestBed, async, inject } from '@angular/core/testing';
-import { UserService } from './User.service';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { TestBed, inject } from '@angular/core/testing';
+import { UserService } from './user.service';
 
 describe('Service: User', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
-      providers: [UserService]
+      imports: [HttpClientTestingModule],
+      providers: [UserService, { provide: 'baseAddress', useValue: 'mockURL' }],
     });
   });
 

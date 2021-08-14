@@ -1,12 +1,14 @@
 /* tslint:disable:no-unused-variable */
 
-import { TestBed, async, inject } from '@angular/core/testing';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { TestBed, inject } from '@angular/core/testing';
 import { FollowService } from './follow.service';
 
 describe('Service: Follow', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
-      providers: [FollowService]
+      imports:[HttpClientTestingModule],
+      providers: [FollowService, { provide: 'baseAddress', useValue: 'mockURL' }]
     });
   });
 

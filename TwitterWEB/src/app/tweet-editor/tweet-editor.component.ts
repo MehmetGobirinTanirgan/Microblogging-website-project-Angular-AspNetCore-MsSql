@@ -20,7 +20,12 @@ export class TweetEditorComponent implements OnInit {
   userData: UserStoreModel;
   imageFiles: FileList;
   ngOnInit(): void {
-    this.userData = this.authService.getUserData();
+    const _userData = this.authService.getUserData();
+    if(_userData != null){
+      this.userData = _userData;
+    }else{
+      alert("Local storage error");
+    }
     this.createTweetSubmitForm();
   }
 

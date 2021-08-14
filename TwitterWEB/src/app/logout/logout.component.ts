@@ -14,7 +14,12 @@ export class LogoutComponent implements OnInit {
 userData:UserStoreModel;
 
   ngOnInit(): void {
-    this.userData = this.authService.getUserData()!;
+    const _userData = this.authService.getUserData();
+    if(_userData != null){
+      this.userData = _userData;
+    }else{
+      alert("Local storage error");
+    }
   }
 
   logOut(){

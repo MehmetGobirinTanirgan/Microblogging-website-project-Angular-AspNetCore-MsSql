@@ -5,7 +5,7 @@ import { TweetModel } from 'src/models/TweetModel';
 @Injectable()
 export class DataService {
   constructor() {}
-  replyModaldata: string;
+  replyModalData: string;
   followList: FollowListModel;
   tweetReplyStream:TweetModel[];
 }

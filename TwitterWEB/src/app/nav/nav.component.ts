@@ -11,7 +11,12 @@ export class NavComponent implements OnInit {
   constructor(private authService:AuthenticationService) { }
   id:string;
   ngOnInit(): void {
-    this.id = this.authService.getUserData().id;
+    const userID =this.authService.getUserData()?.id;
+    if(userID != null){
+      this.id = userID;
+    }else{
+      alert("Local storage error");
+    }
   }
 
 }
