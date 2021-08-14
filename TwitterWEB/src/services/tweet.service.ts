@@ -1,14 +1,11 @@
 import { HttpClient } from '@angular/common/http';
-import { Inject, Injectable } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { LikeModel } from 'src/models/LikeModel';
 import { TweetModel } from 'src/models/TweetModel';
 
 @Injectable()
 export class TweetService {
-  constructor(
-    private httpClient: HttpClient,
-    @Inject('baseAddress') private baseAddress: string
-  ) {}
+  constructor(private httpClient: HttpClient) {}
 
   HttpOptions: Object = {
     headers: new Headers({
@@ -18,9 +15,9 @@ export class TweetService {
     responseType: 'text' as 'json',
   };
 
-  addNewTweet(newTweet: FormData){
+  addNewTweet(newTweet: FormData) {
     return this.httpClient.post<TweetModel>(
-      this.baseAddress + 'api/Tweet/AddNewTweet',
+      'Tweet/AddNewTweet',
       newTweet,
       this.HttpOptions
     );
@@ -28,29 +25,25 @@ export class TweetService {
 
   getAllTweets(id: string) {
     return this.httpClient.get<TweetModel[]>(
-      this.baseAddress + 'api/Tweet/GetAllRelationalTweets/' + id
+      'Tweet/GetAllRelationalTweets/' + id
     );
   }
 
   delete(id: string) {
-    return this.httpClient.delete(
-      this.baseAddress + 'api/Tweet/DeleteTweet/' + id
-    );
+    return this.httpClient.delete('Tweet/DeleteTweet/' + id);
   }
 
   addLike(like: LikeModel) {
-    return this.httpClient.post(this.baseAddress + 'api/Tweet/AddLike', like);
+    return this.httpClient.post('Tweet/AddLike', like);
   }
 
   removeLike(tweetID: string, userID: string) {
-    return this.httpClient.delete(
-      this.baseAddress + 'api/Tweet/RemoveLike/' + tweetID + '/' + userID
-    );
+    return this.httpClient.delete('Tweet/RemoveLike/' + tweetID + '/' + userID);
   }
 
-  addReplyTweet(ReplyTweet: FormData){
+  addReplyTweet(ReplyTweet: FormData) {
     return this.httpClient.post<TweetModel>(
-      this.baseAddress + 'api/Tweet/AddReplyTweet',
+      'Tweet/AddReplyTweet',
       ReplyTweet,
       this.HttpOptions
     );
@@ -58,19 +51,15 @@ export class TweetService {
 
   getTweetReplyStream(tweetID: string, userID: string) {
     return this.httpClient.get<TweetModel[]>(
-      this.baseAddress +
-        'api/Tweet/GetTweetWithReplyTweets/' +
-        tweetID +
-        '/' +
-        userID
+      'Tweet/GetTweetWithReplyTweets/' + tweetID + '/' + userID
     );
   }
 
-  setTweetID(id:string){
-    localStorage.setItem('tweetID',id.toString());
+  setTweetID(id: string) {
+    localStorage.setItem('tweetID', id.toString());
   }
 
-  getTweetID():string{
+  getTweetID(): string {
     return localStorage.getItem('tweetID')!;
   }
 }

@@ -61,7 +61,6 @@ import { TweetReplyStreamComponent } from './tweet-reply-stream/tweet-reply-stre
       useClass: HttpRequestInterceptor,
       multi: true,
     },
-    { provide: 'baseAddress', useValue: 'https://localhost:44307/' },
     CustomValidatorService,
     ModalService,
     AuthenticationService,

@@ -21,10 +21,13 @@ export class HttpRequestInterceptor implements HttpInterceptor {
     if(token != null){
       request = request.clone({
         setHeaders: {
-          'Authorization': `Bearer ${this.authenticationService.getToken()}`,
+          'Authorization': `Bearer ${token}`,
         },
       });
     }
+    request = request.clone({
+      url: `https://localhost:44307/api/${request.url}`
+    })
     return next.handle(request);
   }
 }

@@ -1,26 +1,20 @@
 import { HttpClient } from '@angular/common/http';
-import { Inject, Injectable } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { tap } from 'rxjs/operators';
 import { LoginModel } from 'src/models/LoginModel';
 import { UserStoreModel } from 'src/models/UserStoreModel';
 @Injectable()
 export class AuthenticationService {
-  constructor(
-    private httpClient: HttpClient,
-    @Inject('baseAddress') private baseAddress: string
-  ) {}
+  constructor(private httpClient: HttpClient) {}
   userData: UserStoreModel = new UserStoreModel();
   decodedToken: any;
   jwtHelper: JwtHelperService = new JwtHelperService();
 
-  login(loginModel: LoginModel){
+  login(loginModel: LoginModel) {
     this.logOut();
     return this.httpClient
-      .post<UserStoreModel>(
-        this.baseAddress + 'api/Login/Authentication',
-        loginModel
-      )
+      .post<UserStoreModel>('Login/Authentication', loginModel)
       .pipe(
         tap((response) => {
           this.userData = response;
@@ -34,16 +28,16 @@ export class AuthenticationService {
   }
 
   getToken(): string | null {
-    const user:UserStoreModel = JSON.parse(localStorage.getItem('user')!);
-    if(user == null){
+    const user: UserStoreModel = JSON.parse(localStorage.getItem('user')!);
+    if (user == null) {
       return null;
     }
     return user.token;
   }
 
-  getUserData(): UserStoreModel | null{
-    const userData :UserStoreModel= JSON.parse(localStorage.getItem("user")!);
-    if(userData == null){
+  getUserData(): UserStoreModel | null {
+    const userData: UserStoreModel = JSON.parse(localStorage.getItem('user')!);
+    if (userData == null) {
       return null;
     }
     return userData;
