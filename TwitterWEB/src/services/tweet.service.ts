@@ -12,7 +12,6 @@ export class TweetService {
       Accept: 'text/html',
       'Content-Type': 'multipart/form-data',
     }),
-    responseType: 'text' as 'json',
   };
 
   addNewTweet(newTweet: FormData) {

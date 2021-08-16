@@ -2,7 +2,6 @@ import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
 import { RouterTestingModule } from '@angular/router/testing';
-import { ModalService } from 'src/services/modal.service';
 
 import { FrontPageComponent } from './front-page.component';
 
@@ -19,9 +18,7 @@ describe('FrontPageComponent', () => {
         ReactiveFormsModule,
       ],
       providers: [
-        { provide: 'baseAddress', useValue: 'mockURL' },
         FormBuilder,
-        ModalService,
       ],
     }).compileComponents();
   });

@@ -14,7 +14,6 @@ describe('FollowListComponent', () => {
       imports: [HttpClientTestingModule],
       providers: [
         { provide: DataService, useValue: dataServiceSpy },
-        { provide: 'baseAddress', useValue: 'mockURL' },
       ],
     }).compileComponents();
     mockDataService = TestBed.inject(DataService) as jasmine.SpyObj<DataService>;

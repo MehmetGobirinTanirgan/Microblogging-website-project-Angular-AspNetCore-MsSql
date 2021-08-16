@@ -11,7 +11,6 @@ describe('SearchBarComponent', () => {
     await TestBed.configureTestingModule({
       declarations: [SearchBarComponent],
       imports: [HttpClientTestingModule],
-      providers: [{ provide: 'baseAddress', useValue: 'mockURL' }],
     }).compileComponents();
   });
 

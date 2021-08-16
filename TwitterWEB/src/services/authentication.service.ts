@@ -8,7 +8,6 @@ import { UserStoreModel } from 'src/models/UserStoreModel';
 export class AuthenticationService {
   constructor(private httpClient: HttpClient) {}
   userData: UserStoreModel = new UserStoreModel();
-  decodedToken: any;
   jwtHelper: JwtHelperService = new JwtHelperService();
 
   login(loginModel: LoginModel) {
@@ -44,7 +43,7 @@ export class AuthenticationService {
   }
 
   logOut() {
-    localStorage.clear();
+    localStorage.removeItem('user');
   }
 
   isLoggedIn(): boolean {

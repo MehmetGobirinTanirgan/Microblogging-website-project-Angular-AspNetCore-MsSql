@@ -19,7 +19,6 @@ describe('TweetEditorComponent', () => {
       providers: [
         { provide: AuthenticationService, useValue: authServiceSpyObj },
         FormBuilder,
-        { provide: 'baseAddress', useValue: 'mockURL' },
       ],
     }).compileComponents();
     mockAuthService = TestBed.inject(AuthenticationService) as jasmine.SpyObj<AuthenticationService>;

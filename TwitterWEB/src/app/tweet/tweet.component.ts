@@ -29,7 +29,7 @@ export class TweetComponent implements OnInit {
     private dataService: DataService,
     private followService: FollowService,
     private router: Router,
-    private renderer:Renderer2
+    private renderer: Renderer2
   ) {}
   userID: string;
   userProfilePicPath: string;
@@ -39,14 +39,14 @@ export class TweetComponent implements OnInit {
   @ViewChild('dislikeBtn') private dislikeBtn: ElementRef;
   @ViewChild('heart') private heart: ElementRef;
   replyModalModel: ReplyModalModel = new ReplyModalModel();
-  tweetFlag:boolean=true;
+  tweetFlag: boolean = true;
   ngOnInit(): void {
     const data = this.authService.getUserData();
-    if(data != null){
+    if (data != null) {
       this.userID = data.id;
       this.userProfilePicPath = data.profilePicPath;
-    }else{
-      alert("Error: Tweet loading failed");
+    } else {
+      alert('Error: Tweet loading failed');
     }
   }
 
@@ -55,11 +55,9 @@ export class TweetComponent implements OnInit {
     this.replyModalModel.MainTweetDetail = this.tweet.tweetDetail;
     this.replyModalModel.MainTweetID = this.tweet.id;
     this.replyModalModel.MainTweetImagePaths = [];
-    for (let i = 0; i < this.tweet.tweetImageInfos.length; i++) {
-      this.replyModalModel.MainTweetImagePaths.push(
-        this.tweet.tweetImageInfos[i].imagePath
-      );
-    }
+    this.tweet.tweetImageInfos.forEach((x) =>
+      this.replyModalModel.MainTweetImagePaths.push(x.imagePath)
+    );
     this.replyModalModel.MainTweetUserFullname = this.tweet.fullname;
     this.replyModalModel.MainTweetUserUsername = this.tweet.username;
     this.replyModalModel.ReplyTweetUserProfilePicPath =
@@ -79,10 +77,10 @@ export class TweetComponent implements OnInit {
     );
   }
 
-  likeCheck(){
-    if(this.tweet.likeFlag){
+  likeCheck() {
+    if (this.tweet.likeFlag) {
       this.removeLike();
-    }else{
+    } else {
       this.like();
     }
   }
@@ -94,12 +92,12 @@ export class TweetComponent implements OnInit {
     this.tweetService.addLike(like).subscribe(
       (data) => {
         let el = this.likeBtn.nativeElement;
-        this.renderer.setStyle(el,'color', '#E44878');
+        this.renderer.setStyle(el, 'color', '#E44878');
         this.tweet.likeCounter++;
-        this.tweet.likeFlag=true;
-        this.renderer.removeClass(this.heart.nativeElement,"far");
-        this.renderer.addClass(this.heart.nativeElement,"fas");
-        this.renderer.setProperty(el,'(click)','removelike()');
+        this.tweet.likeFlag = true;
+        this.renderer.removeClass(this.heart.nativeElement, 'far');
+        this.renderer.addClass(this.heart.nativeElement, 'fas');
+        this.renderer.setProperty(el, '(click)', 'removelike()');
       },
       (error) => alert('Like failed')
     );
@@ -109,12 +107,12 @@ export class TweetComponent implements OnInit {
     this.tweetService.removeLike(this.tweet.id, this.userID).subscribe(
       (data) => {
         let el = this.dislikeBtn.nativeElement;
-        this.renderer.setStyle(el,'color', '#909EAB');
+        this.renderer.setStyle(el, 'color', '#909EAB');
         this.tweet.likeCounter--;
-        this.tweet.likeFlag=false;
-        this.renderer.removeClass(this.heart.nativeElement,"fas");
-        this.renderer.addClass(this.heart.nativeElement,"far");
-        this.renderer.setProperty(el,'(click)','like()');
+        this.tweet.likeFlag = false;
+        this.renderer.removeClass(this.heart.nativeElement, 'fas');
+        this.renderer.addClass(this.heart.nativeElement, 'far');
+        this.renderer.setProperty(el, '(click)', 'like()');
       },
       (error) => alert('Dislike failed')
     );

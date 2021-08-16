@@ -18,7 +18,6 @@ describe('ProfileEditModalComponent', () => {
       imports: [HttpClientTestingModule, ReactiveFormsModule],
       providers: [
         FormBuilder,
-        { provide: 'baseAddress', useValue: 'mockURL' },
         { provide: AuthenticationService, useValue: authServiceSpyObj },
       ],
     }).compileComponents();

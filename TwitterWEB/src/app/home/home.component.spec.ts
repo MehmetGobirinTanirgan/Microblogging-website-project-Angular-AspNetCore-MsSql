@@ -15,7 +15,6 @@ describe('HomeComponent', () => {
       declarations: [HomeComponent],
       imports: [HttpClientTestingModule],
       providers: [
-        { provide: 'baseAddress', useValue: 'mockURL' },
         { provide: AuthenticationService, useValue: authServiceSpyObj },
       ],
     }).compileComponents();

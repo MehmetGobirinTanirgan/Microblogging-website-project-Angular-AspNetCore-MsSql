@@ -20,7 +20,6 @@ describe('ProfileCardComponent', () => {
       declarations: [ProfileCardComponent],
       imports: [HttpClientTestingModule, RouterTestingModule],
       providers: [
-        { provide: 'baseAddress', useValue: 'mockURL' },
         { provide: AuthenticationService, useValue: authServiceSpyObj },
         { provide: DataService, useValue: dataServiceSpy },
       ],

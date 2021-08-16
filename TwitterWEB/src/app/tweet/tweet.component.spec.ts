@@ -18,15 +18,23 @@ describe('TweetComponent', () => {
     ]);
     const dataServiceSpy = jasmine.createSpy();
     await TestBed.configureTestingModule({
-      declarations: [ TweetComponent ],
-      imports:[HttpClientTestingModule,RouterTestingModule,NgbDropdownModule],
-      providers:[{ provide: 'baseAddress', useValue: 'mockURL' },
-      { provide: AuthenticationService, useValue: authServiceSpyObj },
-      { provide: DataService, useValue: dataServiceSpy },]
-    })
-    .compileComponents();
-    mockAuthService = TestBed.inject(AuthenticationService) as jasmine.SpyObj<AuthenticationService>;
-    mockDataService = TestBed.inject(DataService) as jasmine.SpyObj<DataService>;
+      declarations: [TweetComponent],
+      imports: [
+        HttpClientTestingModule,
+        RouterTestingModule,
+        NgbDropdownModule,
+      ],
+      providers: [
+        { provide: AuthenticationService, useValue: authServiceSpyObj },
+        { provide: DataService, useValue: dataServiceSpy },
+      ],
+    }).compileComponents();
+    mockAuthService = TestBed.inject(
+      AuthenticationService
+    ) as jasmine.SpyObj<AuthenticationService>;
+    mockDataService = TestBed.inject(
+      DataService
+    ) as jasmine.SpyObj<DataService>;
   });
 
   beforeEach(() => {

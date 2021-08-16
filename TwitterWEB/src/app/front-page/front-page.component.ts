@@ -1,8 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { SignUpModel } from 'src/models/SignUpModel';
-import { ModalService } from 'src/services/modal.service';
 import { UserService } from 'src/services/user.service';
 
 @Component({
@@ -15,9 +15,10 @@ export class FrontPageComponent implements OnInit {
   constructor(
     private userService: UserService,
     private formBuilder: FormBuilder,
-    private modalService: ModalService,
+    private ngbModal: NgbModal,
     private router: Router
   ) {}
+  @ViewChild('signupModal') signupModal: any;
   days = new Array(31);
   currentYear = new Date().getFullYear();
   years = new Array(this.currentYear - 1969);
@@ -35,8 +36,8 @@ export class FrontPageComponent implements OnInit {
     'November',
     'December',
   ];
-  isLeapYear:boolean;
-  selectedMonth:string;
+  isLeapYear: boolean;
+  selectedMonth: string;
   signUpForm: FormGroup;
 
   ngOnInit() {
@@ -70,8 +71,8 @@ export class FrontPageComponent implements OnInit {
     }
   }
 
-  openModal(signupModal: any) {
-    this.modalService.openModal(signupModal);
+  openModal() {
+    this.ngbModal.open(this.signupModal, { centered: true });
   }
 
   checkMonth(month: string) {

@@ -23,7 +23,6 @@ describe('ReplyModalComponent', () => {
         { provide: DataService, useValue: dataServiceSpy },
         FormBuilder,
         { provide: AuthenticationService, useValue: authServiceSpyObj },
-        { provide: 'baseAddress', useValue: 'mockURL' },
       ],
     }).compileComponents();
     mockAuthService = TestBed.inject(AuthenticationService) as jasmine.SpyObj<AuthenticationService>;

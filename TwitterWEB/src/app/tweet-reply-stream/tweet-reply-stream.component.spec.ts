@@ -20,7 +20,6 @@ describe('TweetReplyStreamComponent', () => {
       imports: [HttpClientTestingModule],
       providers: [
         { provide: DataService, useValue: dataServiceSpy },
-        { provide: 'baseAddress', useValue: 'mockURL' },
         { provide: AuthenticationService, useValue: authServiceSpyObj },
       ],
     }).compileComponents();

@@ -12,7 +12,6 @@ import { HomeComponent } from './home/home.component';
 import { TweetEditorComponent } from './tweet-editor/tweet-editor.component';
 import { HttpRequestInterceptor } from 'src/interceptors/HttpRequestInterceptor';
 import { CustomValidatorService } from 'src/services/customValidator.service';
-import { ModalService } from 'src/services/modal.service';
 import { AuthenticationService } from 'src/services/authentication.service';
 import { FrontPageComponent } from './front-page/front-page.component';
 import { RouteGuardService } from 'src/services/route-guard.service';
@@ -62,7 +61,6 @@ import { TweetReplyStreamComponent } from './tweet-reply-stream/tweet-reply-stre
       multi: true,
     },
     CustomValidatorService,
-    ModalService,
     AuthenticationService,
     RouteGuardService,
     DataService,

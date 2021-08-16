@@ -28,7 +28,6 @@ export class UserService {
       headers: new Headers({
         'Content-Type': 'multipart/form-data',
       }),
-      responseType: 'text' as 'json',
     };
 
     return this.httpClient.put(
