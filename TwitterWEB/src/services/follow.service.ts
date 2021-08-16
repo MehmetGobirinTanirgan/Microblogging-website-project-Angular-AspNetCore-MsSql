@@ -8,15 +8,20 @@ export class FollowService {
   constructor(private httpClient: HttpClient) {}
 
   follow(foreignUserID: string, userID: string) {
-    const followModel = new FollowModel();
-    followModel.followerUserID = userID;
-    followModel.followingUserID = foreignUserID;
-    return this.httpClient.post('Follow/Follow', followModel);
+    let followModel = new FollowModel();
+    followModel = {
+      followerUserID: userID,
+      followingUserID: foreignUserID,
+    };
+    return this.httpClient.post('Follow/Follow', followModel, {
+      observe: 'response',
+    });
   }
 
   unfollow(foreignUserID: string, userID: string) {
     return this.httpClient.delete(
-      'Follow/Unfollow/' + userID + '/' + foreignUserID
+      'Follow/Unfollow/' + userID + '/' + foreignUserID,
+      { observe: 'response' }
     );
   }
 

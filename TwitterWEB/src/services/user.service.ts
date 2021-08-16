@@ -8,7 +8,9 @@ export class UserService {
   constructor(private httpClient: HttpClient) {}
 
   signUp(signUpModel: SignUpModel) {
-    return this.httpClient.post('Login/SignUp', signUpModel);
+    return this.httpClient.post('Login/SignUp', signUpModel, {
+      observe: 'response',
+    });
   }
 
   getUserProfile(userID: string) {
@@ -24,16 +26,11 @@ export class UserService {
   }
 
   updateProfile(updatedProfile: FormData) {
-    let HttpOptions: Object = {
-      headers: new Headers({
+    return this.httpClient.put('Profile/UpdateProfile', updatedProfile, {
+      headers: {
         'Content-Type': 'multipart/form-data',
-      }),
-    };
-
-    return this.httpClient.put(
-      'Profile/UpdateProfile',
-      updatedProfile,
-      HttpOptions
-    );
+      },
+      observe: 'response',
+    });
   }
 }

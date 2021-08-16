@@ -27,9 +27,10 @@ export class TweetReplyStreamComponent implements OnInit {
 
   refreshPage() {
     const userID = this.authService.getUserData()?.id;
-    if (userID != null) {
+    const tweetID = this.tweetService.getTweetID();
+    if (userID != null && tweetID != null) {
       this.tweetService
-        .getTweetReplyStream(this.tweetService.getTweetID(), userID)
+        .getTweetReplyStream(tweetID, userID)
         .subscribe(
           (data) => {
             this.tweetReplyStream = data;

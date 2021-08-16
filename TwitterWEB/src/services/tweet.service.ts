@@ -29,15 +29,24 @@ export class TweetService {
   }
 
   delete(id: string) {
-    return this.httpClient.delete('Tweet/DeleteTweet/' + id);
+    return this.httpClient.delete('Tweet/DeleteTweet/' + id, {
+      observe: 'response',
+    });
   }
 
   addLike(like: LikeModel) {
-    return this.httpClient.post('Tweet/AddLike', like);
+    return this.httpClient.post('Tweet/AddLike', like, {
+      observe: 'response',
+    });
   }
 
   removeLike(tweetID: string, userID: string) {
-    return this.httpClient.delete('Tweet/RemoveLike/' + tweetID + '/' + userID);
+    return this.httpClient.delete(
+      'Tweet/RemoveLike/' + tweetID + '/' + userID,
+      {
+        observe: 'response',
+      }
+    );
   }
 
   addReplyTweet(ReplyTweet: FormData) {
@@ -58,7 +67,11 @@ export class TweetService {
     localStorage.setItem('tweetID', id.toString());
   }
 
-  getTweetID(): string {
-    return localStorage.getItem('tweetID')!;
+  getTweetID(): string | null {
+    const tweetID = localStorage.getItem('tweetID');
+    if (tweetID == null) {
+      return null;
+    }
+    return tweetID;
   }
 }
