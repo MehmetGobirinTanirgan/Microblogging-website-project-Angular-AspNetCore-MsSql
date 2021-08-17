@@ -10,36 +10,8 @@ import { TweetService } from './tweet.service';
 describe('Service: Tweet', () => {
   let service: TweetService;
   let mockHttp: HttpTestingController;
-
-  //Mock data
-  let formData = new FormData();
-  formData.append('mock1', '1');
-  formData.append('mock2', '2');
-
-  const tweet = {
-    id: '1',
-    userID: 'mockUserID',
-    createdDate: new Date(2001,1,1),
-    tweetDetail: 'mockTweetDetail',
-    profilePicPath: 'mockProfilePicPath',
-    fullname: 'mockFullname',
-    username: 'mockUsername',
-    replyCounter: 1,
-    retweetCounter: 1,
-    likeCounter: 1,
-    followFlag: true,
-    likeFlag: true,
-    ownershipStatus: true,
-    mainTweetOwnerID: null,
-    mainTweetOwnerUsername: null,
-    tweetImageInfos: [
-      {
-        id: '1',
-        imagePath: 'mockImagePath',
-      },
-    ],
-  };
-
+  let mockData: MockData;
+  let mockLocalStorage: MockLocalStorage;
   beforeEach(() => {
     TestBed.configureTestingModule({
       imports: [HttpClientTestingModule],
@@ -47,20 +19,8 @@ describe('Service: Tweet', () => {
     });
     service = TestBed.inject(TweetService);
     mockHttp = TestBed.inject(HttpTestingController);
-
-    var store: Record<string, string> = {};
-
-    spyOn(localStorage, 'setItem').and.callFake(
-      (key: string, value: string): string => {
-        return (store[key] = <string>value);
-      }
-    );
-
-    spyOn(localStorage, 'getItem').and.callFake(
-      (key: string): string | null => {
-        return store[key] || null;
-      }
-    );
+    mockData = new MockData();
+    mockLocalStorage = new MockLocalStorage();
   });
 
   it('should ...', () => {
@@ -68,8 +28,9 @@ describe('Service: Tweet', () => {
   });
 
   it('#addNewTweet should post and return expected data', () => {
-    service.addNewTweet(formData).subscribe((res) => {
-      expect(res).toBe(tweet);
+    const mockTweet = mockData.mockTweet;
+    service.addNewTweet(mockData.getMockFormData()).subscribe((res) => {
+      expect(res).toBe(mockTweet);
     });
 
     const req = mockHttp.expectOne({
@@ -77,13 +38,14 @@ describe('Service: Tweet', () => {
     });
 
     expect(req.request.method).toEqual('POST');
-    expect(req.request.body).toEqual(formData);
-    req.flush(tweet);
+    expect(req.request.body).toEqual(mockData.getMockFormData());
+    req.flush(mockTweet);
   });
 
   it('#getAllTweets should return expected data', () => {
     let id = '1';
-    const tweets = [tweet];
+    const mockTweet = mockData.mockTweet;
+    const tweets = [mockTweet];
     service.getAllTweets(id).subscribe((res) => {
       expect(res).toBe(tweets);
     });
@@ -156,8 +118,10 @@ describe('Service: Tweet', () => {
   });
 
   it('#addReplyTweet should post and return expected data', () => {
+    const formData = mockData.getMockFormData();
+    const mockTweet = mockData.mockTweet;
     service.addReplyTweet(formData).subscribe((res) => {
-      expect(res).toBe(tweet);
+      expect(res).toBe(mockTweet);
     });
 
     const req = mockHttp.expectOne({
@@ -166,13 +130,13 @@ describe('Service: Tweet', () => {
 
     expect(req.request.method).toEqual('POST');
     expect(req.request.body).toEqual(formData);
-    req.flush(tweet);
+    req.flush(mockTweet);
   });
 
   it('#getTweetReplyStream should return expected data', () => {
     let userID = 'mockUserID';
     let tweetID = 'mockTweetID';
-    const tweets = [tweet];
+    const tweets = [mockData.mockTweet];
     service.getTweetReplyStream(tweetID, userID).subscribe((res) => {
       expect(res).toBe(tweets);
     });
@@ -187,18 +151,72 @@ describe('Service: Tweet', () => {
   });
 
   it('#setTweetID should save tweet id into local storage', () => {
+    mockLocalStorage.addMockLocalStorage();
     let id = '1';
     service.setTweetID(id);
     expect(localStorage.getItem('tweetID')).toEqual(id);
   });
 
   it('#getTweetID should return tweet id from local storage', () => {
+    mockLocalStorage.addMockLocalStorage();
     let id = '1';
     service.setTweetID(id);
     expect(service.getTweetID()).toEqual(id);
   });
 
   it('#getTweetID should return null if there is not tweet id in local storage', () => {
+    mockLocalStorage.addMockLocalStorage();
     expect(service.getTweetID()).toEqual(null);
   });
 });
+
+class MockData {
+  getMockFormData() {
+    const formData = new FormData();
+    formData.append('mock1', '1');
+    formData.append('mock2', '2');
+    return formData;
+  }
+
+  mockTweet = {
+    id: '1',
+    userID: 'mockUserID',
+    createdDate: new Date(2001, 1, 1),
+    tweetDetail: 'mockTweetDetail',
+    profilePicPath: 'mockProfilePicPath',
+    fullname: 'mockFullname',
+    username: 'mockUsername',
+    replyCounter: 1,
+    retweetCounter: 1,
+    likeCounter: 1,
+    followFlag: true,
+    likeFlag: true,
+    ownershipStatus: true,
+    mainTweetOwnerID: null,
+    mainTweetOwnerUsername: null,
+    tweetImageInfos: [
+      {
+        id: '1',
+        imagePath: 'mockImagePath',
+      },
+    ],
+  };
+}
+
+class MockLocalStorage {
+  store: Record<string, string> = {};
+
+  addMockLocalStorage() {
+    spyOn(localStorage, 'setItem').and.callFake(
+      (key: string, value: string): string => {
+        return (this.store[key] = <string>value);
+      }
+    );
+
+    spyOn(localStorage, 'getItem').and.callFake(
+      (key: string): string | null => {
+        return this.store[key] || null;
+      }
+    );
+  }
+}

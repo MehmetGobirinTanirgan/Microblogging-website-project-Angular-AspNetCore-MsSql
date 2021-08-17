@@ -6,6 +6,6 @@ import { TweetModel } from 'src/models/TweetModel';
 export class DataService {
   constructor() {}
   replyModalData: string;
-  followList: FollowListModel;
+  followList: FollowListModel | null;
   tweetReplyStream:TweetModel[];
 }
