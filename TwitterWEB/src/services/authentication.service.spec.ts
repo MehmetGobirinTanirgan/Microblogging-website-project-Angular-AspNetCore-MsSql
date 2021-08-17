@@ -11,7 +11,7 @@ describe('Service: Authentication', () => {
   let service: AuthenticationService;
   let mockHttp: HttpTestingController;
   let mockData: MockData;
-  let mockLocalStorage: MockLocalStorage;
+
   beforeEach(() => {
     TestBed.configureTestingModule({
       providers: [AuthenticationService],
@@ -19,9 +19,7 @@ describe('Service: Authentication', () => {
     });
     service = TestBed.inject(AuthenticationService);
     mockHttp = TestBed.inject(HttpTestingController);
-
     mockData = new MockData();
-    mockLocalStorage = new MockLocalStorage();
   });
 
   afterEach(() => {
@@ -32,107 +30,120 @@ describe('Service: Authentication', () => {
     expect(service).toBeTruthy();
   });
 
-  it('#login should post and return expected data', () => {
-    let logOutSpy = spyOn(service, 'logOut').and.callThrough();
-    let saveDataSpy = spyOn(service, 'saveData').and.callThrough();
-    const mockLoggingUser = mockData.mockLoggingUser;
-    const mockUserStorageData = mockData.mockUserStorageData;
+  describe('HTTP Tests', () => {
 
-    service.login(mockLoggingUser).subscribe((res) => {
-      expect(res).toBe(mockUserStorageData);
-      expect(service.userData).toBe(res);
-      expect(saveDataSpy).toHaveBeenCalledTimes(1);
-      expect(JSON.parse(localStorage.getItem('user')!)).toEqual(res);
+    it('#login should post and return expected data', () => {
+      let logOutSpy = spyOn(service, 'logOut').and.callThrough();
+      let saveDataSpy = spyOn(service, 'saveData').and.callThrough();
+      const mockLoggingUser = mockData.mockLoggingUser;
+      const mockUserStorageData = mockData.mockUserStorageData;
+
+      service.login(mockLoggingUser).subscribe((res) => {
+        expect(res).toBe(mockUserStorageData);
+        expect(service.userData).toBe(res);
+        expect(saveDataSpy).toHaveBeenCalledTimes(1);
+        expect(JSON.parse(localStorage.getItem('user')!)).toEqual(res);
+      });
+
+      expect(logOutSpy).toHaveBeenCalledTimes(1);
+      const req = mockHttp.expectOne({
+        url: 'Login/Authentication',
+      });
+
+      expect(req.request.method).toEqual('POST');
+      expect(req.request.body).toEqual(mockLoggingUser);
+      req.flush(mockUserStorageData);
+    });
+  });
+
+  describe('LocalStorage Tests', () => {
+    let mockLocalStorage: MockLocalStorage;
+
+    beforeEach(() => {
+      mockLocalStorage = new MockLocalStorage();
     });
 
-    expect(logOutSpy).toHaveBeenCalledTimes(1);
-    const req = mockHttp.expectOne({
-      url: 'Login/Authentication',
+    it('#saveData should save user data into localStorage', () => {
+      mockLocalStorage.addMockLocalStorage();
+      const mockUserStorageData = mockData.mockUserStorageData;
+      service.saveData(mockUserStorageData);
+      expect(localStorage.getItem('user')).toEqual(
+        JSON.stringify(mockUserStorageData)
+      );
     });
 
-    expect(req.request.method).toEqual('POST');
-    expect(req.request.body).toEqual(mockLoggingUser);
-    req.flush(mockUserStorageData);
-  });
+    it('#saveData should override user data', () => {
+      mockLocalStorage.addMockLocalStorage();
+      const mockUserStorageData = mockData.mockUserStorageData;
+      localStorage.setItem('user', 'mockUserData');
+      service.saveData(mockUserStorageData);
+      expect(localStorage.getItem('user')).toEqual(
+        JSON.stringify(mockUserStorageData)
+      );
+    });
 
-  it('#saveData should save user data into localStorage', () => {
-    mockLocalStorage.addMockLocalStorage();
-    const mockUserStorageData = mockData.mockUserStorageData;
-    service.saveData(mockUserStorageData);
-    expect(localStorage.getItem('user')).toEqual(
-      JSON.stringify(mockUserStorageData)
-    );
-  });
+    it('#getToken should return token when user data is saved into localstorage', () => {
+      mockLocalStorage.addMockLocalStorage();
+      const mockUserStorageData = mockData.mockUserStorageData;
+      service.saveData(mockUserStorageData);
+      const token = service.getToken();
+      expect(token).toEqual(mockUserStorageData.token);
+    });
 
-  it('#saveData should override user data', () => {
-    mockLocalStorage.addMockLocalStorage();
-    const mockUserStorageData = mockData.mockUserStorageData;
-    localStorage.setItem('user', 'mockUserData');
-    service.saveData(mockUserStorageData);
-    expect(localStorage.getItem('user')).toEqual(
-      JSON.stringify(mockUserStorageData)
-    );
-  });
+    it('#getToken should return null when user data is not saved into localstorage', () => {
+      mockLocalStorage.addMockLocalStorage();
+      const token = service.getToken();
+      expect(token).toEqual(null);
+    });
 
-  it('#getToken should return token when user data is saved into localstorage', () => {
-    mockLocalStorage.addMockLocalStorage();
-    const mockUserStorageData = mockData.mockUserStorageData;
-    service.saveData(mockUserStorageData);
-    const token = service.getToken();
-    expect(token).toEqual(mockUserStorageData.token);
-  });
+    it('#getTUserData should return data when user data is saved into localstorage', () => {
+      mockLocalStorage.addMockLocalStorage();
+      const mockUserStorageData = mockData.mockUserStorageData;
+      service.saveData(mockUserStorageData);
+      const userObj = service.getUserData();
+      expect(userObj?.id).toEqual(mockUserStorageData.id);
+      expect(userObj?.fullname).toEqual(mockUserStorageData.fullname);
+      expect(userObj?.username).toEqual(mockUserStorageData.username);
+      expect(userObj?.profilePicPath).toEqual(
+        mockUserStorageData.profilePicPath
+      );
+      expect(userObj?.token).toEqual(mockUserStorageData.token);
+    });
 
-  it('#getToken should return null when user data is not saved into localstorage', () => {
-    mockLocalStorage.addMockLocalStorage();
-    const token = service.getToken();
-    expect(token).toEqual(null);
-  });
+    it('#getUserData should return null when there is none user data in localStorage', () => {
+      mockLocalStorage.addMockLocalStorage();
+      const userObj = service.getUserData();
+      expect(userObj).toEqual(null);
+    });
 
-  it('#getTUserData should return data when user data is saved into localstorage', () => {
-    mockLocalStorage.addMockLocalStorage();
-    const mockUserStorageData = mockData.mockUserStorageData;
-    service.saveData(mockUserStorageData);
-    const userObj = service.getUserData();
-    expect(userObj?.id).toEqual(mockUserStorageData.id);
-    expect(userObj?.fullname).toEqual(mockUserStorageData.fullname);
-    expect(userObj?.username).toEqual(mockUserStorageData.username);
-    expect(userObj?.profilePicPath).toEqual(mockUserStorageData.profilePicPath);
-    expect(userObj?.token).toEqual(mockUserStorageData.token);
-  });
+    it('#logOut should remove user from localStorage', () => {
+      mockLocalStorage.addMockLocalStorage();
+      const mockUserStorageData = mockData.mockUserStorageData;
+      service.saveData(mockUserStorageData);
+      service.logOut();
+      expect(service.getUserData()).toEqual(null);
+    });
 
-  it('#getUserData should return null when there is none user data in localStorage', () => {
-    mockLocalStorage.addMockLocalStorage();
-    const userObj = service.getUserData();
-    expect(userObj).toEqual(null);
-  });
+    it('#isLoggedIn should return true when user is logged in with new generated token', () => {
+      mockLocalStorage.addMockLocalStorage();
+      const mockUserStorageData = mockData.mockUserStorageData;
+      mockUserStorageData.token = mockData.getNewToken();
+      service.saveData(mockUserStorageData);
+      expect(service.isLoggedIn()).toBeTrue();
+    });
 
-  it('#logOut should remove user from localStorage', () => {
-    mockLocalStorage.addMockLocalStorage();
-    const mockUserStorageData = mockData.mockUserStorageData;
-    service.saveData(mockUserStorageData);
-    service.logOut();
-    expect(service.getUserData()).toEqual(null);
-  });
+    it('#isLoggedIn should return false when user is not logged in ', () => {
+      mockLocalStorage.addMockLocalStorage();
+      expect(service.isLoggedIn()).toBeFalse();
+    });
 
-  it('#isLoggedIn should return true when user is logged in with new generated token', () => {
-    mockLocalStorage.addMockLocalStorage();
-    const mockUserStorageData = mockData.mockUserStorageData;
-    mockUserStorageData.token = mockData.getNewToken();
-    service.saveData(mockUserStorageData);
-    expect(service.isLoggedIn()).toBeTrue();
-  });
-
-  it('#isLoggedIn should return false when user is not logged in ', () => {
-    mockLocalStorage.addMockLocalStorage();
-    expect(service.isLoggedIn()).toBeFalse();
-  });
-
-  it('#isLoggedIn should return false when token is expired', () => {
-    mockLocalStorage.addMockLocalStorage();
-    const mockUserStorageData = mockData.mockUserStorageData;
-    mockUserStorageData.token = mockData.getExpiredToken();
-    service.saveData(mockUserStorageData);
-    expect(service.isLoggedIn()).toBeFalse();
+    it('#isLoggedIn should return false when token is expired', () => {
+      mockLocalStorage.addMockLocalStorage();
+      const mockUserStorageData = mockData.mockUserStorageData;
+      mockUserStorageData.token = mockData.getExpiredToken();
+      service.saveData(mockUserStorageData);
+      expect(service.isLoggedIn()).toBeFalse();
+    });
   });
 });
 

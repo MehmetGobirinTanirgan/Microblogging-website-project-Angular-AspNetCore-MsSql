@@ -10,8 +10,7 @@ import { TweetService } from './tweet.service';
 describe('Service: Tweet', () => {
   let service: TweetService;
   let mockHttp: HttpTestingController;
-  let mockData: MockData;
-  let mockLocalStorage: MockLocalStorage;
+
   beforeEach(() => {
     TestBed.configureTestingModule({
       imports: [HttpClientTestingModule],
@@ -19,154 +18,168 @@ describe('Service: Tweet', () => {
     });
     service = TestBed.inject(TweetService);
     mockHttp = TestBed.inject(HttpTestingController);
-    mockData = new MockData();
-    mockLocalStorage = new MockLocalStorage();
   });
 
   it('should ...', () => {
     expect(service).toBeTruthy();
   });
 
-  it('#addNewTweet should post and return expected data', () => {
-    const mockTweet = mockData.mockTweet;
-    service.addNewTweet(mockData.getMockFormData()).subscribe((res) => {
-      expect(res).toBe(mockTweet);
+  describe('HTTP Tests', () => {
+    let mockData: MockData;
+
+    beforeEach(() => {
+      mockData = new MockData();
     });
 
-    const req = mockHttp.expectOne({
-      url: 'Tweet/AddNewTweet',
+    it('#addNewTweet should post and return expected data', () => {
+      const mockTweet = mockData.mockTweet;
+      service.addNewTweet(mockData.getMockFormData()).subscribe((res) => {
+        expect(res).toBe(mockTweet);
+      });
+
+      const req = mockHttp.expectOne({
+        url: 'Tweet/AddNewTweet',
+      });
+
+      expect(req.request.method).toEqual('POST');
+      expect(req.request.body).toEqual(mockData.getMockFormData());
+      req.flush(mockTweet);
     });
 
-    expect(req.request.method).toEqual('POST');
-    expect(req.request.body).toEqual(mockData.getMockFormData());
-    req.flush(mockTweet);
+    it('#getAllTweets should return expected data', () => {
+      let id = '1';
+      const mockTweet = mockData.mockTweet;
+      const tweets = [mockTweet];
+      service.getAllTweets(id).subscribe((res) => {
+        expect(res).toBe(tweets);
+      });
+
+      const req = mockHttp.expectOne({
+        url: `Tweet/GetAllRelationalTweets/${id}`,
+      });
+
+      expect(req.request.method).toEqual('GET');
+      expect(req.request.body).toEqual(null);
+      req.flush(tweets);
+    });
+
+    it('#delete should delete tweet and return OK', () => {
+      let id = '1';
+      service.delete(id).subscribe((res) => {
+        expect(res.body).toEqual('');
+        expect(res.status).toBe(200);
+        expect(res.ok).toBeTrue();
+        expect(res.statusText).toBe('OK');
+      });
+
+      const req = mockHttp.expectOne({
+        url: `Tweet/DeleteTweet/${id}`,
+      });
+
+      expect(req.request.method).toEqual('DELETE');
+      expect(req.request.body).toEqual(null);
+      req.flush('');
+    });
+
+    it('#addLike should post like and return OK', () => {
+      const like = {
+        UserID: 'mockUserID',
+        TweetID: 'mockTweetID',
+      };
+      service.addLike(like).subscribe((res) => {
+        expect(res.body).toEqual('');
+        expect(res.status).toBe(200);
+        expect(res.ok).toBeTrue();
+        expect(res.statusText).toBe('OK');
+      });
+
+      const req = mockHttp.expectOne({
+        url: 'Tweet/AddLike',
+      });
+
+      expect(req.request.method).toEqual('POST');
+      expect(req.request.body).toEqual(like);
+      req.flush('');
+    });
+
+    it('#removeLike should remove like and return OK', () => {
+      let userID = 'mockUserID';
+      let tweetID = 'mockTweetID';
+      service.removeLike(tweetID, userID).subscribe((res) => {
+        expect(res.body).toEqual('');
+        expect(res.status).toBe(200);
+        expect(res.ok).toBeTrue();
+        expect(res.statusText).toBe('OK');
+      });
+
+      const req = mockHttp.expectOne({
+        url: `Tweet/RemoveLike/${tweetID}/${userID}`,
+      });
+
+      expect(req.request.method).toEqual('DELETE');
+      expect(req.request.body).toEqual(null);
+      req.flush('');
+    });
+
+    it('#addReplyTweet should post and return expected data', () => {
+      const formData = mockData.getMockFormData();
+      const mockTweet = mockData.mockTweet;
+      service.addReplyTweet(formData).subscribe((res) => {
+        expect(res).toBe(mockTweet);
+      });
+
+      const req = mockHttp.expectOne({
+        url: 'Tweet/AddReplyTweet',
+      });
+
+      expect(req.request.method).toEqual('POST');
+      expect(req.request.body).toEqual(formData);
+      req.flush(mockTweet);
+    });
+
+    it('#getTweetReplyStream should return expected data', () => {
+      let userID = 'mockUserID';
+      let tweetID = 'mockTweetID';
+      const tweets = [mockData.mockTweet];
+      service.getTweetReplyStream(tweetID, userID).subscribe((res) => {
+        expect(res).toBe(tweets);
+      });
+
+      const req = mockHttp.expectOne({
+        url: `Tweet/GetTweetWithReplyTweets/${tweetID}/${userID}`,
+      });
+
+      expect(req.request.method).toEqual('GET');
+      expect(req.request.body).toEqual(null);
+      req.flush(tweets);
+    });
   });
 
-  it('#getAllTweets should return expected data', () => {
-    let id = '1';
-    const mockTweet = mockData.mockTweet;
-    const tweets = [mockTweet];
-    service.getAllTweets(id).subscribe((res) => {
-      expect(res).toBe(tweets);
+  describe('LocalStorage Tests', () => {
+    let mockLocalStorage: MockLocalStorage;
+
+    beforeEach(() => {
+      mockLocalStorage = new MockLocalStorage();
     });
 
-    const req = mockHttp.expectOne({
-      url: `Tweet/GetAllRelationalTweets/${id}`,
+    it('#setTweetID should save tweet id into local storage', () => {
+      mockLocalStorage.addMockLocalStorage();
+      let id = '1';
+      service.setTweetID(id);
+      expect(localStorage.getItem('tweetID')).toEqual(id);
     });
 
-    expect(req.request.method).toEqual('GET');
-    expect(req.request.body).toEqual(null);
-    req.flush(tweets);
-  });
-
-  it('#delete should delete tweet and return OK', () => {
-    let id = '1';
-    service.delete(id).subscribe((res) => {
-      expect(res.body).toEqual('');
-      expect(res.status).toBe(200);
-      expect(res.ok).toBeTrue();
-      expect(res.statusText).toBe('OK');
+    it('#getTweetID should return tweet id from local storage', () => {
+      mockLocalStorage.addMockLocalStorage();
+      let id = '1';
+      service.setTweetID(id);
+      expect(service.getTweetID()).toEqual(id);
     });
 
-    const req = mockHttp.expectOne({
-      url: `Tweet/DeleteTweet/${id}`,
+    it('#getTweetID should return null if there is not tweet id in local storage', () => {
+      mockLocalStorage.addMockLocalStorage();
+      expect(service.getTweetID()).toEqual(null);
     });
-
-    expect(req.request.method).toEqual('DELETE');
-    expect(req.request.body).toEqual(null);
-    req.flush('');
-  });
-
-  it('#addLike should post like and return OK', () => {
-    const like = {
-      UserID: 'mockUserID',
-      TweetID: 'mockTweetID',
-    };
-    service.addLike(like).subscribe((res) => {
-      expect(res.body).toEqual('');
-      expect(res.status).toBe(200);
-      expect(res.ok).toBeTrue();
-      expect(res.statusText).toBe('OK');
-    });
-
-    const req = mockHttp.expectOne({
-      url: 'Tweet/AddLike',
-    });
-
-    expect(req.request.method).toEqual('POST');
-    expect(req.request.body).toEqual(like);
-    req.flush('');
-  });
-
-  it('#removeLike should remove like and return OK', () => {
-    let userID = 'mockUserID';
-    let tweetID = 'mockTweetID';
-    service.removeLike(tweetID, userID).subscribe((res) => {
-      expect(res.body).toEqual('');
-      expect(res.status).toBe(200);
-      expect(res.ok).toBeTrue();
-      expect(res.statusText).toBe('OK');
-    });
-
-    const req = mockHttp.expectOne({
-      url: `Tweet/RemoveLike/${tweetID}/${userID}`,
-    });
-
-    expect(req.request.method).toEqual('DELETE');
-    expect(req.request.body).toEqual(null);
-    req.flush('');
-  });
-
-  it('#addReplyTweet should post and return expected data', () => {
-    const formData = mockData.getMockFormData();
-    const mockTweet = mockData.mockTweet;
-    service.addReplyTweet(formData).subscribe((res) => {
-      expect(res).toBe(mockTweet);
-    });
-
-    const req = mockHttp.expectOne({
-      url: 'Tweet/AddReplyTweet',
-    });
-
-    expect(req.request.method).toEqual('POST');
-    expect(req.request.body).toEqual(formData);
-    req.flush(mockTweet);
-  });
-
-  it('#getTweetReplyStream should return expected data', () => {
-    let userID = 'mockUserID';
-    let tweetID = 'mockTweetID';
-    const tweets = [mockData.mockTweet];
-    service.getTweetReplyStream(tweetID, userID).subscribe((res) => {
-      expect(res).toBe(tweets);
-    });
-
-    const req = mockHttp.expectOne({
-      url: `Tweet/GetTweetWithReplyTweets/${tweetID}/${userID}`,
-    });
-
-    expect(req.request.method).toEqual('GET');
-    expect(req.request.body).toEqual(null);
-    req.flush(tweets);
-  });
-
-  it('#setTweetID should save tweet id into local storage', () => {
-    mockLocalStorage.addMockLocalStorage();
-    let id = '1';
-    service.setTweetID(id);
-    expect(localStorage.getItem('tweetID')).toEqual(id);
-  });
-
-  it('#getTweetID should return tweet id from local storage', () => {
-    mockLocalStorage.addMockLocalStorage();
-    let id = '1';
-    service.setTweetID(id);
-    expect(service.getTweetID()).toEqual(id);
-  });
-
-  it('#getTweetID should return null if there is not tweet id in local storage', () => {
-    mockLocalStorage.addMockLocalStorage();
-    expect(service.getTweetID()).toEqual(null);
   });
 });
 
