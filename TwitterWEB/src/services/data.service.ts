@@ -7,5 +7,5 @@ export class DataService {
   constructor() {}
   replyModalData: string;
   followList: FollowListModel | null;
-  tweetReplyStream:TweetModel[];
+  tweetReplyStream:TweetModel[] | null;
 }

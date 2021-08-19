@@ -32,7 +32,6 @@ export class ReplyModalComponent implements OnInit {
     this.replyModalData = JSON.parse(this.dataService.replyModalData);
     this.createReplyForm();
     this.modalRef = this.modalService.open(this.modalContent);
-    this.modalRef.result.then();
   }
 
   createReplyForm() {
@@ -64,6 +63,7 @@ export class ReplyModalComponent implements OnInit {
         }
         this.tweetService.addReplyTweet(formData).subscribe(
           (data) => {
+            alert('Replied successfully');
             this.modalRef.close();
           },
           (error) => {

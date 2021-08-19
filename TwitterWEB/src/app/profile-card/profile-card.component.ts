@@ -20,7 +20,7 @@ export class ProfileCardComponent implements OnInit {
     private dataService: DataService
   ) {}
   @Input() userProfileCard: UserProfileCardModel;
-  @ViewChild('editModal') private modalComponent: ProfileEditModalComponent;
+  @ViewChild('editModal') modalComponent: ProfileEditModalComponent;
   userID: string;
   ngOnInit(): void {
     const id = this.authService.getUserData()?.id;
@@ -30,6 +30,7 @@ export class ProfileCardComponent implements OnInit {
       alert('Local storage error');
     }
   }
+
   openModal() {
     this.modalComponent.open();
   }
@@ -37,10 +38,10 @@ export class ProfileCardComponent implements OnInit {
   follow() {
     this.followService.follow(this.userProfileCard.id, this.userID).subscribe(
       (success) => {
-        alert('Success');
+        alert('Following');
       },
       (error) => {
-        alert('Error');
+        alert('Following failed');
       }
     );
   }
@@ -48,10 +49,10 @@ export class ProfileCardComponent implements OnInit {
   unfollow() {
     this.followService.unfollow(this.userProfileCard.id, this.userID).subscribe(
       (success) => {
-        alert('Success');
+        alert('Unfollowed');
       },
       (error) => {
-        alert('Error');
+        alert('Unfollowing failed');
       }
     );
   }

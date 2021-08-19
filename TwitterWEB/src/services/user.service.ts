@@ -26,11 +26,16 @@ export class UserService {
   }
 
   updateProfile(updatedProfile: FormData) {
-    return this.httpClient.put('Profile/UpdateProfile', updatedProfile, {
-      headers: {
+    let HttpOptions: Object = {
+      headers: new Headers({
         'Content-Type': 'multipart/form-data',
-      },
+      }),
       observe: 'response',
-    });
+    };
+
+    return this.httpClient.put('Profile/UpdateProfile',
+      updatedProfile,
+      HttpOptions
+    );
   }
 }

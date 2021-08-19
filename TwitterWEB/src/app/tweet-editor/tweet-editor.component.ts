@@ -24,10 +24,10 @@ export class TweetEditorComponent implements OnInit {
     const _userData = this.authService.getUserData();
     if(_userData != null){
       this.userData = _userData;
+      this.createTweetSubmitForm();
     }else{
       alert("Local storage error");
     }
-    this.createTweetSubmitForm();
   }
 
   createTweetSubmitForm() {

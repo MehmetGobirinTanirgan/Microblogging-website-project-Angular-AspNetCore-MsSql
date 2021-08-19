@@ -34,10 +34,10 @@ export class TweetComponent implements OnInit {
   userID: string;
   userProfilePicPath: string;
   @Input() tweet: TweetModel;
-  @ViewChild('replyModal') private modalComponent: ReplyModalComponent;
-  @ViewChild('likeBtn') private likeBtn: ElementRef;
-  @ViewChild('dislikeBtn') private dislikeBtn: ElementRef;
-  @ViewChild('heart') private heart: ElementRef;
+  @ViewChild('replyModal') modalComponent: ReplyModalComponent;
+  @ViewChild('likeBtn') likeBtn: ElementRef;
+  @ViewChild('dislikeBtn') dislikeBtn: ElementRef;
+  @ViewChild('heart') heart: ElementRef;
   replyModalModel: ReplyModalModel = new ReplyModalModel();
   tweetFlag: boolean = true;
   ngOnInit(): void {
@@ -121,10 +121,10 @@ export class TweetComponent implements OnInit {
   follow() {
     this.followService.follow(this.tweet.userID, this.userID).subscribe(
       (success) => {
-        alert('Success');
+        alert('Following');
       },
       (error) => {
-        alert('Error');
+        alert('Follow failed');
       }
     );
   }
@@ -132,10 +132,10 @@ export class TweetComponent implements OnInit {
   unfollow() {
     this.followService.unfollow(this.tweet.userID, this.userID).subscribe(
       (success) => {
-        alert('Success');
+        alert('Unfollowed');
       },
       (error) => {
-        alert('Error');
+        alert('Unfollow failed');
       }
     );
   }

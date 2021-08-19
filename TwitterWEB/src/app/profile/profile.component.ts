@@ -21,8 +21,8 @@ export class ProfileComponent implements OnInit {
   ) {
     this.router.routeReuseStrategy.shouldReuseRoute = () => false;
   }
-  userID: string;
-  upcomingUserID: string;
+  userID: string | null = null;
+  upcomingUserID: string | null = null;
   userProfile: UserProfileModel = new UserProfileModel();
   userProfileCard: UserProfileCardModel = new UserProfileCardModel();
   ownTweets: TweetModel[];
@@ -35,22 +35,26 @@ export class ProfileComponent implements OnInit {
   toggle4: boolean = false;
   ngOnInit(): void {
     const id = this.authService.getUserData()?.id;
-    if (id != null) {
+    if (id != undefined) {
       this.userID = id;
-    } else {
-      alert('Local storage error');
     }
+
     this.activatedRoute.params.subscribe(
       (params) => (this.upcomingUserID = params['id'])
     );
-    if (this.userID !== null && this.upcomingUserID !== null) {
-      if (this.userID === this.upcomingUserID) {
-        this.getUserProfile(this.userID);
+
+    if (this.userID !== null) {
+      if (this.upcomingUserID !== null) {
+        if (this.userID === this.upcomingUserID) {
+          this.getUserProfile(this.userID);
+        } else {
+          this.getForeignUserProfile(this.userID, this.upcomingUserID);
+        }
       } else {
-        this.getForeignUserProfile(this.userID, this.upcomingUserID);
+        alert('Routing URL error');
       }
     } else {
-      alert('Error');
+      alert('Local storage error');
     }
   }
 
@@ -86,18 +90,21 @@ export class ProfileComponent implements OnInit {
     this.toggle3 = false;
     this.toggle4 = false;
   }
+
   show2() {
     this.toggle1 = false;
     this.toggle2 = true;
     this.toggle3 = false;
     this.toggle4 = false;
   }
+
   show3() {
     this.toggle1 = false;
     this.toggle2 = false;
     this.toggle3 = true;
     this.toggle4 = false;
   }
+
   show4() {
     this.toggle1 = false;
     this.toggle2 = false;

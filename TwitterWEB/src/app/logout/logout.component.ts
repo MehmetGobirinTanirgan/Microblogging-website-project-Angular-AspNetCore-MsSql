@@ -9,21 +9,23 @@ import { AuthenticationService } from 'src/services/authentication.service';
   styleUrls: ['./logout.component.css'],
 })
 export class LogoutComponent implements OnInit {
-
-  constructor(private authService:AuthenticationService, private router:Router) { }
-userData:UserStoreModel;
+  constructor(
+    private authService: AuthenticationService,
+    private router: Router
+  ) {}
+  userData: UserStoreModel;
 
   ngOnInit(): void {
     const _userData = this.authService.getUserData();
-    if(_userData != null){
+    if (_userData != null) {
       this.userData = _userData;
-    }else{
-      alert("Local storage error");
+    } else {
+      alert('Local storage error');
     }
   }
 
-  logOut(){
+  logOut() {
     this.authService.logOut();
-    this.router.navigate([""]);
+    this.router.navigate(['']);
   }
 }

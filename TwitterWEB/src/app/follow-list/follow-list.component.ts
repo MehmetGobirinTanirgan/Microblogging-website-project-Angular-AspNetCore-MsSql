@@ -7,18 +7,19 @@ import { FollowService } from 'src/services/follow.service';
   selector: 'app-follow-list',
   templateUrl: './follow-list.component.html',
   styleUrls: ['./follow-list.component.css'],
-  providers: [FollowService],
+  providers:[FollowService]
 })
 export class FollowListComponent implements OnInit {
   constructor(
     private dataService: DataService,
     private followService: FollowService
   ) {}
-  followList: FollowListModel;
-  displayFlag: boolean;
+  followList: FollowListModel | null = null;
+  displayFlag: boolean | null = null;
   ngOnInit(): void {
-    this.followList = this.dataService.followList;
-    if (this.followList == null) {
+    if (this.dataService.followList != null) {
+      this.followList = this.dataService.followList;
+    } else{
       this.refreshData();
     }
     this.displayFlag = this.followService.getDisplayFlag();
@@ -37,11 +38,11 @@ export class FollowListComponent implements OnInit {
 
   showFollowers() {
     this.displayFlag = false;
-    this.followService.setDisplayFlag(false);
+    this.followService.setDisplayFlag(this.displayFlag);
   }
 
   showFollowings() {
     this.displayFlag = true;
-    this.followService.setDisplayFlag(true);
+    this.followService.setDisplayFlag(this.displayFlag);
   }
 }

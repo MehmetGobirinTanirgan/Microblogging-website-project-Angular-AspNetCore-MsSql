@@ -28,8 +28,8 @@ export class ProfileEditModalComponent implements OnInit {
   ) {}
   @Input() profileData: UserProfileCardModel;
   profileEditForm: FormGroup;
-  @ViewChild('editModal') private modalContent: TemplateRef<ProfileEditModalComponent>;
-  private modalRef: NgbModalRef;
+  @ViewChild('editModal') modalContent: TemplateRef<ProfileEditModalComponent>;
+  modalRef: NgbModalRef;
   profilePic: File;
   bgImage: File;
   ngOnInit(): void {
@@ -46,9 +46,9 @@ export class ProfileEditModalComponent implements OnInit {
       bgImage: [],
     });
   }
+
   open() {
     this.modalRef = this.modalService.open(this.modalContent);
-    this.modalRef.result.then();
   }
 
   addProfilePic(pic: FileList) {
@@ -62,9 +62,10 @@ export class ProfileEditModalComponent implements OnInit {
       this.bgImage = img[0];
     }
   }
+
   editProfile() {
     const userID = this.authService.getUserData()?.id;
-    if(userID != null){
+    if (userID != undefined) {
       if (this.profileEditForm.valid) {
         const updatedProfile = Object.assign({}, this.profileEditForm.value);
         const formdata = new FormData();
@@ -80,14 +81,14 @@ export class ProfileEditModalComponent implements OnInit {
         formdata.append('BackgroundImage', this.bgImage);
         this.userService.updateProfile(formdata).subscribe(
           (data) => {
-            alert('Success');
+            alert('Profile updated');
             this.modalRef.close();
           },
           (error) => alert('Profile update failed')
         );
       }
-    }else{
-      alert("Local storage error");
+    } else {
+      alert('Local storage error');
     }
   }
 }

@@ -12,20 +12,46 @@ describe('NavComponent', () => {
       'getUserData',
     ]);
     await TestBed.configureTestingModule({
-      declarations: [ NavComponent ],
-      providers:[{ provide: AuthenticationService, useValue: authServiceSpyObj }]
-    })
-    .compileComponents();
-    mockAuthService = TestBed.inject(AuthenticationService) as jasmine.SpyObj<AuthenticationService>;
+      declarations: [NavComponent],
+      providers: [
+        { provide: AuthenticationService, useValue: authServiceSpyObj },
+      ],
+    }).compileComponents();
+    mockAuthService = TestBed.inject(
+      AuthenticationService
+    ) as jasmine.SpyObj<AuthenticationService>;
   });
 
   beforeEach(() => {
     fixture = TestBed.createComponent(NavComponent);
     component = fixture.componentInstance;
-    fixture.detectChanges();
   });
 
   it('should create', () => {
     expect(component).toBeTruthy();
+  });
+
+  it('#ngOnInit should change id`s value if auth. service gets data correctly', () => {
+    const mockUserData = {
+      username: 'mockUsername',
+      fullname: 'mockFullname',
+      id: 'mockID',
+      profilePicPath: 'mockProfilePicPath',
+      token: 'mockToken',
+    };
+    mockAuthService.getUserData.and.returnValue(mockUserData);
+    fixture.detectChanges();
+
+    expect(component.id).toEqual(mockUserData.id);
+    expect(mockAuthService.getUserData).toHaveBeenCalled();
+  });
+
+  it('#ngOnInit should display alert if auth. service gets null', () => {
+    mockAuthService.getUserData.and.returnValue(null);
+    spyOn(window, 'alert');
+    fixture.detectChanges();
+
+    expect(window.alert).toHaveBeenCalledWith('Local storage error');
+    expect(mockAuthService.getUserData).toHaveBeenCalled();
   });
 });

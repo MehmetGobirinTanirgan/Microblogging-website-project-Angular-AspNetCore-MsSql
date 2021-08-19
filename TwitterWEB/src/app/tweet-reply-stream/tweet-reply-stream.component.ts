@@ -16,7 +16,7 @@ export class TweetReplyStreamComponent implements OnInit {
     private tweetService: TweetService,
     private authService: AuthenticationService
   ) {}
-  tweetReplyStream: TweetModel[] = [];
+  tweetReplyStream: TweetModel[] | null = null;
 
   ngOnInit(): void {
     this.tweetReplyStream = this.dataService.tweetReplyStream;
@@ -29,16 +29,14 @@ export class TweetReplyStreamComponent implements OnInit {
     const userID = this.authService.getUserData()?.id;
     const tweetID = this.tweetService.getTweetID();
     if (userID != null && tweetID != null) {
-      this.tweetService
-        .getTweetReplyStream(tweetID, userID)
-        .subscribe(
-          (data) => {
-            this.tweetReplyStream = data;
-          },
-          (error) => {
-            alert('Error: Cant load tweet reply stream');
-          }
-        );
+      this.tweetService.getTweetReplyStream(tweetID, userID).subscribe(
+        (data) => {
+          this.tweetReplyStream = data;
+        },
+        (error) => {
+          alert('Error: Cant load tweet reply stream');
+        }
+      );
     } else {
       alert('Local storage error');
     }
