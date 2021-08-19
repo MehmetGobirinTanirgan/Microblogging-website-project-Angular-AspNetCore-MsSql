@@ -160,24 +160,22 @@ describe('Service: Tweet', () => {
 
     beforeEach(() => {
       mockLocalStorage = new MockLocalStorage();
+      mockLocalStorage.addMockLocalStorage();
     });
 
     it('#setTweetID should save tweet id into local storage', () => {
-      mockLocalStorage.addMockLocalStorage();
       let id = '1';
       service.setTweetID(id);
       expect(localStorage.getItem('tweetID')).toEqual(id);
     });
 
     it('#getTweetID should return tweet id from local storage', () => {
-      mockLocalStorage.addMockLocalStorage();
       let id = '1';
       service.setTweetID(id);
       expect(service.getTweetID()).toEqual(id);
     });
 
     it('#getTweetID should return null if there is not tweet id in local storage', () => {
-      mockLocalStorage.addMockLocalStorage();
       expect(service.getTweetID()).toEqual(null);
     });
   });

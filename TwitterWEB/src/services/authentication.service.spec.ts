@@ -31,6 +31,12 @@ describe('Service: Authentication', () => {
   });
 
   describe('HTTP Tests', () => {
+    let mockLocalStorage: MockLocalStorage;
+
+    beforeEach(() => {
+      mockLocalStorage = new MockLocalStorage();
+      mockLocalStorage.addMockLocalStorage();
+    });
 
     it('#login should post and return expected data', () => {
       let logOutSpy = spyOn(service, 'logOut').and.callThrough();
@@ -61,10 +67,10 @@ describe('Service: Authentication', () => {
 
     beforeEach(() => {
       mockLocalStorage = new MockLocalStorage();
+      mockLocalStorage.addMockLocalStorage();
     });
 
     it('#saveData should save user data into localStorage', () => {
-      mockLocalStorage.addMockLocalStorage();
       const mockUserStorageData = mockData.mockUserStorageData;
       service.saveData(mockUserStorageData);
       expect(localStorage.getItem('user')).toEqual(
@@ -73,7 +79,6 @@ describe('Service: Authentication', () => {
     });
 
     it('#saveData should override user data', () => {
-      mockLocalStorage.addMockLocalStorage();
       const mockUserStorageData = mockData.mockUserStorageData;
       localStorage.setItem('user', 'mockUserData');
       service.saveData(mockUserStorageData);
@@ -83,7 +88,6 @@ describe('Service: Authentication', () => {
     });
 
     it('#getToken should return token when user data is saved into localstorage', () => {
-      mockLocalStorage.addMockLocalStorage();
       const mockUserStorageData = mockData.mockUserStorageData;
       service.saveData(mockUserStorageData);
       const token = service.getToken();
@@ -91,13 +95,11 @@ describe('Service: Authentication', () => {
     });
 
     it('#getToken should return null when user data is not saved into localstorage', () => {
-      mockLocalStorage.addMockLocalStorage();
       const token = service.getToken();
       expect(token).toEqual(null);
     });
 
     it('#getTUserData should return data when user data is saved into localstorage', () => {
-      mockLocalStorage.addMockLocalStorage();
       const mockUserStorageData = mockData.mockUserStorageData;
       service.saveData(mockUserStorageData);
       const userObj = service.getUserData();
@@ -111,13 +113,11 @@ describe('Service: Authentication', () => {
     });
 
     it('#getUserData should return null when there is none user data in localStorage', () => {
-      mockLocalStorage.addMockLocalStorage();
       const userObj = service.getUserData();
       expect(userObj).toEqual(null);
     });
 
     it('#logOut should remove user from localStorage', () => {
-      mockLocalStorage.addMockLocalStorage();
       const mockUserStorageData = mockData.mockUserStorageData;
       service.saveData(mockUserStorageData);
       service.logOut();
@@ -125,7 +125,6 @@ describe('Service: Authentication', () => {
     });
 
     it('#isLoggedIn should return true when user is logged in with new generated token', () => {
-      mockLocalStorage.addMockLocalStorage();
       const mockUserStorageData = mockData.mockUserStorageData;
       mockUserStorageData.token = mockData.getNewToken();
       service.saveData(mockUserStorageData);
@@ -133,12 +132,10 @@ describe('Service: Authentication', () => {
     });
 
     it('#isLoggedIn should return false when user is not logged in ', () => {
-      mockLocalStorage.addMockLocalStorage();
       expect(service.isLoggedIn()).toBeFalse();
     });
 
     it('#isLoggedIn should return false when token is expired', () => {
-      mockLocalStorage.addMockLocalStorage();
       const mockUserStorageData = mockData.mockUserStorageData;
       mockUserStorageData.token = mockData.getExpiredToken();
       service.saveData(mockUserStorageData);

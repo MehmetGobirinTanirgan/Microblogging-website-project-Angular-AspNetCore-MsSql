@@ -83,31 +83,28 @@ describe('Service: Follow', () => {
 
     beforeEach(() => {
       mockLocalStorage = new MockLocalStorage();
+      mockLocalStorage.addMockLocalStorage();
     });
 
     it('#setDisplayFlag should set flag into localStorage', () => {
-      mockLocalStorage.addMockLocalStorage();
       service.setDisplayFlag(mockData.flag);
       let flagFromStorage = JSON.parse(localStorage.getItem('displayFlag')!);
       expect(flagFromStorage).toEqual(mockData.flag);
     });
 
     it('#getDisplayFlag should get flag from localStorage', () => {
-      mockLocalStorage.addMockLocalStorage();
       service.setDisplayFlag(mockData.flag);
       let flagFromStorage = service.getDisplayFlag();
       expect(flagFromStorage).toEqual(mockData.flag);
     });
 
     it('#setUserID should set user`s id into localStorage', () => {
-      mockLocalStorage.addMockLocalStorage();
       service.setUserID(mockData.id1);
       let idFromStorage = localStorage.getItem('userID');
       expect(idFromStorage).toEqual(mockData.id1);
     });
 
     it('#getUserID should get user`s id from localStorage', () => {
-      mockLocalStorage.addMockLocalStorage();
       service.setUserID(mockData.id1);
       let idFromStorage = service.getUserID();
       expect(idFromStorage).toEqual(mockData.id1);
