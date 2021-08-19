@@ -21,7 +21,7 @@ export class HomeComponent implements OnInit {
 
   getAllTweets() {
     const userID = this.authService.getUserData()?.id;
-    if(userID != null){
+    if(userID != undefined){
       this.tweetService.getAllTweets(userID).subscribe(
         (data) => (this.tweets = data),
         (error) => alert("Error: Can't load tweets")
@@ -29,5 +29,9 @@ export class HomeComponent implements OnInit {
     }else{
       alert("Local storage error");
     }
+  }
+
+  addNewTweet(tweet:any){
+    this.tweets.unshift(JSON.parse(tweet));
   }
 }

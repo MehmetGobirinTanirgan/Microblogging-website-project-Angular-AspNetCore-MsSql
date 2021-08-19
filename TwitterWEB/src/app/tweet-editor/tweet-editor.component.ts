@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { UserStoreModel } from 'src/models/UserStoreModel';
 import { AuthenticationService } from 'src/services/authentication.service';
@@ -16,6 +16,7 @@ export class TweetEditorComponent implements OnInit {
     private formBuilder: FormBuilder,
     private tweetService: TweetService,
   ) {}
+  @Output() addedNewTweet: EventEmitter<any> = new EventEmitter();
   tweetSubmitForm: FormGroup;
   userData: UserStoreModel;
   imageFiles: FileList;
@@ -58,6 +59,7 @@ export class TweetEditorComponent implements OnInit {
       this.tweetService.addNewTweet(formData).subscribe(
         (data) => {
           this.tweetSubmitForm.reset();
+          this.addedNewTweet.emit(JSON.stringify(data));
         },
         (error) => {
           alert('Error: Tweet posting failed');
