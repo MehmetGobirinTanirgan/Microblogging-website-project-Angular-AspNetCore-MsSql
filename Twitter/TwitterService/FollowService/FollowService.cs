@@ -1,34 +1,32 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using TwitterModel.Models;
-using TwitterRepository.FollowRepository;
+using TwitterRepository.UnitOfWork;
 
 namespace TwitterService.FollowService
 {
     public class FollowService : IFollowService
     {
-        private readonly IFollowRepository followRepository;
+        private readonly IUnitOfWork unitOfWork;
 
-        public FollowService(IFollowRepository followRepository)
+        public FollowService(IUnitOfWork unitOfWork)
         {
-            this.followRepository = followRepository;
+            this.unitOfWork = unitOfWork;
         }
 
         public async Task AddFollowAsync(Follow follow)
         {
-            await followRepository.AddFollowAsync(follow);
+            await unitOfWork.Follows.AddFollowAsync(follow);
+            await unitOfWork.SaveAsync();
         }
 
         public async Task RemoveFollowAsync(Follow follow)
         {
-            await followRepository.RemoveFollowAsync(follow);
+            await unitOfWork.Follows.RemoveFollowAsync(follow);
+            await unitOfWork.SaveAsync();
         }
         public async Task<bool> AnyFollowAsync(Follow follow)
         {
-            return await followRepository.AnyFollowAsync(follow);
+            return await unitOfWork.Follows.AnyFollowAsync(follow);
         }
     }
 }

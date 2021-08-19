@@ -56,9 +56,9 @@ namespace TwitterRepository.UserRepository
                 .Include(x => x.Followings).ThenInclude(y =>y.FollowingUser)
                 .FirstOrDefaultAsync();
         }
-        public async Task UpdateUserAsync(User user)
+        public void UpdateUser(User user)
         {
-            await UpdateAsync(user);
+            Update(user);
         }
 
         public async Task<List<User>> SearchUsersAsync(string searchText)

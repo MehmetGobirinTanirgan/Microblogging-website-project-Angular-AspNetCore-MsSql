@@ -15,7 +15,7 @@ namespace TwitterRepository.UserRepository
         Task<User> GetUserWithFollowersAsync(Guid id);
         Task<User> GetUserWithFollowingsAsync(Guid id);
         Task<User> GetUserWithFollowersAndFollowingsAsync(Guid id);
-        Task UpdateUserAsync(User user);
+        void UpdateUser(User user);
         Task<List<User>> SearchUsersAsync(string searchText);
     }
 }

@@ -13,7 +13,7 @@ namespace TwitterRepository.TweetRepository
         Task<List<Tweet>> GetUserOwnTweetsAsync(Guid id);
         Task<List<Tweet>> GetForeignUserOwnTweetsAsync(Guid id);
         Task<Tweet> GetTweetWithReplyTweetsAsync(Guid id);
-        Task UpdateTweetAsync(Tweet tweet);
+        void UpdateTweet(Tweet tweet);
         Task DeleteTweetAsync(Guid id);
     }
 }

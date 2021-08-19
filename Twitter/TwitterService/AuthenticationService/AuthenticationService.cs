@@ -6,29 +6,29 @@ using System.Text;
 using System.Threading.Tasks;
 using TwitterModel.DTO;
 using TwitterModel.Models;
-using TwitterRepository.UserRepository;
+using TwitterRepository.UnitOfWork;
 
 namespace TwitterService.AuthenticationService
 {
     public class AuthenticationService : IAuthenticationService
     {
-        private readonly IUserRepository userRepository;
-        public AuthenticationService(IUserRepository userRepository)
+        private readonly IUnitOfWork unitOfWork;
+        public AuthenticationService(IUnitOfWork unitOfWork)
         {
-            this.userRepository = userRepository;
+            this.unitOfWork = unitOfWork;
         }
 
         public async Task<HomePageDTO> AuthenticateAsync(string usernameOrPhoneOrEmail, string password, string secretKey)
         {
             var loggingUser = new User();
 
-            if (!await userRepository.AnyAsync(x => (x.Username.Equals(usernameOrPhoneOrEmail) || x.EmailAddress.Equals(usernameOrPhoneOrEmail) || x.PhoneNumber.Equals(usernameOrPhoneOrEmail)) && x.Password.Equals(password)))
+            if (!await unitOfWork.Users.AnyAsync(x => (x.Username.Equals(usernameOrPhoneOrEmail) || x.EmailAddress.Equals(usernameOrPhoneOrEmail) || x.PhoneNumber.Equals(usernameOrPhoneOrEmail)) && x.Password.Equals(password)))
             {
                 return null;
             }
             else
             {
-                loggingUser = await userRepository.GetUserWithAllTweetsAsync(x => (x.Username.Equals(usernameOrPhoneOrEmail) || x.EmailAddress.Equals(usernameOrPhoneOrEmail) || x.PhoneNumber.Equals(usernameOrPhoneOrEmail))
+                loggingUser = await unitOfWork.Users.GetUserWithAllTweetsAsync(x => (x.Username.Equals(usernameOrPhoneOrEmail) || x.EmailAddress.Equals(usernameOrPhoneOrEmail) || x.PhoneNumber.Equals(usernameOrPhoneOrEmail))
                 && x.Password.Equals(password));
             }
 

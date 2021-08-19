@@ -9,10 +9,9 @@ namespace TwitterRepository.SimpleEntityRepository
     public interface ISimpleEntityRepository<T> where T : SimpleEntity
     {
         Task AddAsync(T entity);
-        Task UpdateAsync(T entity);
+        void Update(T entity);
         Task DeleteAsync(Guid id);
         Task DeleteAsync(Expression<Func<T, bool>> exp);
-        Task SaveAsync();
         Task<bool> AnyAsync(Expression<Func<T, bool>> exp);     
         Task<T> GetOneByIDAsync(Guid id);
         Task<T> GetOneByExpressionAsync(Expression<Func<T, bool>> exp);

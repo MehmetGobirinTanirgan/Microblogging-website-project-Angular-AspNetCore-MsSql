@@ -21,25 +21,18 @@ namespace TwitterRepository.MTMEntityRepository
         public async Task AddAsync(T entity)
         {
             await twitterContext.Set<T>().AddAsync(entity);
-            await twitterContext.SaveChangesAsync();
         }
-        public async Task UpdateAsync(T entity)
+        public void Update(T entity)
         {
             twitterContext.Set<T>().Update(entity);
-            await twitterContext.SaveChangesAsync();
         }
 
         public async Task DeleteAsync(Expression<Func<T, bool>> exp)
         {
             var entity = await GetOneByExpressionAsync(exp);
             twitterContext.Set<T>().Remove(entity);
-            await twitterContext.SaveChangesAsync();
         }
 
-        public async Task SaveAsync()
-        {
-            await twitterContext.SaveChangesAsync();
-        }
         public async Task<bool> AnyAsync(Expression<Func<T, bool>> exp)
         {
             return await Task.FromResult(twitterContext.Set<T>().AsNoTracking().Any(exp));

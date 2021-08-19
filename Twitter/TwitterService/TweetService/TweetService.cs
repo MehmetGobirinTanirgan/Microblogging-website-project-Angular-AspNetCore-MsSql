@@ -2,66 +2,55 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using TwitterModel.Models;
-using TwitterRepository.FollowRepository;
-using TwitterRepository.LikeRepository;
-using TwitterRepository.TweetImageRepository;
-using TwitterRepository.TweetRepository;
+using TwitterRepository.UnitOfWork;
 
 namespace TwitterService.TweetService
 {
     public class TweetService : ITweetService
     {
-        private readonly ITweetRepository tweetRepository;
-        private readonly ILikeRepository likeRepository;
-        private readonly IFollowRepository followRepository;
-        private readonly ITweetImageRepository tweetImageRepository;
-
-        public TweetService(ITweetRepository tweetRepository, ILikeRepository likeRepository, IFollowRepository followRepository
-            , ITweetImageRepository tweetImageRepository)
+        private readonly IUnitOfWork unitOfWork;
+        public TweetService(IUnitOfWork unitOfWork)
         {
-            this.tweetRepository = tweetRepository;
-            this.likeRepository = likeRepository;
-            this.followRepository = followRepository;
-            this.tweetImageRepository = tweetImageRepository;
+            this.unitOfWork = unitOfWork;
         }
 
         public async Task<Tweet> GetTweetAsync(Guid id)
         {
-            return await tweetRepository.GetTweetAsync(id);
+            return await unitOfWork.Tweets.GetTweetAsync(id);
         }
 
         public async Task<List<Tweet>> GetUserOwnTweetsAsync(Guid id)
         {
-            return await tweetRepository.GetUserOwnTweetsAsync(id);
+            return await unitOfWork.Tweets.GetUserOwnTweetsAsync(id);
         }
 
         public async Task<List<Tweet>> GetForeignUserOwnTweetsAsync(Guid id)
         {
-            return await tweetRepository.GetForeignUserOwnTweetsAsync(id);
+            return await unitOfWork.Tweets.GetForeignUserOwnTweetsAsync(id);
         }
 
         public async Task<List<Tweet>> GetUserLikedTweetsAsync(Guid id)
         {
-            return await likeRepository.GetUserLikedTweetsAsync(id);
+            return await unitOfWork.Likes.GetUserLikedTweetsAsync(id);
         }
         public async Task<List<Tweet>> GetForeignUserLikedTweetsAsync(Guid id)
         {
-            return await likeRepository.GetForeignUserLikedTweetsAsync(id);
+            return await unitOfWork.Likes.GetForeignUserLikedTweetsAsync(id);
         }
 
         public async Task<List<Tweet>> GetFollowingUsersTweetsAsync(Guid id)
         {
-            return await followRepository.GetFollowingUsersTweetsAsync(id);
+            return await unitOfWork.Follows.GetFollowingUsersTweetsAsync(id);
         }
 
         public async Task<Tweet> GetTweetWithReplyTweetsAsync(Guid id)
         {
-            return await tweetRepository.GetTweetWithReplyTweetsAsync(id);
+            return await unitOfWork.Tweets.GetTweetWithReplyTweetsAsync(id);
         }
 
         public async Task<Guid> AddNewTweetAsync(Tweet newTweet, List<string> imagePaths)
         {
-            await tweetRepository.CreateAsync(newTweet);
+            await unitOfWork.Tweets.CreateAsync(newTweet);
             if (imagePaths != null)
             {
                 foreach (var imagePath in imagePaths)
@@ -71,50 +60,56 @@ namespace TwitterService.TweetService
                         ImagePath = imagePath,
                         TweetID = newTweet.ID,
                     };
-                    await tweetImageRepository.AddAsync(tweetImage);
+                    await unitOfWork.TweetImages.AddAsync(tweetImage);
                 }
             }
+            await unitOfWork.SaveAsync();
             return newTweet.ID;
         }
 
         public async Task UpdateTweetAsync(Tweet tweet)
         {
-            await tweetRepository.UpdateTweetAsync(tweet);
+            unitOfWork.Tweets.UpdateTweet(tweet);
+            await unitOfWork.SaveAsync();
         }
 
         public async Task DeleteTweetAsync(Guid id)
         {
-            await tweetRepository.DeleteTweetAsync(id);
+            await unitOfWork.Tweets.DeleteTweetAsync(id);
+            await unitOfWork.SaveAsync();
         }
 
         public async Task<bool> AddLikeAsync(Like like)
         {
-            if (!await likeRepository.AnyAsync(x => x.TweetID.Equals(like.TweetID) && x.UserID.Equals(like.UserID)))
+            if (!await unitOfWork.Likes.AnyAsync(x => x.TweetID.Equals(like.TweetID) && x.UserID.Equals(like.UserID)))
             {
-                await likeRepository.AddLikeAsync(like);
+                await unitOfWork.Likes.AddLikeAsync(like);
                 var tweet = await GetTweetAsync(like.TweetID);
                 tweet.LikeCounter++;
                 await UpdateTweetAsync(tweet);
                 return true;
             }
+            await unitOfWork.SaveAsync();
             return false;
         }
 
         public async Task<bool> RemoveLikeAsync(Like like)
         {
-            if (await likeRepository.AnyAsync(x => x.TweetID.Equals(like.TweetID) && x.UserID.Equals(like.UserID)))
+            if (await unitOfWork.Likes.AnyAsync(x => x.TweetID.Equals(like.TweetID) && x.UserID.Equals(like.UserID)))
             {
-                await likeRepository.DeleteAsync(x => x.TweetID.Equals(like.TweetID) && x.UserID.Equals(like.UserID));
+                await unitOfWork.Likes.DeleteAsync(x => x.TweetID.Equals(like.TweetID) && x.UserID.Equals(like.UserID));
                 var tweet = await GetTweetAsync(like.TweetID);
                 tweet.LikeCounter--;
                 await UpdateTweetAsync(tweet);
                 return true;
             }
+            await unitOfWork.SaveAsync();
             return false;
         }
+
         public async Task<TweetImage> GetTweetImageAsync(Guid id)
         {
-            return await tweetImageRepository.GetTweetImageWithTweetAndUserAsync(id);
+            return await unitOfWork.TweetImages.GetTweetImageWithTweetAndUserAsync(id);
         }
     }
 }

@@ -54,9 +54,9 @@ namespace TwitterRepository.TweetRepository
                 .FirstOrDefaultAsync();
         }
 
-        public async Task UpdateTweetAsync(Tweet tweet)
+        public void UpdateTweet(Tweet tweet)
         {
-             await UpdateAsync(tweet);
+            Update(tweet);
         }
 
         public async Task DeleteTweetAsync(Guid id)

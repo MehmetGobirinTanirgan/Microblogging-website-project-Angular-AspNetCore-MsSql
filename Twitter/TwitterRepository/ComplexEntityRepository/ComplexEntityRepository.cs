@@ -21,29 +21,24 @@ namespace TwitterRepository.ComplexEntityRepository
         public async Task CreateAsync(T entity)
         {
             await twitterContext.Set<T>().AddAsync(entity);
-            await twitterContext.SaveChangesAsync();
         }
-        public async Task UpdateAsync(T entity)
+
+        public void Update(T entity)
         {
             twitterContext.Set<T>().Update(entity);
-            await twitterContext.SaveChangesAsync();
         }
-        public async Task DeleteAsync(T entity)
+
+        public void Delete(T entity)
         {
             entity.Status = ComplexEntityStatus.Passive;
-            await UpdateAsync(entity);
+            Update(entity);
         }
 
         public async Task DeleteAsync(Guid id)
         {
             T entity = await GetOneByIDAsync(id);
             entity.Status = ComplexEntityStatus.Passive;
-            await UpdateAsync(entity);
-        }
-
-        public async Task SaveAsync()
-        {
-            await twitterContext.SaveChangesAsync();
+            Update(entity);
         }
 
         public async Task<bool> AnyAsync(Expression<Func<T, bool>> exp)

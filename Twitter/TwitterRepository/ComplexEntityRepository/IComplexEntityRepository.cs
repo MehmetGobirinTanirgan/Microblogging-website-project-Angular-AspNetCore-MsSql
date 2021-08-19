@@ -10,10 +10,9 @@ namespace TwitterRepository.ComplexEntityRepository
     public interface IComplexEntityRepository<T> where T : ComplexEntity
     {
         Task CreateAsync(T entity);
-        Task UpdateAsync(T entity);
-        Task DeleteAsync(T entity);
+        void Update(T entity);
+        void Delete(T entity);
         Task DeleteAsync(Guid id);      
-        Task SaveAsync();
         Task<bool> AnyAsync(Expression<Func<T, bool>> exp);
         Task<T> GetOneByIDAsync(Guid id);
         Task<T> GetOneByExpressionAsync(Expression<Func<T, bool>> exp);
