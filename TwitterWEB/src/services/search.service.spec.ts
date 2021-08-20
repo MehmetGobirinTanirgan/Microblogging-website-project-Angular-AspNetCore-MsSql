@@ -23,6 +23,10 @@ describe('Service: Search', () => {
     expect(service).toBeTruthy();
   });
 
+  afterEach(() => {
+    mockHttp.verify();
+  });
+
   it('#getSearchResults should return expected data', () => {
     const searchText = 'mockText';
     const mockResults = [

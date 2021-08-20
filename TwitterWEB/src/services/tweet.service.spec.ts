@@ -20,6 +20,10 @@ describe('Service: Tweet', () => {
     mockHttp = TestBed.inject(HttpTestingController);
   });
 
+  afterEach(() => {
+    mockHttp.verify();
+  });
+
   it('should ...', () => {
     expect(service).toBeTruthy();
   });

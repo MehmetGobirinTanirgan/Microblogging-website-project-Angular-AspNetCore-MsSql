@@ -22,6 +22,10 @@ describe('Service: Follow', () => {
     mockData = new MockData();
   });
 
+  afterEach(() => {
+    mockHttp.verify();
+  });
+
   it('should ...', () => {
     expect(service).toBeTruthy();
   });

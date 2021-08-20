@@ -11,6 +11,7 @@ describe('Service: User', () => {
   let service: UserService;
   let mockHttp: HttpTestingController;
   let mockData: MockData;
+
   beforeEach(() => {
     TestBed.configureTestingModule({
       imports: [HttpClientTestingModule],
@@ -19,6 +20,10 @@ describe('Service: User', () => {
     service = TestBed.inject(UserService);
     mockHttp = TestBed.inject(HttpTestingController);
     mockData = new MockData();
+  });
+
+  afterEach(() => {
+    mockHttp.verify();
   });
 
   it('should ...', () => {
