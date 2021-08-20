@@ -29,5 +29,21 @@ namespace TwitterModel.Models
         public virtual List<Like> UsersWhoLiked { get; set; }
         public virtual List<Tweet> ReplyTweets { get; set; }
         public virtual List<Tweet> Retweets { get; set; }
+
+        public override bool Equals(object obj)
+        {
+            var theOther = obj as Tweet;
+            if (theOther == null)
+            {
+                return false;
+            }
+
+            return ID == theOther.ID && UserID == theOther.UserID;
+        }
+
+        public override int GetHashCode()
+        {
+            return HashCode.Combine(ID, UserID);
+        }
     }
 }

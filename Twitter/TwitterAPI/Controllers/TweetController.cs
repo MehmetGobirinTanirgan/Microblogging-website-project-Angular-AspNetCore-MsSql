@@ -44,8 +44,8 @@ namespace TwitterAPI.Controllers
 
                 if (userTweets.Count > 0 || userLikedTweets.Count > 0 || followingUsersTweets.Count > 0)
                 {
-                    userTweets = userTweets.Except(userLikedTweets, new TweetComparer()).ToList();
-                    followingUsersTweets = followingUsersTweets.Except(userLikedTweets, new TweetComparer()).ToList();
+                    userTweets = userTweets.Except(userLikedTweets).ToList();
+                    followingUsersTweets = followingUsersTweets.Except(userLikedTweets).ToList();
                     userTweets.ForEach(x =>
                     {
                         x.OwnershipStatus = true;
