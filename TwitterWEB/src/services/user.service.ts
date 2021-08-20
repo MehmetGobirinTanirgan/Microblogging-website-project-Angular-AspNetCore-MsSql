@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { SignUpModel } from 'src/models/SignUpModel';
 import { UserProfileModel } from 'src/models/UserProfileModel';
@@ -26,16 +26,9 @@ export class UserService {
   }
 
   updateProfile(updatedProfile: FormData) {
-    let HttpOptions: Object = {
-      headers: new Headers({
-        'Content-Type': 'multipart/form-data',
-      }),
-      observe: 'response',
-    };
-
     return this.httpClient.put('Profile/UpdateProfile',
       updatedProfile,
-      HttpOptions
+      {observe: 'response'}
     );
   }
 }
