@@ -34,6 +34,7 @@
   left: 0px;
   right: -15px;
   width: max-content;
+  overflow: auto;
  }
 
   .scrollable2::-webkit-scrollbar {
