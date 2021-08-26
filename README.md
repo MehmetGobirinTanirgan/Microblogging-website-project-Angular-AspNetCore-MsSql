@@ -34,3 +34,8 @@ npm install --save-dev @angular-devkit/build-angular
 
 3. For Cloudinary you can create a free account to store your images. [To sign up for free](https://cloudinary.com/users/register/free).
 
+
+4. Database creation:
+    - Open package manager console in Visual Studio.
+    - Select 'TwitterModel' as default project in package manager console.
+    - And then run this code: ``` update-database ```
