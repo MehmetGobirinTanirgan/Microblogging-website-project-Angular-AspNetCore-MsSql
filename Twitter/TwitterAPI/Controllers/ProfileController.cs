@@ -145,11 +145,11 @@ namespace TwitterAPI.Controllers
 
                 if(profileEditDTO.ProfilePic != null)
                 {
-                    profilePicPath = upload.ImageUpload(profileEditDTO.ProfilePic);
+                    profilePicPath = await upload.ImageUploadAsync(profileEditDTO.ProfilePic);
                 }
                 if(profileEditDTO.BackgroundImage != null)
                 {
-                    bgImagePath = upload.ImageUpload(profileEditDTO.BackgroundImage);
+                    bgImagePath = await upload.ImageUploadAsync(profileEditDTO.BackgroundImage);
                 }
 
                 var user = await userService.GetUserByIDAsync(profileEditDTO.ID);

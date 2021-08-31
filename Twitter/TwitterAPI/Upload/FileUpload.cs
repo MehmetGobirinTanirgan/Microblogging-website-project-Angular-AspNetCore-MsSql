@@ -19,7 +19,7 @@ namespace TwitterAPI.Upload
             this.cloudinarySettings = cloudinarySettings;
         }
 
-        public List<string> ImageUpload(List<IFormFile> ImageFiles)
+        public async Task<List<string>> ImageUploadAsync(List<IFormFile> ImageFiles)
         {
             Account account = new Account()
             {
@@ -42,7 +42,7 @@ namespace TwitterAPI.Upload
                         {
                             File = new FileDescription(image.FileName, fileStream)
                         };
-                        uploadResult = cloudinary.Upload(uploadParams);
+                        uploadResult = await cloudinary.UploadAsync(uploadParams);
                     }
 
                     if (uploadResult == null)
@@ -57,7 +57,7 @@ namespace TwitterAPI.Upload
             return null;
         }
 
-        public string ImageUpload(IFormFile ImageFile)
+        public async Task<string> ImageUploadAsync(IFormFile ImageFile)
         {
             Account account = new Account()
             {
@@ -77,7 +77,7 @@ namespace TwitterAPI.Upload
                     {
                         File = new FileDescription(ImageFile.FileName, fileStream)
                     };
-                    uploadResult = cloudinary.Upload(uploadParams);
+                    uploadResult = await cloudinary.UploadAsync(uploadParams);
                 }
 
                 if (uploadResult == null)

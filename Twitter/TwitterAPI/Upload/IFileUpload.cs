@@ -8,6 +8,7 @@ namespace TwitterAPI.Upload
 {
     public interface IFileUpload
     {
-        List<string> ImageUpload(List<IFormFile> ImageFiles); 
+        Task<List<string>> ImageUploadAsync(List<IFormFile> ImageFiles);
+        Task<string> ImageUploadAsync(IFormFile ImageFile);
     }
 }

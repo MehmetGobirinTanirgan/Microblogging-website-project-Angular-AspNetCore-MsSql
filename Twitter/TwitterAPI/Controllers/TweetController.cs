@@ -89,7 +89,7 @@ namespace TwitterAPI.Controllers
 
                 if (newTweetDTO.ImageFiles != null)
                 {
-                    uploadResult = upload.ImageUpload(newTweetDTO.ImageFiles);
+                    uploadResult = await upload.ImageUploadAsync(newTweetDTO.ImageFiles);
 
                     if (uploadResult == null)
                     {
@@ -175,7 +175,7 @@ namespace TwitterAPI.Controllers
 
                 if (newReplyTweetDTO.ImageFiles != null)
                 {
-                    uploadResult = upload.ImageUpload(newReplyTweetDTO.ImageFiles);
+                    uploadResult = await upload.ImageUploadAsync(newReplyTweetDTO.ImageFiles);
 
                     if (uploadResult == null)
                     {
