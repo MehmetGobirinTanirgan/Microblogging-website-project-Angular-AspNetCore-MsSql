@@ -82,11 +82,12 @@ describe('Service: User', () => {
   });
 
   it('#updateProfile should send new data', () => {
+   const expectedMockData = mockData.mockUserProfileCard;
     let formData = new FormData();
     formData.append('fullname', 'mockFullname');
     formData.append('location', 'mockLocation');
     service.updateProfile(formData).subscribe((res) => {
-      expect(res.body).toEqual('');
+      expect(res.body).toEqual(expectedMockData);
       expect(res.status).toBe(200);
       expect(res.ok).toBeTrue();
       expect(res.statusText).toBe('OK');
@@ -98,7 +99,7 @@ describe('Service: User', () => {
 
     expect(req.request.method).toEqual('PUT');
     expect(req.request.body).toEqual(formData);
-    req.flush('');
+    req.flush(expectedMockData);
   });
 });
 

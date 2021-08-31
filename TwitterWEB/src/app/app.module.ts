@@ -23,8 +23,8 @@ import { MainLayoutModule } from './main-layout/main-layout.module';
     LoginComponent,
   ],
   imports: [
-    BrowserModule,
     AppRoutingModule,
+    BrowserModule,
     HttpClientModule,
     ReactiveFormsModule,
     NgbModule,

@@ -5,6 +5,7 @@ import { HomeComponent } from './home.component';
 import { TweetService } from 'src/services/tweet.service';
 import { of, throwError } from 'rxjs';
 import { HttpResponse } from '@angular/common/http';
+import { NO_ERRORS_SCHEMA } from '@angular/core';
 
 describe('HomeComponent', () => {
   let component: HomeComponent;
@@ -24,6 +25,7 @@ describe('HomeComponent', () => {
       providers: [
         { provide: AuthenticationService, useValue: authServiceSpyObj },
       ],
+      schemas:[NO_ERRORS_SCHEMA]
     })
     .overrideProvider(TweetService,{useValue:tweetServiceSpyObj})
     .compileComponents();

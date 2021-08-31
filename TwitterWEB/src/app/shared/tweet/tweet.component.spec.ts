@@ -1,5 +1,6 @@
 import { HttpResponse } from '@angular/common/http';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { Router } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
@@ -49,6 +50,7 @@ describe('TweetComponent', () => {
         { provide: AuthenticationService, useValue: authServiceSpyObj },
         { provide: DataService, useValue: dataServiceSpy },
       ],
+      schemas:[NO_ERRORS_SCHEMA]
     })
       .overrideProvider(TweetService, { useValue: tweetServiceSpyObj })
       .overrideProvider(FollowService, { useValue: followServiceSpyObj })

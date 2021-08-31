@@ -1,3 +1,4 @@
+import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { AuthenticationService } from 'src/services/authentication.service';
 
@@ -16,6 +17,7 @@ describe('NavComponent', () => {
       providers: [
         { provide: AuthenticationService, useValue: authServiceSpyObj },
       ],
+      schemas:[NO_ERRORS_SCHEMA]
     }).compileComponents();
     mockAuthService = TestBed.inject(
       AuthenticationService

@@ -1,5 +1,6 @@
 import { HttpResponse } from '@angular/common/http';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ActivatedRoute } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
@@ -28,11 +29,12 @@ describe('ProfileComponent', () => {
     };
     await TestBed.configureTestingModule({
       declarations: [ProfileComponent],
-      imports: [HttpClientTestingModule, RouterTestingModule],
+      imports: [HttpClientTestingModule, RouterTestingModule.withRoutes([])],
       providers: [
         { provide: AuthenticationService, useValue: authServiceSpyObj },
         { provide: ActivatedRoute, useValue: mockActivatedRoute },
       ],
+      schemas:[NO_ERRORS_SCHEMA]
     })
       .overrideProvider(UserService, { useValue: userServiceSpyObj })
       .compileComponents();

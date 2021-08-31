@@ -1,14 +1,17 @@
 import {
   Component,
+  EventEmitter,
   Injectable,
   Input,
   OnInit,
+  Output,
   TemplateRef,
   ViewChild,
 } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { UserProfileCardModel } from 'src/models/UserProfileCardModel';
+import { UserStoreModel } from 'src/models/UserStoreModel';
 import { AuthenticationService } from 'src/services/authentication.service';
 import { UserService } from 'src/services/user.service';
 
@@ -27,6 +30,7 @@ export class ProfileEditModalComponent implements OnInit {
     private authService: AuthenticationService
   ) {}
   @Input() profileData: UserProfileCardModel;
+  @Output() sendUpdatedUserData:EventEmitter<string> = new EventEmitter<string>();
   profileEditForm: FormGroup;
   @ViewChild('editModal') modalContent: TemplateRef<ProfileEditModalComponent>;
   modalRef: NgbModalRef;
@@ -83,6 +87,7 @@ export class ProfileEditModalComponent implements OnInit {
           (data) => {
             alert('Profile updated');
             this.modalRef.close();
+            this.sendUpdatedUserData.emit(JSON.stringify(data.body));
           },
           (error) => alert('Profile update failed')
         );

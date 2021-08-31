@@ -47,7 +47,7 @@
             <i class="fas fa-map-marker-alt"></i> {{userProfileCard.location}}
           </h6>
           <div *ngIf="userProfileCard.personalWebSiteURL != null" >
-            <h6 *ngIf="userProfileCard.personalWebSiteURL !== null" style="margin-left:5px;" id="user-personal-url">
+            <h6 *ngIf="userProfileCard.personalWebSiteURL !== null" style="margin-left:7px;" id="user-personal-url">
               <i class="fas fa-link" style="margin-right: 2px;"></i><a href="userProfileCard.personalWebSiteURL">
                 <label
                   *ngIf="userProfileCard.personalWebSiteURL.length > 30; else shortVer">{{userProfileCard.personalWebSiteURL
@@ -56,7 +56,7 @@
               </a>
             </h6>
           </div>
-          <h6 class="text-muted">
+          <h6 class="text-muted" [ngStyle]="{'margin-left': (userProfileCard.location !== null || userProfileCard.personalWebSiteURL !== null) ? '8px': '0'}">
             <i class="far fa-calendar-alt"></i> Joined
             {{userProfileCard.createdDate | date:'MMM y'}}
           </h6>
@@ -74,7 +74,7 @@
       </ul>
     </div>
   </div>
-  <app-profile-edit-modal #editModal *ngIf="userProfileCard.followFlag == null" [profileData]="userProfileCard">
+  <app-profile-edit-modal (sendUpdatedUserData) = 'updateProfile($event)' #editModal *ngIf="userProfileCard.followFlag == null" [profileData]="userProfileCard">
   </app-profile-edit-modal>
 
 </div>

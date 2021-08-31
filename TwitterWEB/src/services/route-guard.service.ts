@@ -12,7 +12,7 @@ constructor(private router:Router,private authService:AuthenticationService) { }
     if(flag){
       return true;
     }
-    this.router.navigate(["login"]);
+    this.router.navigate([""]);
     return false;
   }
 

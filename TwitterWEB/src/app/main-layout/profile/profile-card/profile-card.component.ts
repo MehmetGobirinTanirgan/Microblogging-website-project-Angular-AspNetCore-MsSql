@@ -1,6 +1,7 @@
 import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { UserProfileCardModel } from 'src/models/UserProfileCardModel';
+import { UserStoreModel } from 'src/models/UserStoreModel';
 import { AuthenticationService } from 'src/services/authentication.service';
 import { DataService } from 'src/services/data.service';
 import { FollowService } from 'src/services/follow.service';
@@ -73,5 +74,18 @@ export class ProfileCardComponent implements OnInit {
         alert("Can't load follow list");
       }
     );
+  }
+
+  updateProfile(updatedProfileStr:string){
+    const updatedUserProfileData:UserProfileCardModel = JSON.parse(updatedProfileStr);
+    this.userProfileCard = updatedUserProfileData;
+    const updatedUserData:UserStoreModel = {
+      id:updatedUserProfileData.id,
+      profilePicPath: updatedUserProfileData.profilePicPath,
+      username: updatedUserProfileData.username,
+      fullname: updatedUserProfileData.fullname,
+      token: this.authService.getToken()!,
+    }
+    this.authService.saveData(updatedUserData);
   }
 }
