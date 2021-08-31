@@ -36,7 +36,6 @@ namespace TwitterAPI.AutoMappers.UserMapper
                 .ForPath(f => f.UserProfileCard.FollowerCounter, m => m.MapFrom(u => u.FollowerCounter))
                 .ForPath(f => f.UserProfileCard.FollowingCounter, m => m.MapFrom(u => u.FollowingCounter));
 
-            CreateMap<User, ProfileEditModalDTO>();
             CreateMap<ProfileEditDTO, User>()
                 .ForMember(u => u.PersonalInfo, m => m.MapFrom(p => p.PersonalInfo == "null" ? null : p.PersonalInfo))
                 .ForMember(u => u.PersonalWebSiteURL, m => m.MapFrom(p => p.PersonalWebSiteURL == "null" ? null : p.PersonalWebSiteURL))
@@ -59,6 +58,7 @@ namespace TwitterAPI.AutoMappers.UserMapper
             CreateMap<User, SearchUserDTO>();
             CreateMap<FollowDTO, Follow>();
             CreateMap<User, FollowerFollowingDTO>();
+            CreateMap<User, UserProfileCardDTO>();
         }
 
         private static string SplitString(string str)

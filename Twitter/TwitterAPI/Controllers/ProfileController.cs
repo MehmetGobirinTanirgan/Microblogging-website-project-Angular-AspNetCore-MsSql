@@ -119,21 +119,6 @@ namespace TwitterAPI.Controllers
             return BadRequest();
         }
 
-        [HttpGet("{id}")]
-        public async Task<IActionResult> GetUserProfileEditInfos([FromRoute] Guid id)
-        {
-            if (id != Guid.Empty)
-            {
-                var user = await userService.GetUserByIDAsync(id);
-                if (user != null)
-                {
-                    var userProfileInfos = mapper.Map<ProfileEditModalDTO>(user);
-                    return Ok(userProfileInfos);
-                }
-            }
-            return BadRequest();
-        }
-
         [HttpPut]
         public async Task<IActionResult> UpdateProfile([FromForm] ProfileEditDTO profileEditDTO)
         {
@@ -153,9 +138,9 @@ namespace TwitterAPI.Controllers
                 }
 
                 var user = await userService.GetUserByIDAsync(profileEditDTO.ID);
+                
                 mapper.Map<ProfileEditDTO, User>(profileEditDTO, user);
-
-                if(profilePicPath != null)
+                if (profilePicPath != null)
                 {
                     user.ProfilePicPath = profilePicPath;
                 }
@@ -166,7 +151,8 @@ namespace TwitterAPI.Controllers
                 }
 
                 await userService.UpdateUserAsync(user);
-                return Ok();
+                var newUserData = mapper.Map<UserProfileCardDTO>(user);
+                return Ok(newUserData);
             }
             return BadRequest();
         }
