@@ -15,7 +15,7 @@ describe('ProfileEditModalComponent', () => {
   let mockAuthService: jasmine.SpyObj<AuthenticationService>;
   let mockNgbModal: jasmine.SpyObj<NgbModal>;
   let mockUserService: jasmine.SpyObj<UserService>;
-
+  let mockUserProfileCard:any;
   beforeEach(async () => {
     const authServiceSpyObj = jasmine.createSpyObj('AuthenticationService', [
       'getUserData',
@@ -48,6 +48,20 @@ describe('ProfileEditModalComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(ProfileEditModalComponent);
     component = fixture.componentInstance;
+    mockUserProfileCard = {
+      id: 'mockID',
+      createdDate: new Date(),
+      fullname: 'mockFullname',
+      username: 'mockUsername',
+      personalInfo: 'mockPersonalInfo',
+      location: 'mockLocation',
+      personalWebSiteURL: 'mockPersonalWebSiteURL',
+      profilePicPath: 'mockProfilePicPath',
+      backgroundPath: 'mockBackgroundPath',
+      followerCounter: 1,
+      followingCounter: 1,
+      followFlag: true,
+    };
   });
 
   it('should create', () => {
@@ -57,6 +71,7 @@ describe('ProfileEditModalComponent', () => {
   it('#ngOnInit should call form creation', () => {
     const formSpy = spyOn(component, 'createEditForm');
     formSpy.and.callThrough();
+    component.profileData = mockUserProfileCard;
     fixture.detectChanges();
 
     expect(formSpy).toHaveBeenCalled();
@@ -65,12 +80,13 @@ describe('ProfileEditModalComponent', () => {
   it('#createEditForm checking form creation', () => {
     const formSpy = spyOn(component, 'createEditForm');
     formSpy.and.callThrough();
+    component.profileData = mockUserProfileCard;
     fixture.detectChanges();
     const editFormValues = {
-      fullname: '',
-      personalInfo: '',
-      location: '',
-      personalWebSiteURL: '',
+      fullname: component.profileData.fullname,
+      personalInfo: component.profileData.personalInfo,
+      location: component.profileData.location,
+      personalWebSiteURL: component.profileData.personalWebSiteURL,
       profilePic: null,
       bgImage: null,
     };
@@ -80,6 +96,7 @@ describe('ProfileEditModalComponent', () => {
   });
 
   it('#open should call open method of modal', () => {
+    component.profileData = mockUserProfileCard;
     fixture.detectChanges();
     component.open();
     expect(mockNgbModal.open).toHaveBeenCalledWith(component.modalContent);
@@ -102,6 +119,7 @@ describe('ProfileEditModalComponent', () => {
   });
 
   it('#editProfile should post successfully and close modal', () => {
+    component.profileData = mockUserProfileCard;
     fixture.detectChanges();
     component.open();
     spyOn(window,'alert');
@@ -127,6 +145,7 @@ describe('ProfileEditModalComponent', () => {
   });
 
   it('#editProfile should display alert when request fails', () => {
+    component.profileData = mockUserProfileCard;
     fixture.detectChanges();
     spyOn(window,'alert');
     const mockUserData = {
@@ -157,7 +176,3 @@ describe('ProfileEditModalComponent', () => {
     expect(window.alert).toHaveBeenCalledWith('Local storage error');
   });
 });
-
-class MockNgbModalRef {
-  result: Promise<any> = new Promise((resolve, reject) => resolve('x'));
-}

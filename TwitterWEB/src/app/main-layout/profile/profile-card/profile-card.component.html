@@ -18,7 +18,7 @@
   <div class="px-4 pt-4">
     <div class="row justify-content-end">
       <button *ngIf="userProfileCard.followFlag == null" class="btn btn-outline-primary" (click)="openModal()"
-        style="width: max-content; border-radius:20px;">
+      style="width: max-content; border-radius:20px;" >
         <b>Set up profile</b>
       </button>
       <button *ngIf="userProfileCard.followFlag === true" class="btn btn-primary" id="unfollow-btn" (click)="unfollow()"
@@ -74,7 +74,7 @@
       </ul>
     </div>
   </div>
-  <app-profile-edit-modal (sendUpdatedUserData) = 'updateProfile($event)' #editModal *ngIf="userProfileCard.followFlag == null" [profileData]="userProfileCard">
+  <app-profile-edit-modal (sendUpdatedUserData) = 'updateProfile($event)' #editModal *ngIf="userProfileCard.fullname != undefined && userProfileCard.followFlag == null" [profileData]="userProfileCard">
   </app-profile-edit-modal>
 
 </div>

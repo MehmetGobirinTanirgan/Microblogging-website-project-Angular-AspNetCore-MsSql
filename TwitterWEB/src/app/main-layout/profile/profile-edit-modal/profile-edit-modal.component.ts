@@ -42,10 +42,10 @@ export class ProfileEditModalComponent implements OnInit {
 
   createEditForm() {
     this.profileEditForm = this.formBuilder.group({
-      fullname: ['', [Validators.required, Validators.maxLength(50)]],
-      personalInfo: ['', Validators.maxLength(160)],
-      location: ['', Validators.maxLength(100)],
-      personalWebSiteURL: ['', Validators.maxLength(500)],
+      fullname: [this.profileData.fullname, [Validators.required, Validators.maxLength(50)]],
+      personalInfo: [this.profileData.personalInfo, Validators.maxLength(160)],
+      location: [this.profileData.location, Validators.maxLength(100)],
+      personalWebSiteURL: [this.profileData.personalWebSiteURL, Validators.maxLength(500)],
       profilePic: [],
       bgImage: [],
     });

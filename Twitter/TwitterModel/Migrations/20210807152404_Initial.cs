@@ -1,7 +1,7 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace TwitterModel.Migrations
+namespace TwitterDB.Migrations
 {
     public partial class Initial : Migration
     {

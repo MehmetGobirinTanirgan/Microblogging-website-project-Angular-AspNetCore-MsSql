@@ -7,23 +7,18 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using System;
 using System.Text;
 using TwitterAPI.Models;
-using TwitterModel.Context;
-using TwitterRepository.ComplexEntityRepository;
-using TwitterRepository.FollowRepository;
-using TwitterRepository.LikeRepository;
-using TwitterRepository.MTMEntityRepository;
-using TwitterRepository.SimpleEntityRepository;
-using TwitterRepository.TweetImageRepository;
-using TwitterRepository.TweetRepository;
-using TwitterRepository.UnitOfWork;
-using TwitterRepository.UserRepository;
-using TwitterService.AuthenticationService;
-using TwitterService.FollowService;
-using TwitterService.TweetImageService;
-using TwitterService.TweetService;
-using TwitterService.UserService;
+using TwitterAPI.Services.AuthenticationService;
+using TwitterAPI.Services.FollowService;
+using TwitterAPI.Services.TweetImageService;
+using TwitterAPI.Services.TweetService;
+using TwitterAPI.Services.UserService;
+using TwitterAutoMappers.TweetMapper;
+using TwitterCore.RepositoryInterfaces;
+using TwitterDB.Context;
+using TwitterRepository.Repositories;
 
 namespace TwitterAPI
 {
@@ -39,7 +34,7 @@ namespace TwitterAPI
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddAutoMapper(typeof(Startup));
+            services.AddAutoMapper(typeof(TweetTypeMapper));
             services.AddControllers();
             services.AddCors();
             services.AddSwaggerGen(c =>
@@ -47,12 +42,20 @@ namespace TwitterAPI
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "TwitterAPI", Version = "v1" });
             });
 
-            services.AddDbContext<TwitterContext>(options => options.UseSqlServer(Configuration.GetConnectionString("ConStr")));
 
-            services.AddScoped(typeof(IComplexEntityRepository<>),typeof(ComplexEntityRepository<>));
-            services.AddScoped(typeof(ISimpleEntityRepository<>),typeof(SimpleEntityRepository<>));
-            services.AddScoped(typeof(IMTMEntityRepository<>),typeof(MTMEntityRepository<>));
-            services.AddScoped<IUnitOfWork, UnitOfWork>();
+            switch (Configuration.GetConnectionString("DbType"))
+            {
+                case "Sql":
+                    services.AddDbContext<TwitterContext>(options => options.UseSqlServer(Configuration.GetConnectionString("ConStr")));
+                    services.AddScoped(typeof(IComplexEntityRepository<>), typeof(ComplexEntityRepository<>));
+                    services.AddScoped(typeof(ISimpleEntityRepository<>), typeof(SimpleEntityRepository<>));
+                    services.AddScoped(typeof(IMTMEntityRepository<>), typeof(MTMEntityRepository<>));
+                    services.AddScoped<IUnitOfWork, UnitOfWork>();
+                    break;
+                default:
+                    throw new NotImplementedException();
+            }
+            
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<ITweetService, TweetService>();
             services.AddScoped<ITweetImageService, TweetImageService>();
@@ -96,10 +99,12 @@ namespace TwitterAPI
                 app.UseSwagger();
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "TwitterAPI v1"));
             }
-            app.UseCors(x => x.AllowAnyHeader().AllowAnyMethod().AllowAnyOrigin());
+
             app.UseHttpsRedirection();
 
             app.UseRouting();
+
+            app.UseCors(x => x.AllowAnyHeader().AllowAnyMethod().AllowAnyOrigin());
 
             app.UseAuthentication();
 

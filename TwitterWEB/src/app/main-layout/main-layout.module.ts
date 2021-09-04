@@ -24,6 +24,5 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
     SharedModule,
     NgbModule
   ],
-  exports: [MainLayoutComponent,SearchBarComponent,TweetReplyStreamComponent,FollowListComponent]
 })
 export class MainLayoutModule { }

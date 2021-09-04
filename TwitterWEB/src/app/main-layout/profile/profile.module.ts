@@ -17,6 +17,5 @@ import { ReactiveFormsModule } from '@angular/forms';
     RouterModule,
     ReactiveFormsModule
   ],
-  exports: [ProfileComponent,ProfileCardComponent,ProfileEditModalComponent]
 })
 export class ProfileModule { }

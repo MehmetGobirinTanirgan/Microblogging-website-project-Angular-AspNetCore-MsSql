@@ -4,10 +4,10 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using System.Threading.Tasks;
 using TwitterAPI.Models;
-using TwitterModel.DTO;
-using TwitterModel.Models;
-using TwitterService.AuthenticationService;
-using TwitterService.UserService;
+using TwitterAPI.Services.AuthenticationService;
+using TwitterAPI.Services.UserService;
+using TwitterAutoMappers.DTO;
+using TwitterCore.Models;
 
 namespace TwitterAPI.Controllers
 {

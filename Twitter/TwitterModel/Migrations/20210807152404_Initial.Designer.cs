@@ -5,9 +5,9 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using TwitterModel.Context;
+using TwitterDB.Context;
 
-namespace TwitterModel.Migrations
+namespace TwitterDB.Migrations
 {
     [DbContext(typeof(TwitterContext))]
     [Migration("20210807152404_Initial")]

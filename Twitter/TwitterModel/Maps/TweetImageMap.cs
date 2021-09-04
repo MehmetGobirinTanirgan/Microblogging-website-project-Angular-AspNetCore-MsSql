@@ -1,8 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using TwitterCore.Entities.Map;
-using TwitterModel.Models;
+using TwitterCore.Models;
 
-namespace TwitterModel.Maps
+namespace TwitterDB.Maps
 {
     public class TweetImageMap : SimpleEntityMap<TweetImage>
     {

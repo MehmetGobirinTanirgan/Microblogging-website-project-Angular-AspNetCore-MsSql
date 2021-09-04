@@ -26,7 +26,7 @@ export class TweetComponent implements OnInit {
   constructor(
     private tweetService: TweetService,
     private authService: AuthenticationService,
-    private dataService: DataService,
+    public dataService: DataService,
     private followService: FollowService,
     private router: Router,
     private renderer: Renderer2

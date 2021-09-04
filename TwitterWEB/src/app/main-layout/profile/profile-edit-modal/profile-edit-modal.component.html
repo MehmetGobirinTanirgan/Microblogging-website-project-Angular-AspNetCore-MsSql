@@ -5,20 +5,17 @@
   <div class="modal-body">
         <form [formGroup]="profileEditForm" (ngSubmit)="editProfile()" id="edit-form" method="post">
           <div class="form-group">
-            <input formControlName="fullname" type="text" placeholder="Name" id="name" class="form-control"
-              [ngModel]="profileData.fullname">
+            <input formControlName="fullname" type="text" placeholder="Name" id="name" class="form-control">
           </div>
           <div class="form-group">
             <textarea formControlName="personalInfo" class="form-control" id="info" style="resize: none;"
-              placeholder="Bio" [ngModel]="profileData.personalInfo"></textarea>
+              placeholder="Bio"></textarea>
           </div>
           <div class="form-group">
-            <input formControlName="location" type="text" placeholder="Location" id="loc" class="form-control"
-              [ngModel]="profileData.location">
+            <input formControlName="location" type="text" placeholder="Location" id="loc" class="form-control">
           </div>
           <div class="form-group">
-            <input formControlName="personalWebSiteURL" type="text" placeholder="Website" id="site" class="form-control"
-              [ngModel]="profileData.personalWebSiteURL">
+            <input formControlName="personalWebSiteURL" type="text" placeholder="Website" id="site" class="form-control">
           </div>
           <div class="form-group d-flex">
             <h6>Pick a profile picture </h6>

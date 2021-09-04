@@ -5,10 +5,10 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using TwitterModel.DTO;
-using TwitterModel.Models;
-using TwitterService.FollowService;
-using TwitterService.UserService;
+using TwitterAPI.Services.FollowService;
+using TwitterAPI.Services.UserService;
+using TwitterAutoMappers.DTO;
+using TwitterCore.Models;
 
 namespace TwitterAPI.Controllers
 {

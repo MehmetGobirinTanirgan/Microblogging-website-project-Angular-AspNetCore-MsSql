@@ -1,9 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using System.Reflection;
-using TwitterModel.Maps;
-using TwitterModel.Models;
+using TwitterCore.Models;
 
-namespace TwitterModel.Context
+namespace TwitterDB.Context
 {
     public class TwitterContext : DbContext
     {

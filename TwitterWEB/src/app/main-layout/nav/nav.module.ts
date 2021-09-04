@@ -14,6 +14,6 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
     RouterModule,
     NgbModule
   ],
-  exports: [NavComponent,LogoutComponent],
+  exports: [NavComponent],
 })
 export class NavModule { }

@@ -36,8 +36,6 @@ export class LoginComponent implements OnInit {
         },error =>{
           alert("Login failed");
         });
-    }else{
-      alert('Form is invalid');
     }
   }
 }

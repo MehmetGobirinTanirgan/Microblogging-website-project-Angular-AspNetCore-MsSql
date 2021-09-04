@@ -16,6 +16,5 @@ import { ReactiveFormsModule } from '@angular/forms';
     RouterModule,
     ReactiveFormsModule
   ],
-  exports:[HomeComponent,TweetEditorComponent]
 })
 export class HomeModule { }

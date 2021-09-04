@@ -16,6 +16,6 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
     RouterModule,
     NgbModule
   ],
-  exports:[TweetComponent,ReplyModalComponent]
+  exports:[TweetComponent]
 })
 export class SharedModule { }

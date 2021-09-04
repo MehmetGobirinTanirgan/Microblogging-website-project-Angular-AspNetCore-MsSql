@@ -1,6 +1,5 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 using System;
@@ -8,11 +7,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using TwitterAPI.Models;
+using TwitterAPI.Services.TweetService;
+using TwitterAPI.Services.UserService;
 using TwitterAPI.Upload;
-using TwitterModel.DTO;
-using TwitterModel.Models;
-using TwitterService.TweetService;
-using TwitterService.UserService;
+using TwitterAutoMappers.DTO;
+using TwitterCore.Models;
+
 
 namespace TwitterAPI.Controllers
 {

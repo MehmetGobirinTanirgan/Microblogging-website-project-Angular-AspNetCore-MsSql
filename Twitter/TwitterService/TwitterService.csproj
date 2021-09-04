@@ -5,13 +5,10 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.IdentityModel.Tokens" Version="6.11.1" />
-    <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="6.11.1" />
+    
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\TwitterCore\TwitterCore.csproj" />
-    <ProjectReference Include="..\TwitterModel\TwitterModel.csproj" />
     <ProjectReference Include="..\TwitterRepository\TwitterRepository.csproj" />
   </ItemGroup>
 

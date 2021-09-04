@@ -1,6 +1,4 @@
 ﻿using AutoMapper;
-using CloudinaryDotNet;
-using CloudinaryDotNet.Actions;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
@@ -9,11 +7,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using TwitterAPI.Models;
+using TwitterAPI.Services.TweetService;
 using TwitterAPI.Upload;
+using TwitterAutoMappers.DTO;
 using TwitterCore.Entities.Enums;
-using TwitterModel.DTO;
-using TwitterModel.Models;
-using TwitterService.TweetService;
+using TwitterCore.Models;
 
 namespace TwitterAPI.Controllers
 {
@@ -119,7 +117,7 @@ namespace TwitterAPI.Controllers
                     var replyToThisTweet = await tweetService.GetTweetAsync(tweet.ReplyMainTweetID.GetValueOrDefault());
                     if (replyToThisTweet != null)
                     {
-                        replyToThisTweet.ReplyCounter = replyToThisTweet.ReplyCounter - 1;
+                        replyToThisTweet.ReplyCounter--;
                         await tweetService.UpdateTweetAsync(replyToThisTweet);
                     }
                 }
