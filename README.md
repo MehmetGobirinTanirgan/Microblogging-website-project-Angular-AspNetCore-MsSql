@@ -14,7 +14,7 @@ npm install --save-dev @angular-devkit/build-angular
 
 ![](/gifs/user_secret_adding.gif)
 
-- Or update ur appsettings:
+- Or update ur appsettings and remove user secret reference from TwitterAPI.csproj:
 
 ```
 {
@@ -37,5 +37,5 @@ npm install --save-dev @angular-devkit/build-angular
 
 4. Database creation:
     - Open package manager console in Visual Studio.
-    - Select 'TwitterModel' as default project in package manager console.
-    - And then run this code: ``` update-database ```
+    - Select 'TwitterDB' as default project in package manager console.
+    - And then run this command: ``` update-database ```
