@@ -5,13 +5,13 @@ VisualStudioVersion = 16.0.31229.75
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TwitterCore", "TwitterCore\TwitterCore.csproj", "{ECDACC32-D437-4E3B-8F49-443C3638FA4E}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TwitterDB", "TwitterModel\TwitterDB.csproj", "{64B7F18B-850A-4F41-8469-B612215A9CA4}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TwitterRepository", "TwitterRepository\TwitterRepository.csproj", "{7B665C22-F405-4667-91BD-9FD10C3FB0E4}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TwitterAPI", "TwitterAPI\TwitterAPI.csproj", "{4A308C7D-965E-42DD-B6E7-EEBE6E0D6E80}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TwitterAutoMappers", "TwitterAutoMappers\TwitterAutoMappers.csproj", "{38E7894E-01EF-4278-9515-27F7689257FA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TwitterDB", "TwitterDB\TwitterDB.csproj", "{A64AFD7F-A78C-44C9-AADC-363222198100}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -23,10 +23,6 @@ Global
 		{ECDACC32-D437-4E3B-8F49-443C3638FA4E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{ECDACC32-D437-4E3B-8F49-443C3638FA4E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{ECDACC32-D437-4E3B-8F49-443C3638FA4E}.Release|Any CPU.Build.0 = Release|Any CPU
-		{64B7F18B-850A-4F41-8469-B612215A9CA4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{64B7F18B-850A-4F41-8469-B612215A9CA4}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{64B7F18B-850A-4F41-8469-B612215A9CA4}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{64B7F18B-850A-4F41-8469-B612215A9CA4}.Release|Any CPU.Build.0 = Release|Any CPU
 		{7B665C22-F405-4667-91BD-9FD10C3FB0E4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{7B665C22-F405-4667-91BD-9FD10C3FB0E4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7B665C22-F405-4667-91BD-9FD10C3FB0E4}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -39,6 +35,10 @@ Global
 		{38E7894E-01EF-4278-9515-27F7689257FA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{38E7894E-01EF-4278-9515-27F7689257FA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{38E7894E-01EF-4278-9515-27F7689257FA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A64AFD7F-A78C-44C9-AADC-363222198100}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A64AFD7F-A78C-44C9-AADC-363222198100}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A64AFD7F-A78C-44C9-AADC-363222198100}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A64AFD7F-A78C-44C9-AADC-363222198100}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

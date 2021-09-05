@@ -6,7 +6,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\TwitterCore\TwitterCore.csproj" />
-    <ProjectReference Include="..\TwitterModel\TwitterDB.csproj" />
+    <ProjectReference Include="..\TwitterDB\TwitterDB.csproj" />
   </ItemGroup>
 
 </Project>
