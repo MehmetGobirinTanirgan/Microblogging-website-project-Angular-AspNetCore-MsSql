@@ -19,7 +19,8 @@ npm install --save-dev @angular-devkit/build-angular
 ```
 {
   "ConnectionStrings": {
-    "ConStr": "YOUR_CONNECTION_STRING"
+    "ConStr": "YOUR_CONNECTION_STRING",
+    "DbType": "YOUR_DB_TYPE"
   },
   "AppSettings": {
     "SecretKey": "YOUR_SECRET_KEY"
