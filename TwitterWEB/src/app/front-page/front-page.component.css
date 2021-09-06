@@ -1,46 +1,106 @@
-#name, #mail, #psw, #phone {
+#name,
+#mail,
+#psw,
+#phone {
   margin-top: 20px;
   width: 400px;
   padding: 15px;
-  display: block;
- }
+}
 
- form {
+form {
   padding: 30px;
- }
+}
 
- .modal-content{
+.modal-content {
   border-radius: 50px;
 }
 
- .modal-body {
+.modal-body {
   width: 500px;
   height: 650px;
- }
+}
 
- .switch-btn {
+.switch-btn {
   font-size: 1em;
   text-align: left;
-  color: #36A1E4;
+  color: #36a1e4;
   background: none;
   outline: 0 !important;
   border: 0 !important;
   cursor: pointer;
- }
+}
 
+.switch-btn:hover {
+  text-decoration: underline;
+}
 
-  .switch-btn:hover {
-   text-decoration: underline;
-  }
-
- span {
+span {
   font-size: 12px;
- }
+}
 
- .btn-outline-primary:hover {
-  background-color: #E8F5FE;
- }
+.btn-outline-primary:hover {
+  background-color: #e8f5fe;
+  color: #0069d9;
+}
 
-  .btn-primary:hover {
-   background-color: #1DA1F2;
-  }
+.btn-primary:hover {
+  background-color: #1da1f2;
+}
+
+.fp-mini-logo {
+  margin-top: 175px;
+  width: 50px;
+  fill: #1d9bf0;
+}
+.fp-large-logo {
+  width: 300px;
+  fill: #ffffff;
+}
+.lbl-big {
+  font-size: 65px;
+}
+
+.lbl-small {
+  font-size: 35px;
+}
+
+.pd15 {
+  padding: 15px;
+}
+
+.fp-img {
+  inset: 0px;
+  opacity: 0;
+  position: absolute;
+}
+
+.footer {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  padding-bottom: 5px;
+  padding-top: 5px;
+  padding-left: 16px;
+  padding-right: 16px;
+  position: relative;
+}
+
+.footer-link {
+  padding-right: 20px;
+  font-weight: 400;
+  line-height: 16px;
+  color: rgb(83, 100, 113);
+  cursor: pointer;
+  overflow-wrap: break-word;
+  margin-bottom: 4px;
+  margin-top: 4px;
+  text-decoration: none;
+}
+
+.footer-link > span{
+  font-size: 13px;
+}
+
+.footer-link:hover {
+  text-decoration: underline;
+}

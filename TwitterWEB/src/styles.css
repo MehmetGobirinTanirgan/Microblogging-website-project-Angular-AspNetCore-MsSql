@@ -1,33 +1,37 @@
 /* You can add global styles to this file, and also import other style files */
-*, html {
+html,
+body {
   padding: 0;
   margin: 0;
- }
+  height: 100%;
+  display: block;
+}
 
- html {
+html {
   overflow-y: scroll;
- }
+  overscroll-behavior-y: none;
+}
 
- .rounded-img-container {
+.rounded-img-container {
   display: inline-block;
   border-radius: 50%;
   overflow: hidden;
- }
+}
 
- .rounded-img {
+.rounded-img {
   width: inherit;
   height: inherit;
   border-radius: inherit;
   object-fit: cover;
   object-position: center;
- }
+}
 
- /*Scrollable part css*/
+/*Scrollable part css*/
 .scrollable1 {
   position: relative;
- }
+}
 
- .scrollable2 {
+.scrollable2 {
   position: absolute;
   top: 0px;
   bottom: 0px;
@@ -35,27 +39,148 @@
   right: -15px;
   width: max-content;
   overflow: auto;
- }
-
-  .scrollable2::-webkit-scrollbar {
-   width: 0;
-   background-color: transparent;
-  }
-
- .scrollable1::-webkit-scrollbar {
-  width: 0;
-  background-color: transparent;
- }
-
- /* Helpers */
-
- /* Colors */
-.bg-twt-blue{
-  background-color: #86CDFE;
 }
 
+.scrollable2::-webkit-scrollbar {
+  width: 0;
+  background-color: transparent;
+}
+
+.scrollable1::-webkit-scrollbar {
+  width: 0;
+  background-color: transparent;
+}
+
+/* Helpers */
+.fl-wrap{
+  flex-wrap: wrap;
+}
+/* Colors */
+.clr-wht {
+  color: white;
+}
+
+.blue1 {
+  color: #0069d9;
+}
+
+.blue2 {
+  color: #1d9bf0;
+}
+
+.bg-twt-blue1 {
+  background-color: #86cdfe;
+}
 
 /* Borders */
-.borderless{
+.borderless {
   border: none;
+}
+
+.rd10x {
+  border-radius: 10px;
+}
+
+.rd20x {
+  border-radius: 20px;
+}
+
+.rd30x {
+  border-radius: 30px;
+}
+
+.rd40x {
+  border-radius: 40px;
+}
+
+.rd50x {
+  border-radius: 50px;
+}
+/* Fonts */
+
+/* Widths */
+.wdt100 {
+  width: 100%;
+}
+
+.wdt100x {
+  width: 100px;
+}
+
+.wdt200x {
+  width: 200px;
+}
+
+.wdt300x {
+  width: 300px;
+}
+
+.wdt400x {
+  width: 400px;
+}
+
+.wdt500x {
+  width: 500px;
+}
+
+/* Heigths */
+.hgt100 {
+  height: 100%;
+}
+
+/* Z-Index */
+.z-1 {
+  z-index: -1;
+}
+
+/* Background */
+.bg-cover {
+  background-size: cover;
+}
+
+.bg-no-repeat {
+  background-repeat: no-repeat;
+}
+
+.bg-center {
+  background-position: center;
+}
+
+.bg-black {
+  background-color: rgba(0, 0, 0, 0);
+}
+
+/* Position */
+.pos-abs{
+  position: absolute;
+}
+
+.pos-rel{
+  position: relative;
+}
+
+.top-0{
+  top: 0px;
+}
+
+.btm-0{
+  bottom: 0px;
+}
+
+.rgt-0{
+  right: 0px;
+}
+
+.lft-0{
+  left: 0px;
+}
+
+/* Overflow */
+.ov-hidden{
+  overflow: hidden;
+}
+
+/* Links */
+.dec-none{
+  text-decoration: none;
 }
