@@ -68,8 +68,6 @@ export class FrontPageComponent implements OnInit {
           alert('Signup failed');
         }
       );
-    }else{
-      alert('Form is invalid');
     }
   }
 

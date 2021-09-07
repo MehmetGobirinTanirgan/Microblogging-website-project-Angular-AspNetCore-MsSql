@@ -123,16 +123,6 @@ describe('FrontPageComponent', () => {
     expect(window.alert).toHaveBeenCalledWith('Signup failed');
   });
 
-  it('#signUp should display alert when form is invalid', () => {
-    component.createSignUpForm();
-    const signUpForm = component.signUpForm;
-    spyOn(window, 'alert');
-    component.signUp();
-
-    expect(signUpForm.valid).toBeFalse();
-    expect(window.alert).toHaveBeenCalledWith('Form is invalid');
-  });
-
   it('#openModal should call the current modal', () => {
     component.openModal();
     expect(mockNgbModal.open).toHaveBeenCalledWith(component.signupModal,{ centered: true });

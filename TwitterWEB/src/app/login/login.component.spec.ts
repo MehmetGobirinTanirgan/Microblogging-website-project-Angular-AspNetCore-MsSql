@@ -93,12 +93,4 @@ describe('LoginComponent', () => {
     expect(window.alert).toHaveBeenCalledWith('Login failed');
   });
 
-  it('#login should display error alert when form is not valid', () => {
-    component.createLoginForm();
-    spyOn(window, 'alert');
-    const loginForm = component.loginForm;
-    component.login();
-    expect(loginForm.valid).toBeFalse();
-    expect(window.alert).toHaveBeenCalledWith('Form is invalid');
-  });
 });

@@ -123,6 +123,14 @@ html {
   width: 500px;
 }
 
+.wdt-min{
+  width: min-content;
+}
+
+.wdt-max{
+  width: max-content;
+}
+
 /* Heigths */
 .hgt100 {
   height: 100%;
