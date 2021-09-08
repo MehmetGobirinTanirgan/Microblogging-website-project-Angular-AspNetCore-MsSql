@@ -9,9 +9,7 @@
   <div *ngIf="ownTweets != null">
     <div *ngIf="toggle1" class="scrollable1" style="height:700px;" id="tw-1">
       <div class="scrollable2">
-        <div class="row">
-          <app-tweet class="col-md-6" *ngFor="let tweet of ownTweets" [tweet]="tweet"></app-tweet>
-        </div>
+          <app-tweet *ngFor="let tweet of ownTweets" [tweet]="tweet"></app-tweet>
       </div>
     </div>
   </div>

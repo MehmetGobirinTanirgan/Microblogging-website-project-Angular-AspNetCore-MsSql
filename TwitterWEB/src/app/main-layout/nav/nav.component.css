@@ -1,45 +1,66 @@
 #navbar {
   background: white;
- }
+}
 
-  #navbar ul {
-   list-style-type: none;
-   display: flex;
-   flex-direction: column;
-   align-items: flex-start;
-   padding-top: 1rem;
-  }
+#navbar ul {
+  list-style-type: none;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding-top: 1rem;
+}
 
-   #navbar ul li {
-    margin-bottom: 1.5rem;
-   }
+#navbar ul li {
+  margin-bottom: 0.4rem;
+}
 
-    #navbar ul li a {
-     color: black;
-     padding: 0.7rem;
-     text-align: center;
-     border-radius: 0.8rem;
-     font-size: 25px;
-     font-weight: bold;
-     text-decoration: none;
-    }
+#navbar ul li a {
+  color: black;
+  padding: 0.7rem;
+  text-align: center;
+  border-radius: 999px;
+  font-size: 20px;
+  font-family: inherit;
+  text-decoration: none;
+  cursor: pointer;
+}
 
-     #navbar ul li a:hover {
-      background: #E8F5FE;
-      color: #5FBCF5;
-      text-decoration: none;
-     }
+#navbar ul li span {
+  padding-left: 15px;
+}
 
-    #navbar ul li ul {
-     display: none;
-     text-align: center;
-     margin-top: 15px;
-    }
+#navbar ul li a:hover {
+  background: #e8f5fe;
+  color: #5fbcf5;
+  fill: #5fbcf5;
+  text-decoration: none;
+}
 
-    #navbar ul li:hover ul {
-     display: block;
-    }
+#navbar ul li a.active-link {
+  font-weight: bolder ;
+}
 
-  #navbar div a:hover {
-   background: #E8F5FE;
-  }
+#navbar div a:hover {
+  background: #e8f5fe;
+}
+
+.nav-tweet-btn {
+  padding: 10px;
+  padding-left: 80px;
+  padding-right: 80px;
+  font-size: 20px;
+  background-color: #1d9bf0;
+}
+
+.nav-tweet-btn:hover {
+  background-color: #1a8cd8;
+}
+
+.nav-tw-logo {
+  width: 34px;
+  fill: #1d9bf0;
+}
+
+.nav-home-logo {
+  width: 27px;
+}
