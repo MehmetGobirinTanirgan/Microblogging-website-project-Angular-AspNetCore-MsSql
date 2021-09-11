@@ -1,15 +1,15 @@
 <input type="text" id="search-input" placeholder="Search Twitter" (keyup)="search($any($event.target).value)">
 <div #dropdownRef ngbDropdown>
-  <div ngbDropdownMenu id="search-results" style="width:420px;">
+  <div ngbDropdownMenu id="search-results" class="wdt100">
     <div *ngIf="searchResults.length > 0; else noMatch">
       <div ngbDropdownItem *ngFor="let result of searchResults"
       class="position-relative border-top d-flex">
-      <div class="rounded-img-container" style="margin-right:10px;">
-        <img class="rounded-img" style="width:60px; height:60px;" [src]="result.profilePicPath">
+      <div class="rounded-img-container me-3">
+        <img class="rounded-img result-img" [src]="result.profilePicPath">
       </div>
       <div class="d-flex flex-column">
-        <label class="mb-0" style="font-weight:bold; color:black;">{{result.fullname}} </label>
-        <label style="opacity: 0.9; color:#6D7F90 ;">@{{result.username}} </label>
+        <label class="mb-0 fw-bold clr-blck">{{result.fullname}} </label>
+        <label class="transp-text">@{{result.username}} </label>
       </div>
       <a class="stretched-link" routerLink="/{{result.id}}"></a>
     </div>

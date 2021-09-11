@@ -1,12 +1,18 @@
 .nav-btn {
   padding: 30px;
-  color: #5B7083;
+  color: #5b7083;
   border-radius: 0;
   border: 0;
- }
+  -webkit-box-shadow: none;
+  box-shadow: none;
+}
 
-  .nav-btn:hover {
-   background: #E8F5FE;
-   cursor: pointer;
-   color: #56B9F6;
-  }
+.nav-btn:hover {
+  background: #e8f5fe;
+  cursor: pointer;
+  color: #56b9f6;
+}
+
+.hgt-stream{
+  height: 380px;
+}

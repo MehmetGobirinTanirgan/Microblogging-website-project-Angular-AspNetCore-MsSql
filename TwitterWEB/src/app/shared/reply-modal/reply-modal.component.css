@@ -1,3 +1,28 @@
-.modal-content{
+.modal-content {
   border-radius: 50px;
+}
+
+.profile-img {
+  width: 60px;
+  height: 60px;
+}
+
+.img-div {
+  width: 90%;
+  overflow: hidden;
+}
+
+.reply-tweet-text {
+  resize: none;
+  border-radius: 10px;
+  width: 350px;
+  height: 120px;
+}
+
+.reply-tweet-text::-webkit-scrollbar{
+  width: 0;
+}
+
+.btn-div{
+  width: 92%;
 }

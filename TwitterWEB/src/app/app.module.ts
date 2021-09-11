@@ -15,6 +15,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { DataService } from 'src/services/data.service';
 import { SharedModule } from './shared/shared.module';
 import { MainLayoutModule } from './main-layout/main-layout.module';
+import { NgCircleProgressModule } from 'ng-circle-progress';
 
 @NgModule({
   declarations: [
@@ -25,12 +26,13 @@ import { MainLayoutModule } from './main-layout/main-layout.module';
   imports: [
     AppRoutingModule,
     BrowserModule,
+    BrowserAnimationsModule,
     HttpClientModule,
     ReactiveFormsModule,
     NgbModule,
-    BrowserAnimationsModule,
     SharedModule,
     MainLayoutModule,
+    NgCircleProgressModule.forRoot()
   ],
   providers: [
     {

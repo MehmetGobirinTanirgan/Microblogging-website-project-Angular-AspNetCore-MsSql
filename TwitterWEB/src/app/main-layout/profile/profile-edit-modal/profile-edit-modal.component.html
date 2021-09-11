@@ -8,7 +8,7 @@
             <input formControlName="fullname" type="text" placeholder="Name" id="name" class="form-control">
           </div>
           <div class="form-group">
-            <textarea formControlName="personalInfo" class="form-control" id="info" style="resize: none;"
+            <textarea formControlName="personalInfo" class="form-control" id="info"
               placeholder="Bio"></textarea>
           </div>
           <div class="form-group">
@@ -17,25 +17,25 @@
           <div class="form-group">
             <input formControlName="personalWebSiteURL" type="text" placeholder="Website" id="site" class="form-control">
           </div>
-          <div class="form-group d-flex">
+          <div class="form-group d-flex justify-content-between wdt-45">
             <h6>Pick a profile picture </h6>
-            <label for="profile-pic" style="margin-left:5px; color:#1DA1F2;"><i class="fas fa-upload fa-lg"></i>
+            <label for="profile-pic" class="ms-2 blue3"><i class="fas fa-upload fa-lg"></i>
               <input formControlName="profilePic" (change)="addProfilePic($any($event.target).files)"
                 class="form-control-file" type="file" id="profile-pic" hidden>
             </label>
           </div>
-          <div class="form-group d-flex">
+          <div class="form-group d-flex justify-content-between wdt-45">
             <h6>Pick a header </h6>
-            <label for="bg-image" style="margin-left:5px; color:#1DA1F2;">
+            <label for="bg-image" class="ms-2 blue3">
               <i class="fas fa-upload fa-lg"></i>
               <input formControlName="bgImage" (change)="addBgImage($any($event.target).files)"
                 class="form-control-file" type="file" id="bg-image" hidden>
             </label>
           </div>
-          <div class="modal-footer row justify-content-center">
-            <button type="button" class="btn btn-primary" id="edit-profile-btn"
-              style="width: 170px; border-radius:20px; color: white;" (click)="editProfile()" [disabled] = "profileEditForm.invalid" >Save</button>
-            <button type="reset" id="cancel" class="btn btn-outline-primary" style="width: 170px; border-radius:20px;"
+          <div class="modal-footer d-flex justify-content-center">
+            <button type="button" class="btn btn-primary rd20x wdt-45" id="edit-profile-btn"
+              (click)="editProfile()" [disabled] = "profileEditForm.invalid" >Save</button>
+            <button type="reset" id="cancel" class="btn btn-outline-primary rd20x wdt-45"
               (click)="d('Close click')">
               Cancel
             </button>

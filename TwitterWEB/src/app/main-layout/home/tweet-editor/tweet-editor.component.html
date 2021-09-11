@@ -1,31 +1,46 @@
-<div *ngIf="userData != null" class="row border-bottom mt-3">
-  <div class="col-lg-2">
+<div *ngIf="userData != null" class="d-flex border-bottom mt-3">
+  <div class="col-2 d-flex justify-content-center">
     <a routerLink="/{{userData.id}}">
       <div class="rounded-img-container">
-        <img class="rounded-img" style="width:80px; height:80px;" [src]="userData.profilePicPath"
-          alt="user-profile-picture">
+        <img class="rounded-img" [src]="userData.profilePicPath" alt="user-profile-picture">
       </div>
     </a>
   </div>
-  <div class="col-lg-10">
+  <div class="col-10">
     <form [formGroup]="tweetSubmitForm" (ngSubmit)="tweetSubmit()" method="post" enctype="multipart/form-data">
-      <input type="hidden" asp-for="@id" id="user-id" />
       <div class="form-group mb-2">
-        <textarea formControlName="tweetDetail" id="new-tweet-text" class="form-control"
-          style="resize: none; border-radius:10px; border: 0px;  width:490px; height:100px;"
-          placeholder="What's happening?"></textarea>
+        <textarea (keyup)="countTextLength($any($event.target).value)" formControlName="tweetDetail"
+          class="form-control new-tweet-text" placeholder="What's happening?"></textarea>
       </div>
-      <div class="form-group d-flex justify-content-between">
-        <label style="color:#1DA1F2;" for="image-files">
-          <i class="far fa-images fa-lg"></i><input formControlName="imageFiles"
-            (change)="addFiles($any($event.target).files)" id="image-files" title="image-files"
-            class="form-control-file" type="file" name="files" hidden multiple>
+      <div class="form-group d-flex justify-content-between pe-3">
+        <label for="image-files">
+          <div class="upload-image-svg-cap p-2">
+            <svg class="upload-image-svg" viewBox="0 0 24 24">
+              <g>
+                <path
+                  d="M19.75 2H4.25C3.01 2 2 3.01 2 4.25v15.5C2 20.99 3.01 22
+                  4.25 22h15.5c1.24 0 2.25-1.01 2.25-2.25V4.25C22 3.01 20.99
+                  2 19.75 2zM4.25 3.5h15.5c.413
+                  0 .75.337.75.75v9.676l-3.858-3.858c-.14-.14-.33-.22-.53-.22h-.003c-.2 0-.393.08-.532.224l-4.317
+                  4.384-1.813-1.806c-.14-.14-.33-.22-.53-.22-.193-.03-.395.08-.535.227L3.5 17.642V4.25c0-.413.337-.75.75-.75zm-.744 16.28l5.418-5.534
+                  6.282 6.254H4.25c-.402 0-.727-.322-.744-.72zm16.244.72h-2.42l-5.007-4.987 3.792-3.85 4.385 4.384v3.703c0 .413-.337.75-.75.75z">
+                </path>
+                <circle cx="8.868" cy="8.309" r="1.542"></circle>
+              </g>
+            </svg>
+          </div>
+         <input formControlName="imageFiles" (change)="addFiles($any($event.target).files)" id="image-files"
+            title="image-files" class="form-control-file" type="file" name="files" hidden multiple>
         </label>
-        <div class="mb-3">
-          <span id="current-ct">0</span>
-          <span style="margin-right: 10px;">/ 280</span>
-          <button [disabled]="tweetSubmitForm.invalid" class="btn btn-primary" id="add-new-tweet-btn"
-            style="border-radius:20px;" type="submit">Tweet</button>
+        <div class="mb-3 d-flex align-items-center">
+          <circle-progress #circleProg [percent]="(tweetTextLength/280)*100" [maxPercent]="100" [radius]="12"
+            [outerStrokeWidth]="2" [innerStrokeWidth]="2" [outerStrokeColor]="circleColor"
+            [innerStrokeColor]="'#EFF3F4'" [showInnerStroke]="true" [space]="-2" [showTitle]="true"
+            [titleFontSize]="'8'" [unitsFontSize]="'8'" [showSubtitle]="false" [showUnits]="true" [animation]="false"
+            [lazy]="false" [startFromZero]="true">
+          </circle-progress>
+          <button [disabled]="tweetSubmitForm.invalid" class="btn btn-primary tweet-submit-btn rd20x bg-twt-blu2 borderless"
+            id="add-new-tweet-btn" type="submit">Tweet</button>
         </div>
       </div>
     </form>

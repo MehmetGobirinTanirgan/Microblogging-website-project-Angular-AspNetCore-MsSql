@@ -3,7 +3,6 @@ import {
   ElementRef,
   Input,
   OnInit,
-  Renderer2,
   ViewChild,
 } from '@angular/core';
 import { Router } from '@angular/router';
@@ -29,7 +28,6 @@ export class TweetComponent implements OnInit {
     public dataService: DataService,
     private followService: FollowService,
     private router: Router,
-    private renderer: Renderer2
   ) {}
   userID: string;
   userProfilePicPath: string;
@@ -40,11 +38,13 @@ export class TweetComponent implements OnInit {
   @ViewChild('heart') heart: ElementRef;
   replyModalModel: ReplyModalModel = new ReplyModalModel();
   tweetFlag: boolean = true;
+  tweetImgWidth:number;
   ngOnInit(): void {
     const data = this.authService.getUserData();
     if (data != null) {
       this.userID = data.id;
       this.userProfilePicPath = data.profilePicPath;
+      this.tweetImgWidth = 100/this.tweet.tweetImageInfos.length;
     } else {
       alert('Error: Tweet loading failed');
     }
@@ -91,13 +91,8 @@ export class TweetComponent implements OnInit {
     like.UserID = this.userID;
     this.tweetService.addLike(like).subscribe(
       (data) => {
-        let el = this.likeBtn.nativeElement;
-        this.renderer.setStyle(el, 'color', '#E44878');
         this.tweet.likeCounter++;
         this.tweet.likeFlag = true;
-        this.renderer.removeClass(this.heart.nativeElement, 'far');
-        this.renderer.addClass(this.heart.nativeElement, 'fas');
-        this.renderer.setProperty(el, '(click)', 'removelike()');
       },
       (error) => alert('Like failed')
     );
@@ -106,13 +101,8 @@ export class TweetComponent implements OnInit {
   removeLike() {
     this.tweetService.removeLike(this.tweet.id, this.userID).subscribe(
       (data) => {
-        let el = this.dislikeBtn.nativeElement;
-        this.renderer.setStyle(el, 'color', '#909EAB');
         this.tweet.likeCounter--;
         this.tweet.likeFlag = false;
-        this.renderer.removeClass(this.heart.nativeElement, 'fas');
-        this.renderer.addClass(this.heart.nativeElement, 'far');
-        this.renderer.setProperty(el, '(click)', 'like()');
       },
       (error) => alert('Dislike failed')
     );

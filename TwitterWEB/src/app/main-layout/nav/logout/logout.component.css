@@ -1,0 +1,26 @@
+.logout-div {
+  margin-top: 250px;
+}
+
+.logout-btn:hover{
+  background-color: #E7E7E8;
+}
+
+.logout-btn {
+  width: 100% !important;
+}
+
+.logout-img {
+  width: 50px;
+  height: 50px;
+}
+
+.logout-menu {
+  width: 100%;
+  text-align: center;
+  overflow: hidden;
+}
+
+.dropdown-toggle::after {
+  display:none;
+}

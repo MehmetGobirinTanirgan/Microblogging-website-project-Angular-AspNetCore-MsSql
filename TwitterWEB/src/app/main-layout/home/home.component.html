@@ -1,10 +1,8 @@
-<div class="row border-bottom">
-  <header>
-    <h3 style="margin-left: 40px;"><b>Home</b></h3>
-  </header>
+<div class="border-bottom">
+    <h3 class="ms-5"><b>Home</b></h3>
 </div>
-<app-tweet-editor (addedNewTweet) = 'addNewTweet($event)'></app-tweet-editor>
-<div class="scrollable1" style="height:1000px;">
+  <app-tweet-editor (addedNewTweet) = 'addNewTweet($event)'></app-tweet-editor>
+<div class="scrollable1 home-tweet-stream">
   <div class="scrollable2">
       <app-tweet  *ngFor="let tweet of tweets" [tweet]="tweet"></app-tweet>
   </div>

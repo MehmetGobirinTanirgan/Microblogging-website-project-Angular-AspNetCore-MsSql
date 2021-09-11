@@ -1,15 +1,20 @@
 /* You can add global styles to this file, and also import other style files */
+*{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
 html,
 body {
-  padding: 0;
-  margin: 0;
   height: 100%;
   display: block;
 }
 
-html {
-  overflow-y: scroll;
-  overscroll-behavior-y: none;
+.form-control:focus{
+  border: solid 2px #1D9BF0;
+  -webkit-box-shadow: none;
+  box-shadow: none;
 }
 
 .rounded-img-container {
@@ -29,16 +34,15 @@ html {
 /*Scrollable part css*/
 .scrollable1 {
   position: relative;
+  overflow-x: visible !important;
 }
 
 .scrollable2 {
   position: absolute;
   top: 0px;
   bottom: 0px;
-  left: 0px;
-  right: -15px;
-  width: max-content;
-  overflow: auto;
+  width: 100%;
+  overflow-y:auto;
 }
 
 .scrollable2::-webkit-scrollbar {
@@ -46,18 +50,25 @@ html {
   background-color: transparent;
 }
 
-.scrollable1::-webkit-scrollbar {
-  width: 0;
-  background-color: transparent;
-}
 
 /* Helpers */
+
+/* Specifics */
+.transp-text{
+  opacity: 0.9;
+  color: #6d7f90;
+}
+
 .fl-wrap{
   flex-wrap: wrap;
 }
 /* Colors */
 .clr-wht {
   color: white;
+}
+
+.clr-blck{
+  color: black;
 }
 
 .blue1 {
@@ -68,10 +79,18 @@ html {
   color: #1d9bf0;
 }
 
+.blue3{
+  color:#1DA1F2;
+}
+
+
 .bg-twt-blue1 {
   background-color: #86cdfe;
 }
 
+.bg-twt-blu2{
+  background-color: rgb(29, 155, 240);
+}
 /* Borders */
 .borderless {
   border: none;
@@ -190,7 +209,7 @@ html {
 
 /* Links */
 .dec-none{
-  text-decoration: none;
+  text-decoration: none !important;
 }
 
 /* Modal */

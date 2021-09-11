@@ -1,51 +1,86 @@
 /*Tweet display css*/
-﻿article, .tweet-link, .twt-img-link {
+﻿article,
+.tweet-link,
+.twt-img-link {
   z-index: 2;
   position: relative;
- }
-
- article:hover {
-  background-color: #F7F7F7;
- }
-
- article {
-  width: 610px;
- }
-
- article a {
-   text-decoration: none;
- }
-
- article a:hover{
-   text-decoration:underline;
- }
-
- .tweet-btns {
-  color: #909EAB;
- }
-
-.tweet-btns > a{
-  text-decoration: none;
-  color: #909EAB;
 }
- .share-btn, .like-btn, .dislike-btn, .retweet-btn {
+
+article:hover {
+  background-color: #f7f7f7;
+}
+
+article {
+  width: 100%;
+  height: auto;
+}
+
+article a {
+  text-decoration: none;
+}
+
+article a:hover {
+  text-decoration: underline;
+}
+
+.tweet-btns {
+  color: #909eab;
+}
+
+.tweet-btns > a {
+  text-decoration: none;
+  color: #909eab;
+}
+.share-btn,
+.like-btn,
+.retweet-btn {
   margin-left: 110px;
- }
+}
 
- .tweet-btns > a.reply-btn:hover, .tweet-btns > a.share-btn:hover {
-  color: #42AFF3;
+.tweet-btns > a.reply-btn:hover,
+.tweet-btns > a.share-btn:hover {
+  color: #42aff3;
   cursor: pointer;
   text-decoration: none;
- }
+}
 
- .tweet-btns > a.retweet-btn:hover {
-  color: #23C26B;
+.tweet-btns > a.retweet-btn:hover {
+  color: #23c26b;
   cursor: pointer;
   text-decoration: none;
- }
+}
 
- .tweet-btns > a.like-btn:hover, .tweet-btns > a.dislike-btn {
-  color: #E44878;
+.tweet-btns > a.like-btn:hover {
+  color: #e44878;
   cursor: pointer;
   text-decoration: none;
- }
+}
+
+.tweet-user-img {
+  width: 60px;
+  height: 60px;
+}
+
+.tweet-opts {
+  color: #5b7092;
+}
+
+.tweet-delete-btn {
+  color: #e0245e;
+  text-decoration: none;
+}
+
+.single-img {
+  width: 95%;
+  height: auto;
+}
+
+.tweet-img{
+  height: auto;
+}
+
+.img-div {
+  width: 95%;
+  height: auto;
+  overflow: hidden;
+}

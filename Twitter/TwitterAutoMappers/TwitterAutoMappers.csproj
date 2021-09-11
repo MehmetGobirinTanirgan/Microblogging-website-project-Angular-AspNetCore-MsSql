@@ -12,5 +12,5 @@
   <ItemGroup>
     <ProjectReference Include="..\TwitterCore\TwitterCore.csproj" />
   </ItemGroup>
-
+  
 </Project>

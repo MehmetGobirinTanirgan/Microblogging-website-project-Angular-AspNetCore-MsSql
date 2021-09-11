@@ -5,10 +5,15 @@
   border-radius: 30px;
   font-size: 15px;
   background-color: white;
-  background-image: url('https://cdn2.iconfinder.com/data/icons/ios-7-icons/50/search-24.png');
+  background-image: url("https://cdn2.iconfinder.com/data/icons/ios-7-icons/50/search-24.png");
   background-position: 10px 7px;
   background-repeat: no-repeat;
   padding: 8px 20px 8px 40px;
   outline: none;
   opacity: 0.9;
- }
+}
+
+.result-img {
+  width: 60px;
+  height: 60px;
+}

@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { ReplyModalModel } from 'src/models/ReplyModalModel';
 import { AuthenticationService } from 'src/services/authentication.service';
+import { CustomValidatorService } from 'src/services/customValidator.service';
 import { DataService } from 'src/services/data.service';
 import { TweetService } from 'src/services/tweet.service';
 
@@ -18,7 +19,8 @@ export class ReplyModalComponent implements OnInit {
     private dataService: DataService,
     private formBuilder: FormBuilder,
     private authService: AuthenticationService,
-    private tweetService: TweetService
+    private tweetService: TweetService,
+    private validatorService:CustomValidatorService
   ) {}
   @ViewChild('replyModal')
   private modalContent: TemplateRef<ReplyModalComponent>;
@@ -26,18 +28,26 @@ export class ReplyModalComponent implements OnInit {
   replyModalData: ReplyModalModel;
   replyForm: FormGroup;
   imageFiles: FileList;
+  tweetImgWidth:number;
   ngOnInit(): void {}
 
   open() {
     this.replyModalData = JSON.parse(this.dataService.replyModalData);
     this.createReplyForm();
     this.modalRef = this.modalService.open(this.modalContent);
+    this.tweetImgWidth = 100/this.replyModalData.MainTweetImagePaths.length;
   }
 
   createReplyForm() {
     this.replyForm = this.formBuilder.group({
       replyTweetDetail: ['', [Validators.maxLength(280)]],
       replyTweetImageFiles: [],
+    },
+    {
+      validator: this.validatorService.atLeastOne(Validators.required, [
+        'replyTweetDetail',
+        'replyTweetImageFiles',
+      ]),
     });
   }
 

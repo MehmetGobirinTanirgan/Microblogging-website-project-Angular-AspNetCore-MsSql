@@ -1,0 +1,30 @@
+.rounded-img-container img {
+  width: 80px;
+  height: 80px;
+}
+
+.new-tweet-text {
+  resize:none;
+  border: none;
+  width: 490px;
+  height: 100px;
+}
+
+.new-tweet-text::-webkit-scrollbar {
+  width: 0;
+}
+
+.tweet-submit-btn:hover {
+  background-color: rgb(26, 140, 216);
+}
+
+.upload-image-svg {
+  width: 25px;
+  fill: #1DA1F2;
+}
+
+.upload-image-svg-cap:hover {
+  cursor: pointer;
+  background-color: #E8F5FD;
+  border-radius: 9999px;
+}

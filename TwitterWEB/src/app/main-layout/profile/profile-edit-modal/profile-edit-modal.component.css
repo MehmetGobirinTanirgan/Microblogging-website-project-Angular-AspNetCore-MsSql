@@ -15,3 +15,15 @@
 #cancel:hover {
   background-color: #5fbcf5;
 }
+
+#info{
+  resize: none;
+}
+
+#info::-webkit-scrollbar {
+  width: 0;
+}
+
+.wdt-45{
+  width: 45%;
+}

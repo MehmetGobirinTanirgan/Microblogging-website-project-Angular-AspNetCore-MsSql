@@ -1,32 +1,30 @@
 <div *ngIf="userProfileCard != undefined">
-  <div class="row border-bottom ">
+  <div class="d-flex border-bottom ">
     <header>
-      <h4 style="margin-left: 40px;">{{userProfileCard.fullname}}</h4>
+      <h4 class="ms-5">{{userProfileCard.fullname}}</h4>
     </header>
   </div>
-  <div class="row px-4 pt-0 pb-4 cover" id="user-bg-image"
-    style="background-image: url({{userProfileCard.backgroundPath}});">
-    <div class="media profile-head" style="width: 200px;">
-      <div class="rounded-img-container mr-3 mt-3">
+  <div class="d-flex px-4 pt-0 pb-4 cover" style="background-image: url({{userProfileCard.backgroundPath}});">
+    <div class="profile-head">
+      <div class="mr-3 mt-3">
         <a routerLink="/{{userProfileCard.id}}">
-          <img id="user-profile-picture" [src]="userProfileCard.profilePicPath"
-            style="width:150px; height:150px; border:5px solid white; border-radius: 50%;" class="rounded-img">
+          <img [src]="userProfileCard.profilePicPath" class="rounded-img card-profile-img">
         </a>
       </div>
     </div>
   </div>
   <div class="px-4 pt-4">
     <div class="row justify-content-end">
-      <button *ngIf="userProfileCard.followFlag == null" class="btn btn-outline-primary" (click)="openModal()"
-      style="width: max-content; border-radius:20px;" >
+      <button *ngIf="userProfileCard.followFlag == null" class="btn btn-outline-primary rd20x wdt-max"
+        (click)="openModal()">
         <b>Set up profile</b>
       </button>
-      <button *ngIf="userProfileCard.followFlag === true" class="btn btn-primary" id="unfollow-btn" (click)="unfollow()"
-        style="width: max-content; border-radius:20px;">
+      <button *ngIf="userProfileCard.followFlag === true" class="btn btn-primary rd20x wdt-max" id="unfollow-btn"
+        (click)="unfollow()">
         <b>Following</b>
       </button>
-      <button *ngIf="userProfileCard.followFlag === false" class="btn btn-outline-primary" id="follow-btn"
-        (click)="follow()" style="width: max-content; border-radius:20px; ">
+      <button *ngIf="userProfileCard.followFlag === false" class="btn btn-outline-primary rd20x wdt-max" id="follow-btn"
+        (click)="follow()">
         <b>Follow</b>
       </button>
     </div>
@@ -39,16 +37,16 @@
         <li>
           <h6 class="text-muted">@{{userProfileCard.username}}</h6>
         </li>
-        <li *ngIf="userProfileCard.personalInfo !== null" id="user-personal-info" class="mt-2"
-          style="word-break:break-word;">{{userProfileCard.personalInfo}}</li>
+        <li *ngIf="userProfileCard.personalInfo !== null" id="user-personal-info" class="mt-2 text-break">
+          {{userProfileCard.personalInfo}}</li>
         <li class="mt-2 d-flex" id="multiple-data-list-el">
 
           <h6 *ngIf="userProfileCard.location !== null" class="text-muted" id="user-location">
             <i class="fas fa-map-marker-alt"></i> {{userProfileCard.location}}
           </h6>
-          <div *ngIf="userProfileCard.personalWebSiteURL != null" >
-            <h6 *ngIf="userProfileCard.personalWebSiteURL !== null" style="margin-left:7px;" id="user-personal-url">
-              <i class="fas fa-link" style="margin-right: 2px;"></i><a href="userProfileCard.personalWebSiteURL">
+          <div *ngIf="userProfileCard.personalWebSiteURL != null">
+            <h6 *ngIf="userProfileCard.personalWebSiteURL !== null" class="ms-2" id="user-personal-url">
+              <i class="fas fa-link me-1"></i><a href="userProfileCard.personalWebSiteURL">
                 <label
                   *ngIf="userProfileCard.personalWebSiteURL.length > 30; else shortVer">{{userProfileCard.personalWebSiteURL
                   | slice:0:27}}...</label>
@@ -56,7 +54,8 @@
               </a>
             </h6>
           </div>
-          <h6 class="text-muted" [ngStyle]="{'margin-left': (userProfileCard.location !== null || userProfileCard.personalWebSiteURL !== null) ? '8px': '0'}">
+          <h6 class="text-muted"
+            [ngStyle]="{'margin-left': (userProfileCard.location !== null || userProfileCard.personalWebSiteURL !== null) ? '8px': '0'}">
             <i class="far fa-calendar-alt"></i> Joined
             {{userProfileCard.createdDate | date:'MMM y'}}
           </h6>
@@ -74,7 +73,8 @@
       </ul>
     </div>
   </div>
-  <app-profile-edit-modal (sendUpdatedUserData) = 'updateProfile($event)' #editModal *ngIf="userProfileCard.fullname != undefined && userProfileCard.followFlag == null" [profileData]="userProfileCard">
+  <app-profile-edit-modal (sendUpdatedUserData)='updateProfile($event)' #editModal
+    *ngIf="userProfileCard.fullname != undefined && userProfileCard.followFlag == null" [profileData]="userProfileCard">
   </app-profile-edit-modal>
 
 </div>

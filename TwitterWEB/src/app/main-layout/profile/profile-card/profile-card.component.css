@@ -1,10 +1,16 @@
 /*Profile Card CSS*/
 ﻿.profile-head {
-  transform: translateY(5rem)
- }
+  transform: translateY(5rem);
+}
 
- .cover {
+.cover {
   background-size: cover;
   background-repeat: no-repeat;
- }
+}
 
+.card-profile-img {
+  width: 150px;
+  height: 150px;
+  border: 5px solid white;
+  border-radius: 50%;
+}
