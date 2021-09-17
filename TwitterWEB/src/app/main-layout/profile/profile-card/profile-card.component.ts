@@ -35,10 +35,10 @@ export class ProfileCardComponent implements OnInit {
 
       this.dataService.getFollowFlag().subscribe((flag) => {
         if (this.dataServiceUserID === this.userProfileCard.id) {
-          if (flag === true) {
+          if (flag) {
             this.userProfileCard.followFlag = true;
             this.userProfileCard.followerCounter++;
-          } else if (flag === false) {
+          } else if (!flag) {
             this.userProfileCard.followFlag = false;
             this.userProfileCard.followerCounter--;
           }

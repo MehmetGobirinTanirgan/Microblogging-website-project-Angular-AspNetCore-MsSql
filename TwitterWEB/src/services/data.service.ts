@@ -11,6 +11,7 @@ export class DataService {
   tweetReplyStream:TweetModel[] | null;
   followUserID:BehaviorSubject<string | null> = new BehaviorSubject<string | null>(null);
   followFlag:BehaviorSubject<boolean | null> = new BehaviorSubject<boolean | null>(null);
+  newReplyTweet:BehaviorSubject<TweetModel | null> = new BehaviorSubject<TweetModel | null>(null);
 
   getFollowFlag():Observable<boolean | null>{
     return this.followFlag.asObservable();
@@ -26,5 +27,13 @@ export class DataService {
 
   setFollowUserID(userID:string | null): void{
     this.followUserID.next(userID);
+  }
+
+  getNewReplyTweet():Observable<TweetModel | null>{
+    return this.newReplyTweet.asObservable();
+  }
+
+  setNewReplyTweet(newReplyTweet:TweetModel):void{
+    this.newReplyTweet.next(newReplyTweet);
   }
 }

@@ -47,9 +47,9 @@ export class TweetComponent implements OnInit {
 
       this.dataService.getFollowFlag().subscribe((flag) => {
         if (this.dataServiceUserID == this.tweet.userID) {
-          if (flag === true) {
+          if (flag) {
             this.tweet.followFlag = true;
-          } else if (flag === false) {
+          } else if (!flag) {
             this.tweet.followFlag = false;
           }
         }
@@ -120,8 +120,8 @@ export class TweetComponent implements OnInit {
   follow() {
     this.followService.follow(this.tweet.userID, this.userID).subscribe(
       (success) => {
-        this.dataService.setFollowFlag(true);
         this.dataService.setFollowUserID(this.tweet.userID);
+        this.dataService.setFollowFlag(true);
       },
       (error) => {
         alert('Follow failed');
@@ -132,8 +132,8 @@ export class TweetComponent implements OnInit {
   unfollow() {
     this.followService.unfollow(this.tweet.userID, this.userID).subscribe(
       (success) => {
-        this.dataService.setFollowFlag(false);
         this.dataService.setFollowUserID(this.tweet.userID);
+        this.dataService.setFollowFlag(false);
       },
       (error) => {
         alert('Unfollow failed');

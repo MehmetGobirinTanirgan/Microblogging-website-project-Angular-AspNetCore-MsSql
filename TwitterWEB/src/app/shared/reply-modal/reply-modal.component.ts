@@ -1,6 +1,7 @@
 import { Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
+import { of } from 'rxjs';
 import { ReplyModalModel } from 'src/models/ReplyModalModel';
 import { AuthenticationService } from 'src/services/authentication.service';
 import { CustomValidatorService } from 'src/services/customValidator.service';
@@ -73,7 +74,7 @@ export class ReplyModalComponent implements OnInit {
         }
         this.tweetService.addReplyTweet(formData).subscribe(
           (data) => {
-            alert('Replied successfully');
+            this.dataService.setNewReplyTweet(data);
             this.modalRef.close();
           },
           (error) => {
