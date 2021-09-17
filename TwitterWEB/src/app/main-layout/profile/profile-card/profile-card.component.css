@@ -14,3 +14,7 @@
   border: 5px solid white;
   border-radius: 50%;
 }
+
+.header-offset{
+  top: 35px;
+}

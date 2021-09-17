@@ -1,15 +1,15 @@
 <div class="container-fluid main-div">
   <div class="row justify-content-center">
-    <div class="col-2 border-right p-0">
+    <div class="col-2 border-right p-0 pos-fix top-0 nav-offset">
       <app-nav></app-nav>
     </div>
-    <div class="col-8 p-0">
-      <div class="d-flex justify-content-center main-block p-0">
-        <div class="col-7 border-start border-end p-0">
+    <div class="col-8">
+      <div class="d-flex justify-content-center main-block">
+        <div class="col-7 border-start border-end">
             <router-outlet></router-outlet>
         </div>
         <div class="col-4 ms-3">
-          <div class="row">
+          <div class="row pos-fix wdt100" style="max-width: 400px;">
             <app-search-bar></app-search-bar>
           </div>
         </div>

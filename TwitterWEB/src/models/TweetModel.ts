@@ -17,4 +17,5 @@ export class TweetModel {
   ownershipStatus: boolean;
   mainTweetOwnerID:string | null;
   mainTweetOwnerUsername: string | null;
+  tweetFlag:boolean;
 }

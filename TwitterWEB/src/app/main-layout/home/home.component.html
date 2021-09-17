@@ -1,9 +1,9 @@
-<div class="border-bottom">
-    <h3 class="ms-5"><b>Home</b></h3>
+<div class="d-flex border-bottom pos-fix fixed-header p-1">
+  <h3 class="ms-5"><b>Home</b></h3>
 </div>
-  <app-tweet-editor (addedNewTweet) = 'addNewTweet($event)'></app-tweet-editor>
-<div class="scrollable1 home-tweet-stream">
-  <div class="scrollable2">
-      <app-tweet  *ngFor="let tweet of tweets" [tweet]="tweet"></app-tweet>
+<div class="h-100 pos-rel header-offset">
+  <app-tweet-editor (addedNewTweet)='addNewTweet($event)'></app-tweet-editor>
+  <div *ngIf="tweets.length > 1">
+    <app-tweet *ngFor="let tweet of tweets" [tweet]="tweet"></app-tweet>
   </div>
 </div>

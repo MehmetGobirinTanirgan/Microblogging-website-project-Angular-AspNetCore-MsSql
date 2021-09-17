@@ -4,6 +4,7 @@ import { TweetModel } from 'src/models/TweetModel';
 import { UserProfileCardModel } from 'src/models/UserProfileCardModel';
 import { UserProfileModel } from 'src/models/UserProfileModel';
 import { AuthenticationService } from 'src/services/authentication.service';
+import { DataService } from 'src/services/data.service';
 import { UserService } from 'src/services/user.service';
 
 @Component({
@@ -17,7 +18,8 @@ export class ProfileComponent implements OnInit {
     private userService: UserService,
     private authService: AuthenticationService,
     private activatedRoute: ActivatedRoute,
-    private router: Router
+    private router: Router,
+    private dataService:DataService
   ) {
     this.router.routeReuseStrategy.shouldReuseRoute = () => false;
   }

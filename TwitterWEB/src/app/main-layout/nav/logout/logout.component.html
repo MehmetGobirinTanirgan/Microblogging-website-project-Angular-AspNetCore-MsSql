@@ -2,7 +2,7 @@
   <button class="btn btn-outline-light d-flex rd40x logout-btn"  ngbDropdownToggle
      role="button">
       <div class="rounded-img-container">
-          <img title="user-image" class="rounded-img logout-img" [src]="userData.profilePicPath">
+          <img title="user-image" class="rounded-img logout-img" [src]="authService.getUserData()?.profilePicPath">
       </div>
       <div class="ms-2">
           <h6 class="fw-bold clr-blck">{{userData.fullname}} </h6>

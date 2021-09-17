@@ -1,25 +1,25 @@
 /*Tweet display css*/
-﻿article,
+.tweet-article,
 .tweet-link,
 .twt-img-link {
   z-index: 2;
   position: relative;
 }
 
-article:hover {
+.tweet-article:hover {
   background-color: #f7f7f7;
 }
 
-article {
+.tweet-article {
   width: 100%;
   height: auto;
 }
 
-article a {
+.tweet-article a {
   text-decoration: none;
 }
 
-article a:hover {
+.tweet-article a:hover {
   text-decoration: underline;
 }
 
@@ -70,17 +70,15 @@ article a:hover {
   text-decoration: none;
 }
 
-.single-img {
-  width: 95%;
-  height: auto;
-}
-
 .tweet-img{
-  height: auto;
+  height: 100%;
+  width: 100%;
 }
 
-.img-div {
-  width: 95%;
-  height: auto;
-  overflow: hidden;
+.twt-img-link{
+  height: 100%;
+  width: 100%;
+  display: flex;
 }
+
+

@@ -1,5 +1,6 @@
 import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
+import { forkJoin, Observable, of } from 'rxjs';
 import { UserProfileCardModel } from 'src/models/UserProfileCardModel';
 import { UserStoreModel } from 'src/models/UserStoreModel';
 import { AuthenticationService } from 'src/services/authentication.service';
@@ -23,10 +24,26 @@ export class ProfileCardComponent implements OnInit {
   @Input() userProfileCard: UserProfileCardModel;
   @ViewChild('editModal') modalComponent: ProfileEditModalComponent;
   userID: string;
+  dataServiceUserID: string | null = null;
   ngOnInit(): void {
     const id = this.authService.getUserData()?.id;
     if (id != null) {
       this.userID = id;
+      this.dataService.getFollowUserID().subscribe((id) => {
+        this.dataServiceUserID = id;
+      });
+
+      this.dataService.getFollowFlag().subscribe((flag) => {
+        if (this.dataServiceUserID === this.userProfileCard.id) {
+          if (flag === true) {
+            this.userProfileCard.followFlag = true;
+            this.userProfileCard.followerCounter++;
+          } else if (flag === false) {
+            this.userProfileCard.followFlag = false;
+            this.userProfileCard.followerCounter--;
+          }
+        }
+      });
     } else {
       alert('Local storage error');
     }
@@ -39,7 +56,8 @@ export class ProfileCardComponent implements OnInit {
   follow() {
     this.followService.follow(this.userProfileCard.id, this.userID).subscribe(
       (success) => {
-        alert('Following');
+        this.dataService.setFollowUserID(this.userProfileCard.id);
+        this.dataService.setFollowFlag(true);
       },
       (error) => {
         alert('Following failed');
@@ -50,7 +68,8 @@ export class ProfileCardComponent implements OnInit {
   unfollow() {
     this.followService.unfollow(this.userProfileCard.id, this.userID).subscribe(
       (success) => {
-        alert('Unfollowed');
+        this.dataService.setFollowUserID(this.userProfileCard.id);
+        this.dataService.setFollowFlag(false);
       },
       (error) => {
         alert('Unfollowing failed');
@@ -76,16 +95,17 @@ export class ProfileCardComponent implements OnInit {
     );
   }
 
-  updateProfile(updatedProfileStr:string){
-    const updatedUserProfileData:UserProfileCardModel = JSON.parse(updatedProfileStr);
+  updateProfile(updatedProfileStr: string) {
+    const updatedUserProfileData: UserProfileCardModel =
+      JSON.parse(updatedProfileStr);
     this.userProfileCard = updatedUserProfileData;
-    const updatedUserData:UserStoreModel = {
-      id:updatedUserProfileData.id,
+    const updatedUserData: UserStoreModel = {
+      id: updatedUserProfileData.id,
       profilePicPath: updatedUserProfileData.profilePicPath,
       username: updatedUserProfileData.username,
       fullname: updatedUserProfileData.fullname,
       token: this.authService.getToken()!,
-    }
+    };
     this.authService.saveData(updatedUserData);
   }
 }

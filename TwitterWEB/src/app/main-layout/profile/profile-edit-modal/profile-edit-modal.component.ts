@@ -85,7 +85,6 @@ export class ProfileEditModalComponent implements OnInit {
         formdata.append('BackgroundImage', this.bgImage);
         this.userService.updateProfile(formdata).subscribe(
           (data) => {
-            alert('Profile updated');
             this.modalRef.close();
             this.sendUpdatedUserData.emit(JSON.stringify(data.body));
           },

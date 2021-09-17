@@ -1,7 +1,12 @@
-.main-div{
+.main-div {
   width: 1500px;
 }
 
-.main-block{
+.main-block {
   width: 1100px;
+  overflow:visible;
+}
+
+.nav-offset {
+  left: 170px;
 }

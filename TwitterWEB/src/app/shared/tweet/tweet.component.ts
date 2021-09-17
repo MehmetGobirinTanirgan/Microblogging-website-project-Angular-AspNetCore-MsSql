@@ -1,11 +1,6 @@
-import {
-  Component,
-  ElementRef,
-  Input,
-  OnInit,
-  ViewChild,
-} from '@angular/core';
+import { Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
+import { of } from 'rxjs';
 import { LikeModel } from 'src/models/LikeModel';
 import { ReplyModalModel } from 'src/models/ReplyModalModel';
 import { TweetModel } from 'src/models/TweetModel';
@@ -24,10 +19,10 @@ import { ReplyModalComponent } from '../reply-modal/reply-modal.component';
 export class TweetComponent implements OnInit {
   constructor(
     private tweetService: TweetService,
-    private authService: AuthenticationService,
+    public authService: AuthenticationService,
     public dataService: DataService,
     private followService: FollowService,
-    private router: Router,
+    private router: Router
   ) {}
   userID: string;
   userProfilePicPath: string;
@@ -37,14 +32,28 @@ export class TweetComponent implements OnInit {
   @ViewChild('dislikeBtn') dislikeBtn: ElementRef;
   @ViewChild('heart') heart: ElementRef;
   replyModalModel: ReplyModalModel = new ReplyModalModel();
-  tweetFlag: boolean = true;
-  tweetImgWidth:number;
+  dataServiceUserID: string | null = null;
+
   ngOnInit(): void {
     const data = this.authService.getUserData();
     if (data != null) {
+      this.tweet.tweetFlag = true;
       this.userID = data.id;
       this.userProfilePicPath = data.profilePicPath;
-      this.tweetImgWidth = 100/this.tweet.tweetImageInfos.length;
+
+      this.dataService.getFollowUserID().subscribe((id) => {
+        this.dataServiceUserID = id;
+      });
+
+      this.dataService.getFollowFlag().subscribe((flag) => {
+        if (this.dataServiceUserID == this.tweet.userID) {
+          if (flag === true) {
+            this.tweet.followFlag = true;
+          } else if (flag === false) {
+            this.tweet.followFlag = false;
+          }
+        }
+      });
     } else {
       alert('Error: Tweet loading failed');
     }
@@ -71,7 +80,7 @@ export class TweetComponent implements OnInit {
   deleteTweet() {
     this.tweetService.delete(this.tweet.id).subscribe(
       (success) => {
-        this.tweetFlag = false;
+        this.tweet.tweetFlag = false;
       },
       (error) => alert('Deletion failed')
     );
@@ -111,7 +120,8 @@ export class TweetComponent implements OnInit {
   follow() {
     this.followService.follow(this.tweet.userID, this.userID).subscribe(
       (success) => {
-        alert('Following');
+        this.dataService.setFollowFlag(true);
+        this.dataService.setFollowUserID(this.tweet.userID);
       },
       (error) => {
         alert('Follow failed');
@@ -122,7 +132,8 @@ export class TweetComponent implements OnInit {
   unfollow() {
     this.followService.unfollow(this.tweet.userID, this.userID).subscribe(
       (success) => {
-        alert('Unfollowed');
+        this.dataService.setFollowFlag(false);
+        this.dataService.setFollowUserID(this.tweet.userID);
       },
       (error) => {
         alert('Unfollow failed');

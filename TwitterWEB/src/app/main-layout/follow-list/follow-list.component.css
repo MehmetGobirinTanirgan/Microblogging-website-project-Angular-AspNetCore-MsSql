@@ -1,0 +1,23 @@
+.header-offset{
+  top:100px;
+}
+
+.user-img{
+  width: 60px;
+  height: 60px;
+}
+
+.user-block{
+  width: 90%;
+}
+
+.nav-btn{
+  -webkit-box-shadow: none;
+  box-shadow: none;
+}
+
+.nav-btn:hover{
+  background: #e8f5fe;
+  cursor: pointer;
+  color: #56b9f6;
+}

@@ -1,5 +1,5 @@
 /* You can add global styles to this file, and also import other style files */
-*{
+* {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
@@ -8,13 +8,20 @@
 html,
 body {
   height: 100%;
-  display: block;
 }
 
-.form-control:focus{
-  border: solid 2px #1D9BF0;
+.form-control:focus {
+  border: solid 2px #1d9bf0;
   -webkit-box-shadow: none;
   box-shadow: none;
+}
+
+/* Helpers */
+
+/* Specifics */
+.transp-text {
+  opacity: 0.9;
+  color: #6d7f90;
 }
 
 .rounded-img-container {
@@ -31,43 +38,23 @@ body {
   object-position: center;
 }
 
-/*Scrollable part css*/
-.scrollable1 {
-  position: relative;
-  overflow-x: visible !important;
-}
-
-.scrollable2 {
-  position: absolute;
-  top: 0px;
-  bottom: 0px;
+.fixed-header {
+  background-color: white;
+  max-width: 640px;
   width: 100%;
-  overflow-y:auto;
+  z-index: 3;
 }
 
-.scrollable2::-webkit-scrollbar {
-  width: 0;
-  background-color: transparent;
-}
-
-
-/* Helpers */
-
-/* Specifics */
-.transp-text{
-  opacity: 0.9;
-  color: #6d7f90;
-}
-
-.fl-wrap{
+.fl-wrap {
   flex-wrap: wrap;
 }
+
 /* Colors */
 .clr-wht {
   color: white;
 }
 
-.clr-blck{
+.clr-blck {
   color: black;
 }
 
@@ -79,16 +66,15 @@ body {
   color: #1d9bf0;
 }
 
-.blue3{
-  color:#1DA1F2;
+.blue3 {
+  color: #1da1f2;
 }
-
 
 .bg-twt-blue1 {
   background-color: #86cdfe;
 }
 
-.bg-twt-blu2{
+.bg-twt-blu2 {
   background-color: rgb(29, 155, 240);
 }
 /* Borders */
@@ -142,11 +128,11 @@ body {
   width: 500px;
 }
 
-.wdt-min{
+.wdt-min {
   width: min-content;
 }
 
-.wdt-max{
+.wdt-max {
   width: max-content;
 }
 
@@ -178,52 +164,61 @@ body {
 }
 
 /* Position */
-.pos-abs{
+.pos-abs {
   position: absolute;
 }
 
-.pos-rel{
+.pos-rel {
   position: relative;
 }
 
-.top-0{
+.pos-fix {
+  position: fixed;
+}
+
+.pos-stc {
+  position: sticky;
+}
+
+.top-0 {
   top: 0px;
 }
 
-.btm-0{
+.btm-0 {
   bottom: 0px;
 }
 
-.rgt-0{
+.rgt-0 {
   right: 0px;
 }
 
-.lft-0{
+.lft-0 {
   left: 0px;
 }
 
 /* Overflow */
-.ov-hidden{
+.ov-hidden {
   overflow: hidden;
 }
 
 /* Links */
-.dec-none{
+.dec-none {
   text-decoration: none !important;
 }
 
 /* Modal */
-.modal-content{
+.modal-content {
   border-radius: 1.5rem;
 }
 
 /* Form Warning */
-input.ng-invalid.ng-dirty, input.ng-invalid.ng-touched{
-  border-color: #FF0000 !important;
+input.ng-invalid.ng-dirty,
+input.ng-invalid.ng-touched {
+  border-color: #ff0000 !important;
   box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(255, 0, 0, 0.6);
- }
+}
 
- select.ng-invalid.ng-touched{
-  border-color: #FF0000 !important;
+select.ng-invalid.ng-touched {
+  border-color: #ff0000 !important;
   box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(255, 0, 0, 0.6);
- }
+}

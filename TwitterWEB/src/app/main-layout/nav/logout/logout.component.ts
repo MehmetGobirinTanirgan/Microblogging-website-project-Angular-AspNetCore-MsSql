@@ -10,7 +10,7 @@ import { AuthenticationService } from 'src/services/authentication.service';
 })
 export class LogoutComponent implements OnInit {
   constructor(
-    private authService: AuthenticationService,
+    public authService: AuthenticationService,
     private router: Router
   ) {}
   userData: UserStoreModel;

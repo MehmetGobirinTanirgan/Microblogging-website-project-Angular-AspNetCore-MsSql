@@ -8,6 +8,7 @@
 
 .logout-btn {
   width: 100% !important;
+  max-width: 250px;
 }
 
 .logout-img {
@@ -16,6 +17,7 @@
 }
 
 .logout-menu {
+  max-width: 250px;
   width: 100%;
   text-align: center;
   overflow: hidden;
