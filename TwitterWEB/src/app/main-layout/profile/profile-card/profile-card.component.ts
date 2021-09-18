@@ -78,19 +78,11 @@ export class ProfileCardComponent implements OnInit {
   }
 
   followList(flag: boolean) {
-    this.followService.getFollowList(this.userProfileCard.id).subscribe(
-      (data) => {
-        this.dataService.followList = of(data);
-        if (flag) {
-          this.router.navigate([`${this.userProfileCard.id}/following`]);
-        } else if (!flag) {
-          this.router.navigate([`${this.userProfileCard.id}/followers`]);
-        }
-      },
-      (error) => {
-        alert("Can't load follow list");
-      }
-    );
+    if (flag) {
+      this.router.navigate([`${this.userProfileCard.id}/following`]);
+    } else if (!flag) {
+      this.router.navigate([`${this.userProfileCard.id}/followers`]);
+    }
   }
 
   updateProfile(updatedProfileStr: string) {

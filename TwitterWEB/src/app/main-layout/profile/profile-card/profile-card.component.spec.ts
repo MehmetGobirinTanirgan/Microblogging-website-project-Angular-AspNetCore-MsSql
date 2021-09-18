@@ -137,7 +137,6 @@ describe('ProfileCardComponent', () => {
     mockFollowService.getFollowList.and.returnValue(of(mockFollowList));
     component.followList(flag);
 
-    expect(mockDataService.followList).toEqual(of(mockFollowList));
     expect(routerSpy).toHaveBeenCalledWith([
       `${component.userProfileCard.id}/following`,
     ]);
@@ -152,7 +151,6 @@ describe('ProfileCardComponent', () => {
     mockFollowService.getFollowList.and.returnValue(of(mockFollowList));
     component.followList(flag);
 
-    expect(mockDataService.followList).toEqual(of(mockFollowList));
     expect(routerSpy).toHaveBeenCalledWith([
       `${component.userProfileCard.id}/followers`,
     ]);

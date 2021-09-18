@@ -22,6 +22,7 @@ export class FollowListComponent implements OnInit {
   followList: FollowListModel | null = null;
   displaySection: string | null = null;
   upcomingUserID: string;
+
   ngOnInit(): void {
     this.activatedRoute.parent?.params.subscribe((params) => {
       this.upcomingUserID = params['id'];
@@ -31,10 +32,10 @@ export class FollowListComponent implements OnInit {
       this.displaySection = params['section'];
     });
 
-    this.refreshData();
+    this.getFollowList();
   }
 
-  refreshData() {
+  getFollowList() {
     this.followService.getFollowList(this.upcomingUserID).subscribe(
       (data) => {
         this.followList = data;
