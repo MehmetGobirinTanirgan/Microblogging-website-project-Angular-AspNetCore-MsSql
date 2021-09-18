@@ -1,14 +1,11 @@
-.header-offset{
-  top:100px;
-}
-
 .user-img{
   width: 60px;
   height: 60px;
 }
 
-.user-block{
+.follow-article{
   width: 90%;
+  position: relative;
 }
 
 .nav-btn{
@@ -20,4 +17,8 @@
   background: #e8f5fe;
   cursor: pointer;
   color: #56b9f6;
+}
+
+.follow-article:hover {
+  background-color: #f7f7f7;
 }

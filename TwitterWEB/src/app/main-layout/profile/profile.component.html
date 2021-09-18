@@ -1,4 +1,4 @@
-<div *ngIf="userProfileCard">
+<div *ngIf="userProfileCard.backgroundPath; else loading">
   <app-profile-card [userProfileCard]="userProfileCard" ></app-profile-card>
   <div class="btn-group d-flex border-bottom mt-3" role="group">
     <button type="button" class="btn nav-btn" (click)="show1()"><b>Tweet</b></button>
@@ -6,25 +6,30 @@
     <button type="button" class="btn nav-btn" (click)="show3()"><b>Media</b></button>
     <button type="button" class="btn nav-btn" (click)="show4()"><b>Likes</b></button>
   </div>
-  <div *ngIf="ownTweets != null">
+  <div *ngIf="ownTweets">
     <div *ngIf="toggle1">
           <app-tweet *ngFor="let tweet of ownTweets" [tweet]="tweet"></app-tweet>
     </div>
   </div>
-  <div *ngIf="nonReplyOwnTweets != null">
+  <div *ngIf="nonReplyOwnTweets">
     <div *ngIf="toggle2">
         <app-tweet *ngFor="let tweet of nonReplyOwnTweets" [tweet]="tweet"></app-tweet>
     </div>
   </div>
-  <div *ngIf="mediaTypeTweets != null">
+  <div *ngIf="mediaTypeTweets">
     <div *ngIf="toggle3">
         <app-tweet *ngFor="let tweet of mediaTypeTweets" [tweet]="tweet"></app-tweet>
     </div>
   </div>
-  <div *ngIf="likedTweets != null">
+  <div *ngIf="likedTweets">
     <div *ngIf="toggle4">
         <app-tweet *ngFor="let tweet of likedTweets" [tweet]="tweet"></app-tweet>
     </div>
   </div>
 </div>
-
+<ng-template #loading>
+  <div class="d-flex justify-content-center align-items-center" style="height: 700px;">
+    <div class="spinner-border text-primary" role="status">
+    </div>
+  </div>
+</ng-template>

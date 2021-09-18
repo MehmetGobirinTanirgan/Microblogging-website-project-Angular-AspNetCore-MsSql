@@ -7,7 +7,7 @@ import { TweetModel } from 'src/models/TweetModel';
 export class DataService {
   constructor() {}
   replyModalData: string;
-  followList: FollowListModel | null;
+  followList: Observable<FollowListModel | null>;
   tweetReplyStream:TweetModel[] | null;
   followUserID:BehaviorSubject<string | null> = new BehaviorSubject<string | null>(null);
   followFlag:BehaviorSubject<boolean | null> = new BehaviorSubject<boolean | null>(null);

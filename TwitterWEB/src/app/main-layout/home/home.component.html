@@ -1,9 +1,15 @@
-<div class="d-flex border-bottom pos-fix fixed-header p-1">
+<div class="d-flex border-bottom pos-stc top-0 p-1 bg-white z-3">
   <h3 class="ms-5"><b>Home</b></h3>
 </div>
-<div class="h-100 pos-rel header-offset">
+<div class="h-100">
   <app-tweet-editor (addedNewTweet)='addNewTweet($event)'></app-tweet-editor>
-  <div *ngIf="tweets.length > 1">
+  <div *ngIf="tweets.length > 1; else loading">
     <app-tweet *ngFor="let tweet of tweets" [tweet]="tweet"></app-tweet>
   </div>
+  <ng-template #loading>
+    <div class="d-flex justify-content-center align-items-center" style="height: 300%;">
+      <div class="spinner-border text-primary" role="status">
+      </div>
+    </div>
+  </ng-template>
 </div>

@@ -1,6 +1,6 @@
 import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
-import { forkJoin, Observable, of } from 'rxjs';
+import { of } from 'rxjs';
 import { UserProfileCardModel } from 'src/models/UserProfileCardModel';
 import { UserStoreModel } from 'src/models/UserStoreModel';
 import { AuthenticationService } from 'src/services/authentication.service';
@@ -80,9 +80,7 @@ export class ProfileCardComponent implements OnInit {
   followList(flag: boolean) {
     this.followService.getFollowList(this.userProfileCard.id).subscribe(
       (data) => {
-        this.dataService.followList = data;
-        this.followService.setDisplayFlag(flag);
-        this.followService.setUserID(this.userProfileCard.id);
+        this.dataService.followList = of(data);
         if (flag) {
           this.router.navigate([`${this.userProfileCard.id}/following`]);
         } else if (!flag) {

@@ -38,10 +38,7 @@ body {
   object-position: center;
 }
 
-.fixed-header {
-  background-color: white;
-  max-width: 640px;
-  width: 100%;
+.z-3{
   z-index: 3;
 }
 
@@ -141,6 +138,10 @@ body {
   height: 100%;
 }
 
+.hgt-window{
+  height: 100vh;
+}
+
 /* Z-Index */
 .z-1 {
   z-index: -1;
@@ -160,9 +161,12 @@ body {
 }
 
 .bg-black {
-  background-color: rgba(0, 0, 0, 0);
+  background-color: rgba(0, 0, 0, 0) !important;
 }
 
+.bg-white{
+  background: rgba(255, 255, 255, 1) !important;
+}
 /* Position */
 .pos-abs {
   position: absolute;
