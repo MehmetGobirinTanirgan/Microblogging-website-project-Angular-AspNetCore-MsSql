@@ -4,6 +4,7 @@
   justify-content: center;
   align-items: center;
   background-color: rgb(239, 243, 244);
+  border: 1px solid rgb(239, 243, 244);
   border-radius: 9999px;
   width: 100%;
   overflow: hidden;
@@ -20,7 +21,7 @@
   padding: 10px;
   outline: none;
   opacity: 0.9;
-  border: 1px solid rgb(239, 243, 244);
+  border:none;
 }
 
 .caps-onfocus {
