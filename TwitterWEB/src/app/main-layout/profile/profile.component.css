@@ -1,18 +1,48 @@
 .nav-btn {
-  padding: 30px;
-  color: #5b7083;
+  padding-left: 16px;
+  padding-right: 16px;
+  padding-top: 0;
+  padding-bottom: 0;
   border-radius: 0;
   border: 0;
   -webkit-box-shadow: none;
   box-shadow: none;
+  position: relative;
+  width: 100%;
+  display: flex;
+  justify-content: center;
 }
 
-.nav-btn:hover {
-  background: #e8f5fe;
+.btn-caps {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+.btn-caps:hover {
+  background: #e7e7e8;
   cursor: pointer;
-  color: #56b9f6;
 }
 
-.hgt-stream{
-  height: 380px;
+.btn-active {
+  height: 4px;
+  background-color: rgb(29, 155, 240);
+  width: 100%;
+  border-radius: 9999px;
+  position: absolute;
+  bottom: 0;
+  align-self: center;
+}
+
+.btn-inside {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  height: 100%;
+  width: max-content;
+  padding-top: 16px;
+  padding-bottom: 16px;
+  font-size: 15px;
+  font-weight: 500;
+  color: #5b7083;
 }

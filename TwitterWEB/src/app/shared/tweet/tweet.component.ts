@@ -142,15 +142,6 @@ export class TweetComponent implements OnInit {
   }
 
   tweetReplyStream() {
-    this.tweetService.getTweetReplyStream(this.tweet.id, this.userID).subscribe(
-      (data) => {
-        this.dataService.tweetReplyStream = data;
-        this.tweetService.setTweetID(this.tweet.id);
-        this.router.navigate([`${data[0].userID}/status/${this.tweet.id}`]);
-      },
-      (error) => {
-        alert('Error: Cant load tweet reply stream');
-      }
-    );
+    this.router.navigate([`${this.tweet.userID}/status/${this.tweet.id}`]);
   }
 }

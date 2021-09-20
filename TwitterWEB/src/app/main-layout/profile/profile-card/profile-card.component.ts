@@ -79,9 +79,9 @@ export class ProfileCardComponent implements OnInit {
 
   followList(flag: boolean) {
     if (flag) {
-      this.router.navigate([`${this.userProfileCard.id}/following`]);
+      this.router.navigate([`${this.userProfileCard.id}/follow/following`]);
     } else if (!flag) {
-      this.router.navigate([`${this.userProfileCard.id}/followers`]);
+      this.router.navigate([`${this.userProfileCard.id}/follow/followers`]);
     }
   }
 

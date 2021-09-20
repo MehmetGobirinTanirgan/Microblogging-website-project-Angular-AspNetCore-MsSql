@@ -57,8 +57,7 @@ describe('TweetReplyStreamComponent', () => {
   });
 
   it('#ngOnInit should call #refreshPage when data service returns null', () =>{
-    mockDataService.tweetReplyStream = null;
-    const refreshSpy = spyOn(component,'refreshPage');
+    const refreshSpy = spyOn(component,'getTweetReplyStream');
     fixture.detectChanges();
 
     expect(refreshSpy).toHaveBeenCalled();
@@ -67,9 +66,8 @@ describe('TweetReplyStreamComponent', () => {
   it('#refreshPage should return expected data if request is succesfull', () =>{
     const mockTweet = mockData.mockTweet;
     mockAuthService.getUserData.and.returnValue(mockData.mockUserData);
-    mockTweetService.getTweetID.and.returnValue('mockTweetID');
     mockTweetService.getTweetReplyStream.and.returnValue(of([mockTweet]))
-    component.refreshPage();
+    component.getTweetReplyStream();
 
     expect(component.tweetReplyStream).toEqual([mockTweet]);
   });
@@ -77,9 +75,8 @@ describe('TweetReplyStreamComponent', () => {
   it('#refreshPage should display error alert if request fails', () =>{
     spyOn(window,'alert');
     mockAuthService.getUserData.and.returnValue(mockData.mockUserData);
-    mockTweetService.getTweetID.and.returnValue('mockTweetID');
     mockTweetService.getTweetReplyStream.and.returnValue(throwError(new HttpResponse({status:400})))
-    component.refreshPage();
+    component.getTweetReplyStream();
 
     expect(window.alert).toHaveBeenCalledWith('Error: Cant load tweet reply stream');
   });
@@ -87,8 +84,7 @@ describe('TweetReplyStreamComponent', () => {
   it('#refreshPage should display error alert if none data comes from local storage', () =>{
     spyOn(window,'alert');
     mockAuthService.getUserData.and.returnValue(null);
-    mockTweetService.getTweetID.and.returnValue(null);
-    component.refreshPage();
+    component.getTweetReplyStream();
 
     expect(window.alert).toHaveBeenCalledWith('Local storage error');
   });
@@ -119,6 +115,7 @@ class MockData {
     ownershipStatus: true,
     mainTweetOwnerID: null,
     mainTweetOwnerUsername: null,
+    tweetFlag: true,
     tweetImageInfos: [
       {
         id: '1',

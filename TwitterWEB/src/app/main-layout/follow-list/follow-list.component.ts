@@ -4,7 +4,7 @@ import { DataService } from 'src/services/data.service';
 import { FollowService } from 'src/services/follow.service';
 import { Location } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
-import { of } from 'rxjs';
+
 @Component({
   selector: 'app-follow-list',
   templateUrl: './follow-list.component.html',
@@ -22,14 +22,15 @@ export class FollowListComponent implements OnInit {
   followList: FollowListModel | null = null;
   displaySection: string | null = null;
   upcomingUserID: string;
-
+  mainUrl: string;
   ngOnInit(): void {
+    this.mainUrl = this.router.url;
     this.activatedRoute.parent?.params.subscribe((params) => {
       this.upcomingUserID = params['id'];
     });
 
     this.activatedRoute.params.subscribe((params) => {
-      this.displaySection = params['section'];
+      this.displaySection = params['follow_section'];
     });
 
     this.getFollowList();
@@ -47,18 +48,18 @@ export class FollowListComponent implements OnInit {
   }
 
   showFollowers() {
-    this.location.replaceState(
-      this.router.url.substring(0, this.router.url.lastIndexOf('/')) +
-        '/followers'
-    );
     this.displaySection = 'followers';
+    this.location.replaceState(
+      this.router.url.substring(0, this.mainUrl.lastIndexOf('/')) +
+        `/${this.displaySection}`
+    );
   }
 
   showFollowings() {
-    this.location.replaceState(
-      this.router.url.substring(0, this.router.url.lastIndexOf('/')) +
-        '/following'
-    );
     this.displaySection = 'following';
+    this.location.replaceState(
+      this.router.url.substring(0, this.mainUrl.lastIndexOf('/')) +
+        `/${this.displaySection}`
+    );
   }
 }

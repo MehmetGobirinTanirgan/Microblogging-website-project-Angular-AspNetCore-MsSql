@@ -4,8 +4,8 @@ import { TweetModel } from 'src/models/TweetModel';
 import { UserProfileCardModel } from 'src/models/UserProfileCardModel';
 import { UserProfileModel } from 'src/models/UserProfileModel';
 import { AuthenticationService } from 'src/services/authentication.service';
-import { DataService } from 'src/services/data.service';
 import { UserService } from 'src/services/user.service';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-profile',
@@ -19,7 +19,7 @@ export class ProfileComponent implements OnInit {
     private authService: AuthenticationService,
     private activatedRoute: ActivatedRoute,
     private router: Router,
-    private dataService:DataService
+    private location: Location
   ) {
     this.router.routeReuseStrategy.shouldReuseRoute = () => false;
   }
@@ -31,19 +31,26 @@ export class ProfileComponent implements OnInit {
   nonReplyOwnTweets: TweetModel[];
   mediaTypeTweets: TweetModel[];
   likedTweets: TweetModel[];
-  toggle1: boolean = true;
-  toggle2: boolean = false;
-  toggle3: boolean = false;
-  toggle4: boolean = false;
+  displaySection: string = '';
+  mainUrl: string;
+
   ngOnInit(): void {
     const id = this.authService.getUserData()?.id;
     if (id != undefined) {
       this.userID = id;
     }
 
-    this.activatedRoute.params.subscribe(
+    this.activatedRoute.parent?.params.subscribe(
       (params) => (this.upcomingUserID = params['id'])
     );
+    this.mainUrl = this.router.url;
+
+    this.activatedRoute.params.subscribe((params) => {
+      this.displaySection = params['tweet_section'];
+      if (this.displaySection == undefined) {
+        this.displaySection = '';
+      }
+    });
 
     if (this.userID !== null) {
       if (this.upcomingUserID !== null) {
@@ -87,30 +94,49 @@ export class ProfileComponent implements OnInit {
   }
 
   show1() {
-    this.toggle1 = true;
-    this.toggle2 = false;
-    this.toggle3 = false;
-    this.toggle4 = false;
+    this.displaySection = '';
+    if (this.mainUrl.lastIndexOf('/')) {
+      this.location.replaceState(
+        this.mainUrl.substring(0, this.mainUrl.lastIndexOf('/'))
+      );
+    } else {
+      this.location.replaceState(this.mainUrl);
+    }
   }
 
   show2() {
-    this.toggle1 = false;
-    this.toggle2 = true;
-    this.toggle3 = false;
-    this.toggle4 = false;
+    this.displaySection = 'with_replies';
+    if (this.mainUrl.lastIndexOf('/')) {
+      this.location.replaceState(
+        this.mainUrl.substring(0, this.mainUrl.lastIndexOf('/')) +
+          `/${this.displaySection}`
+      );
+    } else {
+      this.location.replaceState(this.mainUrl + `/${this.displaySection}`);
+    }
   }
 
   show3() {
-    this.toggle1 = false;
-    this.toggle2 = false;
-    this.toggle3 = true;
-    this.toggle4 = false;
+    this.displaySection = 'media';
+    if (this.mainUrl.lastIndexOf('/')) {
+      this.location.replaceState(
+        this.mainUrl.substring(0, this.mainUrl.lastIndexOf('/')) +
+          `/${this.displaySection}`
+      );
+    } else {
+      this.location.replaceState(this.mainUrl + `/${this.displaySection}`);
+    }
   }
 
   show4() {
-    this.toggle1 = false;
-    this.toggle2 = false;
-    this.toggle3 = false;
-    this.toggle4 = true;
+    this.displaySection = 'likes';
+    if (this.mainUrl.lastIndexOf('/')) {
+      this.location.replaceState(
+        this.mainUrl.substring(0, this.mainUrl.lastIndexOf('/')) +
+          `/${this.displaySection}`
+      );
+    } else {
+      this.location.replaceState(this.mainUrl + `/${this.displaySection}`);
+    }
   }
 }

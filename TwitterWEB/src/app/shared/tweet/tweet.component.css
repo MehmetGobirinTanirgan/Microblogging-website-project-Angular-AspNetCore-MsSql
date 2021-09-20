@@ -2,8 +2,8 @@
 .tweet-article,
 .tweet-link,
 .twt-img-link {
-  z-index: 2;
   position: relative;
+  z-index: 2;
 }
 
 .tweet-article:hover {

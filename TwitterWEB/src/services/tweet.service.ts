@@ -62,16 +62,4 @@ export class TweetService {
       'Tweet/GetTweetWithReplyTweets/' + tweetID + '/' + userID
     );
   }
-
-  setTweetID(id: string) {
-    localStorage.setItem('tweetID', id.toString());
-  }
-
-  getTweetID(): string | null {
-    const tweetID = localStorage.getItem('tweetID');
-    if (tweetID == null) {
-      return null;
-    }
-    return tweetID;
-  }
 }
