@@ -14,6 +14,7 @@ export class SearchBarComponent implements OnInit {
   searchResults: SearchResultModel[] = [];
   @ViewChild('dropdownRef', { static: false, read: NgbDropdown })
   dropdown: NgbDropdown;
+  focusFlag:boolean = false;
   ngOnInit(): void {}
 
   search(searchText: string) {
@@ -31,5 +32,13 @@ export class SearchBarComponent implements OnInit {
     } else {
       this.dropdown.close();
     }
+  }
+
+  onFocus(){
+    this.focusFlag = true;
+  }
+
+  focusOut(){
+    this.focusFlag = false;
   }
 }
