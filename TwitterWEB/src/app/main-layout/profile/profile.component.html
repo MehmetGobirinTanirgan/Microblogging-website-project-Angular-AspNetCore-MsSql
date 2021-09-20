@@ -35,22 +35,22 @@
     </div>
   </div>
   <div *ngIf="ownTweets">
-    <div *ngIf="displaySection == ''">
+    <div *ngIf="displaySection == ''" [class.hgt-offset]="ownTweets.length < 5">
       <app-tweet *ngFor="let tweet of ownTweets" [tweet]="tweet"></app-tweet>
     </div>
   </div>
   <div *ngIf="nonReplyOwnTweets">
-    <div *ngIf="displaySection == 'with_replies'">
+    <div *ngIf="displaySection == 'with_replies'" [class.hgt-offset]="nonReplyOwnTweets.length < 5">
       <app-tweet *ngFor="let tweet of nonReplyOwnTweets" [tweet]="tweet"></app-tweet>
     </div>
   </div>
   <div *ngIf="mediaTypeTweets">
-    <div *ngIf="displaySection == 'media'">
+    <div *ngIf="displaySection == 'media'" [class.hgt-offset]="mediaTypeTweets.length < 5">
       <app-tweet *ngFor="let tweet of mediaTypeTweets" [tweet]="tweet"></app-tweet>
     </div>
   </div>
   <div *ngIf="likedTweets">
-    <div *ngIf="displaySection == 'likes'">
+    <div *ngIf="displaySection == 'likes'" [class.hgt-offset]="likedTweets.length < 5">
       <app-tweet *ngFor="let tweet of likedTweets" [tweet]="tweet"></app-tweet>
     </div>
   </div>

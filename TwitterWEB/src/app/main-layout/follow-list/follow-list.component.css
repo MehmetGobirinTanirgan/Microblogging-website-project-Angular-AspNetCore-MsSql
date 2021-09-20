@@ -4,7 +4,7 @@
 }
 
 .follow-article {
-  width: 90%;
+  width: 100%;
   position: relative;
 }
 
@@ -59,4 +59,8 @@
   font-size: 15px;
   font-weight: 500;
   color: #5b7083;
+}
+
+.hgt-offset{
+  height: 85.9vh;
 }
