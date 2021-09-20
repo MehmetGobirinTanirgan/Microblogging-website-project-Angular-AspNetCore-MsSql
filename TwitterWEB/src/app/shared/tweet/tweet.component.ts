@@ -1,6 +1,5 @@
 import { Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
-import { of } from 'rxjs';
 import { LikeModel } from 'src/models/LikeModel';
 import { ReplyModalModel } from 'src/models/ReplyModalModel';
 import { TweetModel } from 'src/models/TweetModel';

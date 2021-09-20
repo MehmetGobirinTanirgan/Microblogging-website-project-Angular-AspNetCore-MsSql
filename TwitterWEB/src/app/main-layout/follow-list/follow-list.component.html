@@ -6,53 +6,65 @@
         <h6 class="ms-5 transp-text">@{{followList.username}}</h6>
       </header>
     </div>
-    <div class="btn-group container-fluid border-bottom" role="group">
-      <button type="button" id="nav-btn-follower" class="btn nav-btn"
-        (click)="showFollowers()"><b>Followers</b></button>
-      <button type="button" id="nav-btn-following" class="btn nav-btn"
-        (click)="showFollowings()"><b>Following</b></button>
-    </div>
-  </div>
-
-    <div *ngIf="displaySection == 'followers'" class="pb-5" [class.hgt-window] = "followList.followers.length < 8">
-      <div *ngIf="followList.followers.length > 0" class="d-flex flex-column align-items-center">
-        <article *ngFor="let follower of followList.followers" class="follow-article mt-3">
-          <div class="d-flex border ps-3" >
-            <div class="col-2">
-              <a routerLink="/{{follower.id}}">
-                <div class="rounded-img-container mt-2 mb-2">
-                  <img class="rounded-img user-img" [src]="follower.profilePicPath">
-                </div>
-              </a>
-            </div>
-            <div class="col-10 mt-3">
-              <label class="fw-bold clr-blck">{{follower.fullname}} </label>
-              <label class="transp-text ms-1"> @{{follower.username}} </label>
-              <a class="stretched-link" routerLink="/{{follower.id}}"></a>
-            </div>
+    <div class="btn-group d-flex border-bottom" role="group">
+      <div class="btn-caps">
+        <a type="button" class="btn nav-btn" (click)="showFollowers()">
+          <div class="btn-inside" [class.fw-bolder]="displaySection == 'followers'">
+            Followers
+            <div *ngIf="displaySection == 'followers'" class="btn-active"></div>
           </div>
-        </article>
+        </a>
       </div>
-    </div>
-
-    <div *ngIf="displaySection == 'following'" class="pb-5" [class.hgt-window] = "followList.followings.length < 8">
-      <div *ngIf="followList.followings.length > 0" class="d-flex flex-column align-items-center">
-        <article *ngFor="let following of followList.followings" class="follow-article mt-3">
-          <div class="d-flex border ps-3">
-            <div class="col-2">
-              <a routerLink="/{{following.id}}">
-                <div class="rounded-img-container mt-2 mb-2">
-                  <img class="rounded-img user-img" [src]="following.profilePicPath">
-                </div>
-              </a>
-            </div>
-            <div class="col-10 mt-3">
-              <label class="fw-bold clr-blck">{{following.fullname}} </label>
-              <label class="transp-text ms-1"> @{{following.username}} </label>
-              <a class="stretched-link" routerLink="/{{following.id}}"></a>
-            </div>
+      <div class="btn-caps">
+        <a type="button" class="btn nav-btn" (click)="showFollowings()">
+          <div class="btn-inside" [class.fw-bolder]="displaySection == 'following'">
+            Following
+            <div *ngIf="displaySection == 'following'" class="btn-active"></div>
           </div>
-        </article>
+        </a>
       </div>
     </div>
   </div>
+
+  <div *ngIf="displaySection == 'followers'" class="pb-5" [class.hgt-window]="followList.followers.length < 8">
+    <div *ngIf="followList.followers.length > 0" class="d-flex flex-column align-items-center">
+      <article *ngFor="let follower of followList.followers" class="follow-article mt-3">
+        <div class="d-flex border ps-3">
+          <div class="col-2">
+            <a routerLink="/{{follower.id}}">
+              <div class="rounded-img-container mt-2 mb-2">
+                <img class="rounded-img user-img" [src]="follower.profilePicPath">
+              </div>
+            </a>
+          </div>
+          <div class="col-10 mt-3">
+            <label class="fw-bold clr-blck">{{follower.fullname}} </label>
+            <label class="transp-text ms-1"> @{{follower.username}} </label>
+            <a class="stretched-link" routerLink="/{{follower.id}}"></a>
+          </div>
+        </div>
+      </article>
+    </div>
+  </div>
+
+  <div *ngIf="displaySection == 'following'" class="pb-5" [class.hgt-window]="followList.followings.length < 8">
+    <div *ngIf="followList.followings.length > 0" class="d-flex flex-column align-items-center">
+      <article *ngFor="let following of followList.followings" class="follow-article mt-3">
+        <div class="d-flex border ps-3">
+          <div class="col-2">
+            <a routerLink="/{{following.id}}">
+              <div class="rounded-img-container mt-2 mb-2">
+                <img class="rounded-img user-img" [src]="following.profilePicPath">
+              </div>
+            </a>
+          </div>
+          <div class="col-10 mt-3">
+            <label class="fw-bold clr-blck">{{following.fullname}} </label>
+            <label class="transp-text ms-1"> @{{following.username}} </label>
+            <a class="stretched-link" routerLink="/{{following.id}}"></a>
+          </div>
+        </div>
+      </article>
+    </div>
+  </div>
+</div>

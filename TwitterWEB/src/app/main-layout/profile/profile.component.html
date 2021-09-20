@@ -1,7 +1,7 @@
 <div *ngIf="userProfileCard.backgroundPath; else loading">
   <app-profile-card [userProfileCard]="userProfileCard"></app-profile-card>
   <div class="btn-group d-flex border-bottom mt-3" role="group">
-    <div class="btn-caps d-flex">
+    <div class="btn-caps">
       <a type="button" class="btn nav-btn" (click)="show1()">
         <div class="btn-inside" [class.fw-bolder]="displaySection == ''">
           Tweet
