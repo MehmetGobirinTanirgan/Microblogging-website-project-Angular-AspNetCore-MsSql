@@ -1,5 +1,6 @@
 .logout-div {
-  margin-top: 250px;
+  margin-top: 230px;
+  left:40px;
 }
 
 .logout-btn:hover{
@@ -21,8 +22,15 @@
   width: 100%;
   text-align: center;
   overflow: hidden;
+  box-shadow: rgb(101 119 134 / 20%) 0px 0px 15px,
+    rgb(101 119 134 / 15%) 0px 0px 3px 1px;
 }
 
 .dropdown-toggle::after {
   display:none;
+}
+
+.icon-ok{
+  height: 20px;
+  fill: #1D9BF0;
 }

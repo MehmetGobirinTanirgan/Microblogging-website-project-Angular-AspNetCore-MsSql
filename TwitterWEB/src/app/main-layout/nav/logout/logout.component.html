@@ -1,15 +1,43 @@
 <div *ngIf="userData != null" ngbDropdown placement="top-right" class="logout-div">
-  <button class="btn btn-outline-light d-flex rd40x logout-btn"  ngbDropdownToggle
-     role="button">
-      <div class="rounded-img-container">
-          <img title="user-image" class="rounded-img logout-img" [src]="authService.getUserData()?.profilePicPath">
+  <button class="btn btn-outline-light d-flex rd40x logout-btn pt-2 pb-2" ngbDropdownToggle role="button">
+    <div class="rounded-img-container">
+      <img title="user-image" class="rounded-img logout-img" [src]="authService.getUserData()?.profilePicPath">
+    </div>
+    <div class="ms-2">
+      <div class="d-flex">
+        <h6 class="fw-bold clr-blck pb-1 m-0">{{userData.fullname}} </h6>
       </div>
-      <div class="ms-2">
-          <h6 class="fw-bold clr-blck">{{userData.fullname}} </h6>
-          <h6 class="transp-text">@{{userData.username}} </h6>
+      <div class="d-flex">
+        <h6 class="transp-text m-0">@{{userData.username}} </h6>
       </div>
+    </div>
   </button>
-  <div ngbDropdownMenu class="rd40x logout-menu">
-      <a ngbDropdownItem (click) = "logOut()">Log out</a>
+  <div ngbDropdownMenu class="rd20x logout-menu">
+    <div class="d-flex justify-content-between ps-4 pt-3 pb-3 pe-2 border-bottom">
+      <div class="d-flex justify-content-start">
+        <div class="rounded-img-container">
+          <img title="user-image" class="rounded-img logout-img" [src]="authService.getUserData()?.profilePicPath">
+        </div>
+        <div class="ms-2">
+          <div class="d-flex">
+            <h6 class="fw-bold clr-blck pb-1 m-0">{{userData.fullname}} </h6>
+          </div>
+          <div class="d-flex">
+            <h6 class="transp-text m-0">@{{userData.username}} </h6>
+          </div>
+        </div>
+      </div>
+      <div>
+        <svg viewBox="0 0 24 24" class="icon-ok">
+        <g>
+          <path
+            d="M9 20c-.264 0-.52-.104-.707-.293l-4.785-4.785c-.39-.39-.39-1.023
+            0-1.414s1.023-.39 1.414 0l3.946 3.945L18.075 4.41c.32-.45.94-.558
+            1.395-.24.45.318.56.942.24 1.394L9.817 19.577c-.17.24-.438.395-.732.42-.028.002-.057.003-.085.003z">
+          </path>
+        </g></svg>
+      </div>
+    </div>
+    <a ngbDropdownItem (click)="logOut()" class="p-2">Log out</a>
   </div>
 </div>
