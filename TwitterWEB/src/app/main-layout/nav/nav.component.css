@@ -1,47 +1,48 @@
-#navbar {
+.navbar {
   background: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 10px;
 }
 
-#navbar ul {
+.navbar ul {
   list-style-type: none;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  padding-top: 1rem;
 }
 
-#navbar ul li {
+.navbar ul li {
   margin-bottom: 0.4rem;
 }
 
-#navbar ul li a {
+.navbar ul li a.nav-link {
   color: black;
-  padding: 0.7rem;
+  padding: 13px;
   text-align: center;
-  border-radius: 999px;
+  border-radius: 9999px;
   font-size: 20px;
   font-family: inherit;
   text-decoration: none;
   cursor: pointer;
 }
 
-#navbar ul li span {
+.navbar ul li span {
   padding-left: 15px;
 }
 
-#navbar ul li a:hover {
-  background: #e8f5fe;
-  color: #5fbcf5;
-  fill: #5fbcf5;
+.navbar ul li a.nav-link:hover {
+  background-color: #e7e7e8;
   text-decoration: none;
 }
 
-#navbar ul li a.active-link {
-  font-weight: bolder ;
+.navbar ul li a.tw-logo:hover {
+  background-color: #E8F5FD;
+  text-decoration: none;
 }
-
-#navbar div a:hover {
-  background: #e8f5fe;
+.navbar ul li a.active-link {
+  font-weight: bolder ;
 }
 
 .nav-tweet-btn {
@@ -57,10 +58,22 @@
 }
 
 .nav-tw-logo {
-  width: 34px;
+  height: 30px;
+  width: 30px;
   fill: #1d9bf0;
+}
+
+.tw-logo{
+  padding: 13px;
+  border-radius: 9999px;
+  cursor: pointer;
 }
 
 .nav-home-logo {
   width: 27px;
+}
+
+.nav-link{
+  display: flex;
+  align-items: center;
 }
