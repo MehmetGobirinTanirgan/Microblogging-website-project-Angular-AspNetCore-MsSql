@@ -1,17 +1,15 @@
-<div class="container-fluid main-div">
-  <div class="row justify-content-center">
-    <div class="col-2 pos-fix top-0 nav-offset p-0 h-100">
-      <app-nav></app-nav>
-    </div>
-    <div class="col-6 p-0">
-      <div class="d-flex justify-content-center main-block">
-        <div class="col-7 border-start border-end border-bottom pb-3">
-            <router-outlet></router-outlet>
-        </div>
-        <div class="col-4 px-2">
-          <div class="d-flex justify-content-center pos-stc pb-2 top-0 bg-white">
-            <app-search-bar class="w-100"></app-search-bar>
-          </div>
+<div class="container-fluid" style="max-width: 1250px;">
+  <div class="pos-fix top-0 p-0 h-100 z-3" style="width: max-content;">
+    <app-nav></app-nav>
+  </div>
+  <div class="row justify-content-center" style="margin-left: 250px;">
+    <div class="d-flex justify-content-center">
+      <div class="col-7 border-start border-end border-bottom pb-3">
+        <router-outlet></router-outlet>
+      </div>
+      <div class="col-4">
+        <div class="d-flex justify-content-center pos-stc pb-2 px-2 top-0 bg-white z-3">
+          <app-search-bar class="w-100"></app-search-bar>
         </div>
       </div>
     </div>

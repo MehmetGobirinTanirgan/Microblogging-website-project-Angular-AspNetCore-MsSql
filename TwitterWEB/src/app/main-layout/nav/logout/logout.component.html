@@ -1,26 +1,36 @@
 <div *ngIf="userData != null" ngbDropdown placement="top-right" class="logout-div">
-  <button class="btn btn-outline-light d-flex rd40x logout-btn pt-2 pb-2" ngbDropdownToggle role="button">
-    <div class="rounded-img-container">
-      <img title="user-image" class="rounded-img logout-img" [src]="authService.getUserData()?.profilePicPath">
-    </div>
-    <div class="ms-2">
-      <div class="d-flex">
-        <h6 class="fw-bold clr-blck pb-1 m-0">{{userData.fullname}} </h6>
+  <button class="btn btn-outline-light d-flex rd40x logout-btn pt-2 pb-2 px-0 my-2" ngbDropdownToggle role="button">
+    <div class="d-flex">
+      <div class="col-5">
+        <div class="square">
+          <div class="rounded-img-container">
+            <img title="user-image" class="rounded-img" [src]="authService.getUserData()?.profilePicPath">
+          </div>
+        </div>
       </div>
-      <div class="d-flex">
-        <h6 class="transp-text m-0">@{{userData.username}} </h6>
+      <div class="col-7 ms-2 ps-2">
+        <div class="d-flex">
+          <h6 class="fw-bold clr-blck m-0">{{userData.fullname}} </h6>
+        </div>
+        <div class="d-flex">
+          <h6 class="transp-text m-0">@{{userData.username}} </h6>
+        </div>
       </div>
     </div>
   </button>
   <div ngbDropdownMenu class="rd20x logout-menu">
-    <div class="d-flex justify-content-between ps-3 pt-3 pb-3 pe-2 border-bottom">
+    <div class="d-flex justify-content-between pt-3 pb-3 pe-2 border-bottom">
       <div class="d-flex justify-content-start">
-        <div class="rounded-img-container">
-          <img title="user-image" class="rounded-img logout-img" [src]="authService.getUserData()?.profilePicPath">
+        <div class="col-5">
+          <div class="square">
+            <div class="rounded-img-container">
+              <img title="user-image" class="rounded-img" [src]="authService.getUserData()?.profilePicPath">
+            </div>
+          </div>
         </div>
-        <div class="ms-2">
+        <div class="col-7 ms-2 ps-2">
           <div class="d-flex">
-            <h6 class="fw-bold clr-blck pb-1 m-0">{{userData.fullname}} </h6>
+            <h6 class="fw-bold clr-blck m-0">{{userData.fullname}} </h6>
           </div>
           <div class="d-flex">
             <h6 class="transp-text m-0">@{{userData.username}} </h6>
@@ -29,17 +39,17 @@
       </div>
       <div>
         <svg viewBox="0 0 24 24" class="icon-ok">
-        <g>
-          <path
-            d="M9 20c-.264 0-.52-.104-.707-.293l-4.785-4.785c-.39-.39-.39-1.023
+          <g>
+            <path d="M9 20c-.264 0-.52-.104-.707-.293l-4.785-4.785c-.39-.39-.39-1.023
             0-1.414s1.023-.39 1.414 0l3.946 3.945L18.075 4.41c.32-.45.94-.558
             1.395-.24.45.318.56.942.24 1.394L9.817 19.577c-.17.24-.438.395-.732.42-.028.002-.057.003-.085.003z">
-          </path>
-        </g></svg>
+            </path>
+          </g>
+        </svg>
       </div>
     </div>
     <div class="d-flex justify-content-start" style="text-align: start;">
-      <a ngbDropdownItem (click)="logOut()" class="ps-3 pt-2 pb-2">Log out @{{userData.username}}</a>
+      <a ngbDropdownItem (click)="logOut()" class="logout-link ps-3 pt-2 pb-2">Log out @{{userData.username}}</a>
     </div>
   </div>
 </div>

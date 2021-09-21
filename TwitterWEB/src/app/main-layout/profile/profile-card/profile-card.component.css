@@ -9,14 +9,28 @@
 }
 
 .card-profile-img {
-  width: 150px;
-  height: 150px;
   border: 5px solid white;
-  border-radius: 50%;
 }
 
 .follow-link:hover {
   text-decoration: underline !important;
   text-decoration-color: black !important;
   cursor: pointer;
+}
+
+.web-site-link{
+  color: #44ACF3;
+}
+
+.web-site-link:hover{
+  cursor: pointer;
+  text-decoration: underline !important;
+}
+
+.fw500{
+  font-weight: 500;
+}
+
+.square{
+  min-width: 100px;
 }

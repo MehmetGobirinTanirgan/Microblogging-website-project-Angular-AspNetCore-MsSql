@@ -1,10 +1,12 @@
 <div *ngIf="userData != null" class="d-flex border-bottom mt-3">
-  <div class="col-2 d-flex justify-content-center">
-    <a routerLink="/{{userData.id}}">
-      <div class="rounded-img-container">
-        <img class="rounded-img" [src]="userData.profilePicPath" alt="user-profile-picture">
-      </div>
-    </a>
+  <div class="col-2 d-flex justify-content-center align-items-start">
+    <div class="square">
+      <a routerLink="/{{userData.id}}">
+        <div class="rounded-img-container">
+          <img class="rounded-img" [src]="userData.profilePicPath" alt="user-profile-picture">
+        </div>
+      </a>
+    </div>
   </div>
   <div class="col-10">
     <form [formGroup]="tweetSubmitForm" (ngSubmit)="tweetSubmit()" method="post" enctype="multipart/form-data">

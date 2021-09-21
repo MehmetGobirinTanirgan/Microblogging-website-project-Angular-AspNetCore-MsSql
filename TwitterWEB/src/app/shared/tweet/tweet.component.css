@@ -56,10 +56,6 @@
   text-decoration: none;
 }
 
-.tweet-user-img {
-  width: 60px;
-  height: 60px;
-}
 
 .tweet-opts {
   color: #5b7092;
@@ -81,4 +77,9 @@
   display: flex;
 }
 
+.square{
+  z-index: 2;
+  min-width: 35px;
+  width: 70%;
+}
 

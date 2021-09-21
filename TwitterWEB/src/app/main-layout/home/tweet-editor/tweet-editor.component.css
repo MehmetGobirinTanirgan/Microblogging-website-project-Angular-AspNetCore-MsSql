@@ -1,12 +1,7 @@
-.rounded-img-container img {
-  width: 80px;
-  height: 80px;
-}
-
 .new-tweet-text {
   resize:none;
   border: none;
-  width: 490px;
+  width: 100%;
   height: 100px;
 }
 
@@ -27,4 +22,8 @@
   cursor: pointer;
   background-color: #E8F5FD;
   border-radius: 9999px;
+}
+
+.square{
+  min-width: 50px;
 }

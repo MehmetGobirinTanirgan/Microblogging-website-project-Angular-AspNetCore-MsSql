@@ -1,15 +1,17 @@
 <article *ngIf="tweet.tweetFlag" class="tweet-article border-bottom">
   <div class="d-flex">
-    <div class="col-2 mt-3">
-      <a routerLink="/{{tweet.userID}}" class="tweet-link">
-        <div class="rounded-img-container mx-3 mb-4">
-          <img *ngIf="tweet.userID == userID; else foreignUserPic" class="rounded-img tweet-user-img"
-            [src]="authService.getUserData()?.profilePicPath" alt="tweet-user-profile-picture">
-          <ng-template #foreignUserPic>
-            <img class="rounded-img tweet-user-img" [src]="tweet.profilePicPath" alt="tweet-user-profile-picture">
-          </ng-template>
-        </div>
-      </a>
+    <div class="col-2 pt-2 pb-3 pe-3">
+      <div class="square">
+        <a routerLink="/{{tweet.userID}}">
+          <div class="rounded-img-container mx-3 mb-4">
+            <img *ngIf="tweet.userID == userID; else foreignUserPic" class="rounded-img"
+              [src]="authService.getUserData()?.profilePicPath" alt="tweet-user-profile-picture">
+            <ng-template #foreignUserPic>
+              <img class="rounded-img" [src]="tweet.profilePicPath" alt="tweet-user-profile-picture">
+            </ng-template>
+          </div>
+        </a>
+      </div>
     </div>
     <div class="col-10">
       <div class="d-flex justify-content-between flex-column">

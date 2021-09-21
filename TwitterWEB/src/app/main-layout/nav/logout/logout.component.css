@@ -1,20 +1,21 @@
 .logout-div {
-  margin-top: 230px;
-  left:40px;
+  background-color: rgb(255,255,255);
+}
+
+.logout-btn {
+  width: 100% !important;
 }
 
 .logout-btn:hover{
   background-color: #E7E7E8;
 }
 
-.logout-btn {
-  width: 100% !important;
-  max-width: 250px;
+.logout-link:hover{
+ background-color: #F7F9F9;
 }
 
-.logout-img {
-  width: 50px;
-  height: 50px;
+.logout-link:active{
+  color: black;
 }
 
 .logout-menu {
@@ -34,3 +35,4 @@
   height: 20px;
   fill: #1D9BF0;
 }
+

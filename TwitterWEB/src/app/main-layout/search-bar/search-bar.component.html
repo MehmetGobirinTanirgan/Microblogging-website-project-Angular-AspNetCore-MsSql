@@ -19,13 +19,21 @@
 <div #dropdownRef ngbDropdown>
   <div ngbDropdownMenu class="search-result w-100">
     <div *ngIf="searchResults.length > 0; else noMatch">
-      <div ngbDropdownItem *ngFor="let result of searchResults" class="position-relative d-flex">
-        <div class="rounded-img-container me-3">
-          <img class="rounded-img result-img" [src]="result.profilePicPath">
+      <div ngbDropdownItem *ngFor="let result of searchResults" class="d-flex pos-rel result-card">
+        <div class="col-3 d-flex justify-content-center">
+          <div class="square">
+            <div class="rounded-img-container">
+              <img class="rounded-img" [src]="result.profilePicPath">
+            </div>
+          </div>
         </div>
-        <div class="d-flex flex-column">
-          <label class="mb-0 fw-bold clr-blck">{{result.fullname}} </label>
-          <label class="transp-text">@{{result.username}} </label>
+        <div class="col-9">
+          <div class="d-flex">
+            <h6 class="fw-bold clr-blck m-0">{{result.fullname}} </h6>
+          </div>
+          <div class="d-flex">
+            <h6 class="transp-text m-0">@{{result.username}} </h6>
+          </div>
         </div>
         <a class="stretched-link" routerLink="/{{result.id}}"></a>
       </div>
