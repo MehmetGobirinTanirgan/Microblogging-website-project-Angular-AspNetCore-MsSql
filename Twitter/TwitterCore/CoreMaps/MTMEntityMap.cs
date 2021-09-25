@@ -2,13 +2,13 @@
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using TwitterCore.Entities.CoreEntities;
 
-namespace TwitterCore.Entities.Map
+namespace TwitterCore.CoreMaps
 {
-    public class SimpleEntityMap<T> : IEntityTypeConfiguration<T> where T : SimpleEntity
+    public class MTMEntityMap<T> : IEntityTypeConfiguration<T> where T : MTMEntity
     {
         public virtual void Configure(EntityTypeBuilder<T> builder)
         {
-            builder.HasKey(x => x.ID);
+            
         }
     }
 }

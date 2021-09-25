@@ -1,5 +1,4 @@
 ﻿using System;
-using System.ComponentModel.DataAnnotations;
 using TwitterCore.Entities.Enums;
 
 namespace TwitterCore.Entities.CoreEntities

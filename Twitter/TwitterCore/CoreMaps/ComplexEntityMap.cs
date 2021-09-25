@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using TwitterCore.Entities.CoreEntities;
 
-namespace TwitterCore.Entities.Map
+namespace TwitterCore.CoreMaps
 {
     public class ComplexEntityMap<T> : IEntityTypeConfiguration<T> where T : ComplexEntity
     {

@@ -1,6 +1,4 @@
-﻿
-
-namespace TwitterAutoMappers.DTO
+﻿namespace TwitterAutoMappers.DTO
 {
     public class SignUpDTO
     {

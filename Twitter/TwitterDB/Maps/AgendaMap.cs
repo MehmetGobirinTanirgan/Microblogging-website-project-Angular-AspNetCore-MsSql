@@ -1,5 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using TwitterCore.Entities.Map;
+using TwitterCore.CoreMaps;
 using TwitterCore.Models;
 
 namespace TwitterDB.Maps
