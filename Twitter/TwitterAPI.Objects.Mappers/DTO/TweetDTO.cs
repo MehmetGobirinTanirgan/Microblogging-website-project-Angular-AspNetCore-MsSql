@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace TwitterAutoMappers.DTO
+namespace TwitterAPI.Objects.Mappers.DTO
 {
     public class TweetDTO
     {

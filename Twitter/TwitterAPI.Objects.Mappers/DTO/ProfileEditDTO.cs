@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using System;
 
-namespace TwitterAutoMappers.DTO
+namespace TwitterAPI.Objects.Mappers.DTO
 {
     public class ProfileEditDTO
     {

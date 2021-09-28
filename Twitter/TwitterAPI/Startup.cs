@@ -15,7 +15,7 @@ using TwitterAPI.Services.TweetImageService;
 using TwitterAPI.Services.TweetService;
 using TwitterAPI.Services.UserService;
 using TwitterAPI.Settings;
-using TwitterAutoMappers.TweetMapper;
+using TwitterAPI.Objects.Mappers.Mappers;
 using TwitterCore.RepositoryInterfaces;
 using TwitterDB.Context;
 using TwitterRepository.Repositories;

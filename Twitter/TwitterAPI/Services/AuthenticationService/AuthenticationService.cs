@@ -4,7 +4,7 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
-using TwitterAutoMappers.DTO;
+using TwitterAPI.Objects.Mappers.DTO;
 using TwitterCore.Models;
 using TwitterCore.RepositoryInterfaces;
 

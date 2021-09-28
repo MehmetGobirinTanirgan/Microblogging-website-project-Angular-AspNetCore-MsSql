@@ -9,9 +9,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TwitterRepository", "Twitte
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TwitterAPI", "TwitterAPI\TwitterAPI.csproj", "{4A308C7D-965E-42DD-B6E7-EEBE6E0D6E80}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TwitterAutoMappers", "TwitterAutoMappers\TwitterAutoMappers.csproj", "{38E7894E-01EF-4278-9515-27F7689257FA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TwitterDB", "TwitterDB\TwitterDB.csproj", "{A64AFD7F-A78C-44C9-AADC-363222198100}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TwitterDB", "TwitterDB\TwitterDB.csproj", "{A64AFD7F-A78C-44C9-AADC-363222198100}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TwitterAPI.Objects.Mappers", "TwitterAPI.Objects.Mappers\TwitterAPI.Objects.Mappers.csproj", "{97437D92-8536-4CED-9F25-DDF080FB22D3}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -31,14 +31,14 @@ Global
 		{4A308C7D-965E-42DD-B6E7-EEBE6E0D6E80}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4A308C7D-965E-42DD-B6E7-EEBE6E0D6E80}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4A308C7D-965E-42DD-B6E7-EEBE6E0D6E80}.Release|Any CPU.Build.0 = Release|Any CPU
-		{38E7894E-01EF-4278-9515-27F7689257FA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{38E7894E-01EF-4278-9515-27F7689257FA}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{38E7894E-01EF-4278-9515-27F7689257FA}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{38E7894E-01EF-4278-9515-27F7689257FA}.Release|Any CPU.Build.0 = Release|Any CPU
 		{A64AFD7F-A78C-44C9-AADC-363222198100}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{A64AFD7F-A78C-44C9-AADC-363222198100}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A64AFD7F-A78C-44C9-AADC-363222198100}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A64AFD7F-A78C-44C9-AADC-363222198100}.Release|Any CPU.Build.0 = Release|Any CPU
+		{97437D92-8536-4CED-9F25-DDF080FB22D3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{97437D92-8536-4CED-9F25-DDF080FB22D3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{97437D92-8536-4CED-9F25-DDF080FB22D3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{97437D92-8536-4CED-9F25-DDF080FB22D3}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -10,7 +10,7 @@ using TwitterAPI.Services.TweetService;
 using TwitterAPI.Services.UserService;
 using TwitterAPI.Settings;
 using TwitterAPI.Upload;
-using TwitterAutoMappers.DTO;
+using TwitterAPI.Objects.Mappers.DTO;
 using TwitterCore.Models;
 
 

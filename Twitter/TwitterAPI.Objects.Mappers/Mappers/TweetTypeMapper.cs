@@ -1,10 +1,10 @@
 ﻿using AutoMapper;
 using System;
-using TwitterAutoMappers.DTO;
+using TwitterAPI.Objects.Mappers.DTO;
 using TwitterCore.Entities.Enums;
 using TwitterCore.Models;
 
-namespace TwitterAutoMappers.TweetMapper
+namespace TwitterAPI.Objects.Mappers.Mappers
 {
     public class TweetTypeMapper : Profile
     {

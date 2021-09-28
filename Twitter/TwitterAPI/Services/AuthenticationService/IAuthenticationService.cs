@@ -1,5 +1,5 @@
 ﻿using System.Threading.Tasks;
-using TwitterAutoMappers.DTO;
+using TwitterAPI.Objects.Mappers.DTO;
 
 namespace TwitterAPI.Services.AuthenticationService
 {

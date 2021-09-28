@@ -16,7 +16,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\TwitterAutoMappers\TwitterAutoMappers.csproj" />
+    <ProjectReference Include="..\TwitterAPI.Objects.Mappers\TwitterAPI.Objects.Mappers.csproj" />
     <ProjectReference Include="..\TwitterRepository\TwitterRepository.csproj" />
   </ItemGroup>
 

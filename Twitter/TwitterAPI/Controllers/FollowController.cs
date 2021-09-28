@@ -5,9 +5,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using TwitterAPI.Objects.Mappers.DTO;
 using TwitterAPI.Services.FollowService;
 using TwitterAPI.Services.UserService;
-using TwitterAutoMappers.DTO;
 using TwitterCore.Models;
 
 namespace TwitterAPI.Controllers
