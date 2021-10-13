@@ -9,20 +9,6 @@ import { MainLayoutComponent } from './main-layout/main-layout.component';
 import { ProfileComponent } from './main-layout/profile/profile.component';
 import { TweetReplyStreamComponent } from './main-layout/tweet-reply-stream/tweet-reply-stream.component';
 
-// const profileSections = ['with_replies', 'media', 'likes'];
-// export function profileMatcher(url: UrlSegment[]) {
-//   return url.length === 5 &&  profileSections.includes(url[1].parameters[0])
-//     ? { consumed: url }
-//     : null;
-// }
-
-// const followListSections = ['followers', 'following'];
-// export function followListMatcher(url: UrlSegment[]) {
-//   return url.length === 2 && followListSections.includes(url[1].parameters[0])
-//     ? { consumed: url }
-//     : null;
-// }
-
 const routes: Routes = [
   { path: '', component: FrontPageComponent },
   { path: 'login', component: LoginComponent },
