@@ -8,7 +8,7 @@
 npm install --save-dev @angular-devkit/build-angular
 ```
 
-2. For running the API, u have to add a user secret file or update ur appsettings.
+2. For running the API, u have to add an user secret file or update ur appsettings.
 
 - Adding user secret:
 

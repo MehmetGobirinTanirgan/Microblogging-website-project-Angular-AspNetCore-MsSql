@@ -77,6 +77,10 @@
   display: flex;
 }
 
+.tweet-menu-link:hover{
+  background-color: #F7F9F9;
+}
+
 .square{
   z-index: 2;
   min-width: 35px;
