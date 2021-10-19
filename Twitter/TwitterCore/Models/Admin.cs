@@ -1,4 +1,4 @@
-﻿using TwitterCore.Entities.CoreEntities;
+﻿using TwitterCore.Entities.CoreEntities.Concrete;
 
 namespace TwitterCore.Models
 {

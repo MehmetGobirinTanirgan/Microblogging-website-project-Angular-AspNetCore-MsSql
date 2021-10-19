@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using TwitterCore.Entities.CoreEntities;
+using TwitterCore.Entities.CoreEntities.Concrete;
 
 namespace TwitterCore.CoreMaps
 {

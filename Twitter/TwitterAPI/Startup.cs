@@ -9,16 +9,13 @@ using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using System;
 using System.Text;
-using TwitterAPI.Services.AuthenticationService;
-using TwitterAPI.Services.FollowService;
-using TwitterAPI.Services.TweetImageService;
-using TwitterAPI.Services.TweetService;
-using TwitterAPI.Services.UserService;
-using TwitterAPI.Settings;
 using TwitterAPI.Objects.Mappers.Mappers;
-using TwitterCore.RepositoryInterfaces;
+using TwitterAPI.Services.Abstract;
+using TwitterAPI.Services.Concrete;
+using TwitterAPI.Settings;
+using TwitterCore.RepositoryAbstractions;
 using TwitterDB.Context;
-using TwitterRepository.Repositories;
+using TwitterRepository.MsSql.Concrete;
 
 namespace TwitterAPI
 {

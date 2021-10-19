@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using System;
-using TwitterAPI.Objects.Mappers.DTO;
+using TwitterAPI.Objects.Mappers.Dtos;
 using TwitterCore.Entities.Enums;
 using TwitterCore.Models;
 

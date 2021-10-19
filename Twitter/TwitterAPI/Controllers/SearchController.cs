@@ -3,8 +3,8 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using TwitterAPI.Services.UserService;
-using TwitterAPI.Objects.Mappers.DTO;
+using TwitterAPI.Objects.Mappers.Dtos;
+using TwitterAPI.Services.Abstract;
 
 namespace TwitterAPI.Controllers
 {

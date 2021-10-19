@@ -17,7 +17,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\TwitterAPI.Objects.Mappers\TwitterAPI.Objects.Mappers.csproj" />
-    <ProjectReference Include="..\TwitterRepository\TwitterRepository.csproj" />
+    <ProjectReference Include="..\TwitterRepository.MsSql\TwitterRepository.MsSql.csproj" />
   </ItemGroup>
 
 </Project>

@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using TwitterCore.Entities.CoreEntities;
+using TwitterCore.Entities.CoreEntities.Concrete;
 using TwitterCore.Entities.Enums;
 
 namespace TwitterCore.Models

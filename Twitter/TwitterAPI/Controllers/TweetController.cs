@@ -6,10 +6,10 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using TwitterAPI.Services.TweetService;
+using TwitterAPI.Objects.Mappers.Dtos;
+using TwitterAPI.Services.Abstract;
 using TwitterAPI.Settings;
 using TwitterAPI.Upload;
-using TwitterAPI.Objects.Mappers.DTO;
 using TwitterCore.Entities.Enums;
 using TwitterCore.Models;
 

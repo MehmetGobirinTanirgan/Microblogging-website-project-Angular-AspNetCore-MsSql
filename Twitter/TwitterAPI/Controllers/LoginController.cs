@@ -3,9 +3,8 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using System.Threading.Tasks;
-using TwitterAPI.Objects.Mappers.DTO;
-using TwitterAPI.Services.AuthenticationService;
-using TwitterAPI.Services.UserService;
+using TwitterAPI.Objects.Mappers.Dtos;
+using TwitterAPI.Services.Abstract;
 using TwitterAPI.Settings;
 using TwitterCore.Models;
 
