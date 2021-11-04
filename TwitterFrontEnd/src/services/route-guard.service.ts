@@ -5,15 +5,17 @@ import { AuthenticationService } from './authentication.service';
 
 @Injectable()
 export class RouteGuardService implements CanActivate {
+  constructor(private router: Router, private authService: AuthenticationService) {}
 
-constructor(private router:Router,private authService:AuthenticationService) { }
-  canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean | UrlTree | Observable<boolean | UrlTree> | Promise<boolean | UrlTree> {
+  canActivate(
+    route: ActivatedRouteSnapshot,
+    state: RouterStateSnapshot
+  ): boolean | UrlTree | Observable<boolean | UrlTree> | Promise<boolean | UrlTree> {
     let flag = this.authService.isLoggedIn();
-    if(flag){
+    if (flag) {
       return true;
     }
-    this.router.navigate([""]);
+    this.router.navigate(['']);
     return false;
   }
-
 }

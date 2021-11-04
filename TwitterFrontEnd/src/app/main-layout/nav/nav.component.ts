@@ -4,20 +4,20 @@ import { AuthenticationService } from 'src/services/authentication.service';
 @Component({
   selector: 'app-nav',
   templateUrl: './nav.component.html',
-  styleUrls: ['./nav.component.css']
+  styleUrls: ['./nav.component.css'],
 })
 export class NavComponent implements OnInit {
+  constructor(private authService: AuthenticationService) {}
 
-  constructor(private authService:AuthenticationService) { }
-  id:string;
+  username: string;
+
   ngOnInit(): void {
-    const userID =this.authService.getUserData()?.id;
-    if(userID != null){
-      this.id = userID;
-    }else{
-      alert("Local storage error");
+    const authenticatedUsername = this.authService.getAuthenticatedUserInfos()?.username;
+
+    if (authenticatedUsername != null) {
+      this.username = authenticatedUsername;
+    } else {
+      alert('Local storage error');
     }
   }
-
-
 }

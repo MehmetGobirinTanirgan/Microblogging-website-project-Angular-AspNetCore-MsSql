@@ -15,7 +15,6 @@
       (keyup)="search($any($event.target).value)" (focus)="onFocus()" (focusout)="focusOut()">
   </div>
 </div>
-
 <div #dropdownRef ngbDropdown>
   <div ngbDropdownMenu class="search-result w-100">
     <div *ngIf="searchResults.length > 0; else noMatch">
@@ -35,7 +34,7 @@
             <h6 class="transp-text m-0">@{{result.username}} </h6>
           </div>
         </div>
-        <a class="stretched-link" routerLink="/{{result.id}}"></a>
+        <a class="stretched-link" routerLink="/{{result.username}}"></a>
       </div>
     </div>
     <ng-template ngbDropdownItem #noMatch> No match found</ng-template>

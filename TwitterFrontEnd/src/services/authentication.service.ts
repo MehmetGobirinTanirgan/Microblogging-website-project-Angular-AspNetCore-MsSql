@@ -2,53 +2,49 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { tap } from 'rxjs/operators';
-import { LoginModel } from 'src/models/LoginModel';
-import { UserStoreModel } from 'src/models/UserStoreModel';
+import { LoginDTO } from 'src/dtos/LoginDTO';
+import { UserInfoDTO } from 'src/dtos/UserInfoDTO';
+
 @Injectable()
 export class AuthenticationService {
   constructor(private httpClient: HttpClient) {}
-  userData: UserStoreModel = new UserStoreModel();
+  authenticatedUserInfos: UserInfoDTO;
   jwtHelper: JwtHelperService = new JwtHelperService();
 
-  login(loginModel: LoginModel) {
+  login(loginDTO: LoginDTO) {
     this.logOut();
-    return this.httpClient
-      .post<UserStoreModel>('Login/Authentication', loginModel)
-      .pipe(
-        tap((response) => {
-          this.userData = response;
-          this.saveData(this.userData);
-        })
-      );
+    return this.httpClient.post<UserInfoDTO>('Login/Authentication', loginDTO).pipe(
+      tap((response) => {
+        this.authenticatedUserInfos = response;
+        this.saveUserInfos(this.authenticatedUserInfos);
+      })
+    );
   }
 
-  saveData(user: UserStoreModel) {
-    localStorage.setItem('user', JSON.stringify(user));
+  saveUserInfos(userInfo: UserInfoDTO) {
+    localStorage.setItem('userInfo', JSON.stringify(userInfo));
   }
 
-  getToken(): string | null {
-    const user: UserStoreModel = JSON.parse(localStorage.getItem('user')!);
-    if (user == null) {
+  getAuthenticationToken(): string | null {
+    const userInfo: UserInfoDTO = JSON.parse(localStorage.getItem('userInfo')!);
+    if (userInfo == null) {
       return null;
     }
-    return user.token;
+    return userInfo.token;
   }
 
-  getUserData(): UserStoreModel | null {
-    const userData: UserStoreModel = JSON.parse(localStorage.getItem('user')!);
-    if (userData == null) {
-      return null;
-    }
-    return userData;
+  getAuthenticatedUserInfos(): UserInfoDTO | null {
+    const userInfo: UserInfoDTO = JSON.parse(localStorage.getItem('userInfo')!);
+    return userInfo ?? null;
   }
 
   logOut() {
-    localStorage.removeItem('user');
+    localStorage.clear();
   }
 
   isLoggedIn(): boolean {
-    const token = this.getToken();
-    if (token !== null) {
+    const token = this.getAuthenticationToken();
+    if (token) {
       return !this.jwtHelper.isTokenExpired(token);
     }
     return false;

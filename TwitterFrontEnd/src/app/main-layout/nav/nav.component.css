@@ -38,11 +38,11 @@
 }
 
 .navbar ul li a.tw-logo:hover {
-  background-color: #E8F5FD;
+  background-color: #e8f5fd;
   text-decoration: none;
 }
 .navbar ul li a.active-link {
-  font-weight: bolder ;
+  font-weight: bolder;
 }
 
 .nav-tweet-btn {
@@ -63,7 +63,7 @@
   fill: #1d9bf0;
 }
 
-.tw-logo{
+.tw-logo {
   padding: 13px;
   border-radius: 9999px;
   cursor: pointer;
@@ -73,7 +73,7 @@
   width: 27px;
 }
 
-.nav-link{
+.nav-link {
   display: flex;
   align-items: center;
 }

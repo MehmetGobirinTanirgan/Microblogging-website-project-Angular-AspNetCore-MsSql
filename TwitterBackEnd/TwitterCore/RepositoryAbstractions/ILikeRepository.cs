@@ -7,9 +7,7 @@ namespace TwitterCore.RepositoryAbstractions
 {
     public interface ILikeRepository : IMTMEntityRepository<Like>
     {
-        Task<List<Tweet>> GetUserLikedTweetsAsync(Guid id);
+        Task<List<Tweet>> GetMainUserLikedTweetsAsync(Guid id);
         Task<List<Tweet>> GetForeignUserLikedTweetsAsync(Guid id);
-        Task AddLikeAsync(Like like);
-        Task RemoveLikeAsync(Like like);
     }
 }

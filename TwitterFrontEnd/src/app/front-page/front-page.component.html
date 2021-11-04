@@ -88,7 +88,8 @@
       role="link"><span>Developers</span></a>
     <a href="https://twitter.com/i/directory/profiles" class="footer-link" dir="auto" rel="noopener noreferrer"
       target="_blank" role="link"><span>Directory</span></a>
-    <a href="https://twitter.com/settings/account/personalization" class="footer-link" dir="auto" role="link"><span>Settings</span></a>
+    <a href="https://twitter.com/settings/account/personalization" class="footer-link" dir="auto"
+      role="link"><span>Settings</span></a>
     <div dir="auto"><span>© 2021 Twitter, Inc.</span></div>
   </nav>
 </div>
@@ -122,9 +123,9 @@
           <span *ngIf="signUpForm.get('fullName')?.errors?.maxlength">Max 50 characters. </span>
         </div>
       </div>
-      <div class="form-group" id="mail-group">
+      <div class="form-group" id="mail-group" [class.d-none]="!emailOrPhoneFlag">
         <input formControlName="emailAddress" type="email" placeholder="E-mail" id="mail" class="form-control d-block"
-          required>
+          [required]="emailOrPhoneFlag">
         <div *ngIf="signUpForm.get('emailAddress')?.invalid && signUpForm.get('emailAddress')?.touched"
           class="text-danger">
           <span *ngIf="signUpForm.get('emailAddress')?.errors?.required">Email address is required.</span>
@@ -132,8 +133,9 @@
           <span *ngIf="signUpForm.get('emailAddress')?.errors?.email">Please type a valid mail. </span>
         </div>
       </div>
-      <div class="form-group d-none" id="phone-group">
-        <input formControlName="phoneNumber" type="tel" placeholder="Phone" id="phone" class="form-control d-block">
+      <div class="form-group" id="phone-group" [class.d-none]="emailOrPhoneFlag">
+        <input formControlName="phoneNumber" type="tel" placeholder="Phone" id="phone" class="form-control d-block"
+          [required]="!emailOrPhoneFlag">
         <div *ngIf="signUpForm.get('phoneNumber')?.invalid && signUpForm.get('phoneNumber')?.touched"
           class="text-danger">
           <span *ngIf="signUpForm.get('phoneNumber')?.errors?.required">Phone number is required.</span>
@@ -149,7 +151,12 @@
         </div>
       </div>
       <div class="form-group">
-        <button type="button" class="switch-btn" id="switch-btn">Use phone instead</button>
+        <button type="button" class="switch-btn" id="switch-btn" (click)="switchToPhoneOrEmail()">
+          <span *ngIf="emailOrPhoneFlag; else useEmail;">Use phone instead</span>
+          <ng-template #useEmail>
+            <span>Use email instead</span>
+          </ng-template>
+        </button>
       </div>
       <h6>Date of birth</h6>
       <div class="form-group row d-flex justify-content-between">

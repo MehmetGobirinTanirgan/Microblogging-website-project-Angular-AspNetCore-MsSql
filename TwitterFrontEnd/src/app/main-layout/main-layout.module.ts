@@ -16,11 +16,9 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 @NgModule({
   declarations: [MainLayoutComponent,SearchBarComponent,TweetReplyStreamComponent,FollowListComponent],
   imports: [
-    CommonModule,
     NavModule,
     HomeModule,
     ProfileModule,
-    RouterModule,
     SharedModule,
     NgbModule
   ],

@@ -7,7 +7,7 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { of, throwError } from 'rxjs';
 import { UserService } from 'src/services/user.service';
-
+import { ValidatorService } from 'src/services/validator.service';
 import { FrontPageComponent } from './front-page.component';
 
 describe('FrontPageComponent', () => {
@@ -16,27 +16,29 @@ describe('FrontPageComponent', () => {
   let router: Router;
   let mockUserService: jasmine.SpyObj<UserService>;
   let mockNgbModal: jasmine.SpyObj<NgbModal>;
+  let mockValidatorService: jasmine.SpyObj<ValidatorService>;
 
   beforeEach(async () => {
     const userServiceSpyObj = jasmine.createSpyObj('UserService', ['signUp']);
     const ngbModalSpyObj = jasmine.createSpyObj('NgbModal', ['open']);
+    const validatorServiceSpyObj = jasmine.createSpyObj('ValidatorService', ['atLeastOne']);
+
     await TestBed.configureTestingModule({
       declarations: [FrontPageComponent],
-      imports: [
-        HttpClientTestingModule,
-        RouterTestingModule.withRoutes([]),
-        ReactiveFormsModule,
+      imports: [HttpClientTestingModule, RouterTestingModule.withRoutes([]), ReactiveFormsModule],
+      providers: [
+        FormBuilder,
+        { provide: NgbModal, useValue: ngbModalSpyObj },
+        { provide: ValidatorService, useValue: validatorServiceSpyObj },
       ],
-      providers: [FormBuilder, { provide: NgbModal, useValue: ngbModalSpyObj }],
     })
       .overrideProvider(UserService, { useValue: userServiceSpyObj })
       .compileComponents();
 
     router = TestBed.inject(Router);
-    mockUserService = TestBed.inject(
-      UserService
-    ) as jasmine.SpyObj<UserService>;
+    mockUserService = TestBed.inject(UserService) as jasmine.SpyObj<UserService>;
     mockNgbModal = TestBed.inject(NgbModal) as jasmine.SpyObj<NgbModal>;
+    mockValidatorService = TestBed.inject(ValidatorService) as jasmine.SpyObj<ValidatorService>;
   });
 
   beforeEach(() => {
@@ -48,16 +50,15 @@ describe('FrontPageComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it('#ngOnInit should call form creation', () => {
-    const formSpy = spyOn(component,'createSignUpForm');
+  it('#ngOnInit should call sign-up form creation', () => {
+    const formSpy = spyOn(component, 'createSignUpForm');
     formSpy.and.callThrough();
     fixture.detectChanges();
     expect(formSpy).toHaveBeenCalledTimes(1);
   });
 
-
   it('#ngOnInit checking #isLeapYear value', () => {
-    const checkYearSpy = spyOn(component,'checkYear');
+    const checkYearSpy = spyOn(component, 'checkYear');
     checkYearSpy.and.callThrough();
     component.currentYear = 2021;
     fixture.detectChanges();
@@ -66,7 +67,7 @@ describe('FrontPageComponent', () => {
   });
 
   it('#createSignUpForm checking form creation', () => {
-    const formSpy = spyOn(component,'createSignUpForm');
+    const formSpy = spyOn(component, 'createSignUpForm');
     formSpy.and.callThrough();
     component.createSignUpForm();
     const signUpFormValues = {
@@ -78,16 +79,13 @@ describe('FrontPageComponent', () => {
       year: '',
       password: '',
     };
-
     expect(component.signUpForm.value).toEqual(signUpFormValues);
     expect(formSpy).toHaveBeenCalledTimes(1);
   });
 
-  it('#signUp should navigate to when sign up process is successfull', () => {
+  it('#signUp should navigate to login page when sign up process is successfull', () => {
     component.createSignUpForm();
-    mockUserService.signUp.and.returnValue(
-      of(new HttpResponse({ status: 200 }))
-    );
+    mockUserService.signUp.and.returnValue(of(new HttpResponse({ status: 200 })));
     const routerSpy = spyOn(router, 'navigate');
     const signUpForm = component.signUpForm;
     signUpForm.controls.fullName.setValue('mockFullname');
@@ -98,7 +96,6 @@ describe('FrontPageComponent', () => {
     signUpForm.controls.year.setValue(1);
     signUpForm.controls.password.setValue('12345');
     component.signUp();
-
     expect(signUpForm.valid).toBeTrue();
     expect(mockUserService.signUp).toHaveBeenCalled();
     expect(routerSpy).toHaveBeenCalledWith(['login']);
@@ -117,29 +114,25 @@ describe('FrontPageComponent', () => {
     signUpForm.controls.year.setValue(1);
     signUpForm.controls.password.setValue('12345');
     component.signUp();
-
     expect(signUpForm.valid).toBeTrue();
     expect(mockUserService.signUp).toHaveBeenCalled();
     expect(window.alert).toHaveBeenCalledWith('Signup failed');
   });
 
-  it('#openModal should call the current modal', () => {
+  it('#openModal should call and open the signup form modal', () => {
     component.openModal();
-    expect(mockNgbModal.open).toHaveBeenCalledWith(component.signupModal,{ centered: true });
+    expect(mockNgbModal.open).toHaveBeenCalledWith(component.signupModal, { centered: true });
   });
 
   it('#checkMonth should change the #days', () => {
     component.checkMonth('0');
     expect(component.days).toEqual(new Array(31));
-
     component.isLeapYear = true;
     component.checkMonth('1');
     expect(component.days).toEqual(new Array(29));
-
     component.isLeapYear = false;
     component.checkMonth('1');
     expect(component.days).toEqual(new Array(28));
-
     component.checkMonth('3');
     expect(component.days).toEqual(new Array(30));
   });
@@ -147,7 +140,6 @@ describe('FrontPageComponent', () => {
   it('#checkYear should change the #isLeapYear', () => {
     component.checkYear(2020);
     expect(component.isLeapYear).toBeTrue();
-
     component.checkYear(2021);
     expect(component.isLeapYear).toBeFalse();
   });

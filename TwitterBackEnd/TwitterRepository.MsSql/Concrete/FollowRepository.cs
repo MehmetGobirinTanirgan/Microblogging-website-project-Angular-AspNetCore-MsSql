@@ -17,15 +17,6 @@ namespace TwitterRepository.MsSql.Concrete
 
         }
 
-        public async Task AddFollowAsync(Follow follow)
-        {
-            await AddAsync(follow);
-        }
-        public async Task RemoveFollowAsync(Follow follow)
-        {
-            await DeleteAsync(x => x.FollowingUserID.Equals(follow.FollowingUserID) && x.FollowerUserID.Equals(follow.FollowerUserID));
-        }
-
         public async Task<List<Tweet>> GetFollowingUsersTweetsAsync(Guid id)
         {
             return await GetListByExpression(x => x.FollowerUserID.Equals(id)).

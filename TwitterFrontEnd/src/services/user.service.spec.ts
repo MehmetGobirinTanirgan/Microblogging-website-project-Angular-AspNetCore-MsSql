@@ -1,16 +1,17 @@
 /* tslint:disable:no-unused-variable */
 
-import {
-  HttpClientTestingModule,
-  HttpTestingController,
-} from '@angular/common/http/testing';
+import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 import { TestBed } from '@angular/core/testing';
+import { MockSignUp } from 'src/testObjects/MockSignUp';
+import { MockUserInfo } from 'src/testObjects/MockUserInfo';
+import { MockUserProfile } from 'src/testObjects/MockUserProfile';
+import { MockUserProfileCard } from 'src/testObjects/MockUserProfileCard';
 import { UserService } from './user.service';
 
 describe('Service: User', () => {
   let service: UserService;
   let mockHttp: HttpTestingController;
-  let mockData: MockData;
+  let mockUserInfo: MockUserInfo;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
@@ -19,7 +20,7 @@ describe('Service: User', () => {
     });
     service = TestBed.inject(UserService);
     mockHttp = TestBed.inject(HttpTestingController);
-    mockData = new MockData();
+    mockUserInfo = new MockUserInfo();
   });
 
   afterEach(() => {
@@ -31,7 +32,7 @@ describe('Service: User', () => {
   });
 
   it('#signUp should post and return OK', () => {
-    const mockSignUpModel = mockData.mockSignUpModel;
+    const mockSignUpModel = new MockSignUp();
     service.signUp(mockSignUpModel).subscribe((res) => {
       expect(res.body).toEqual('');
       expect(res.status).toBe(200);
@@ -48,15 +49,15 @@ describe('Service: User', () => {
     req.flush('');
   });
 
-  it('#getUserProfile should return expected data', () => {
-    const mockUserProfile = mockData.mockUserProfile;
-    let userID = 'mockUserID';
-    service.getUserProfile(userID).subscribe((res) => {
+  it('#getMainUserProfile should return expected data', () => {
+    const mockUserProfile = new MockUserProfile();
+    let username = 'mockUsername';
+    service.getMainUserProfile(username).subscribe((res) => {
       expect(res).toBe(mockUserProfile);
     });
 
     const req = mockHttp.expectOne({
-      url: `Profile/GetUserProfile/${userID}`,
+      url: `Profile/GetMainUserProfile/${username}`,
     });
 
     expect(req.request.method).toEqual('GET');
@@ -65,7 +66,7 @@ describe('Service: User', () => {
   });
 
   it('#getForeignUserProfile should return expected data', () => {
-    const mockUserProfile = mockData.mockUserProfile;
+    const mockUserProfile = new MockUserProfile();
     let userID = 'mockUserID';
     let foreignUserID = 'mockForeignUserID';
     service.getForeignUserProfile(userID, foreignUserID).subscribe((res) => {
@@ -82,7 +83,7 @@ describe('Service: User', () => {
   });
 
   it('#updateProfile should send new data', () => {
-   const expectedMockData = mockData.mockUserProfileCard;
+    const expectedMockData = new MockUserProfileCard();
     let formData = new FormData();
     formData.append('fullname', 'mockFullname');
     formData.append('location', 'mockLocation');
@@ -102,62 +103,3 @@ describe('Service: User', () => {
     req.flush(expectedMockData);
   });
 });
-
-class MockData {
-  mockSignUpModel = {
-    fullname: 'mockFullname',
-    emailAddress: 'mock@gmail.com',
-    password: '12345',
-    year: 2000,
-    month: 10,
-    day: 15,
-    phoneNumber: '',
-  };
-
-  mockUserProfileCard = {
-    id: 'mockID',
-    createdDate: new Date(),
-    fullname: 'mockFullname',
-    username: 'mockUsername',
-    personalInfo: 'mockPersonalInfo',
-    location: 'mockLocation',
-    personalWebSiteURL: 'mockPersonalWebSiteURL',
-    profilePicPath: 'mockProfilePicPath',
-    backgroundPath: 'mockBackgroundPath',
-    followerCounter: 1,
-    followingCounter: 1,
-    followFlag: true,
-  };
-
-  mockTweet = {
-    id: 'mockID',
-    userID: 'mockUserID',
-    createdDate: new Date(),
-    tweetDetail: 'mockTweetDetail',
-    profilePicPath: 'mockProfilePicPath',
-    fullname: 'mockFullname',
-    username: 'mockUsername',
-    replyCounter: 1,
-    retweetCounter: 1,
-    likeCounter: 1,
-    followFlag: true,
-    likeFlag: true,
-    ownershipStatus: true,
-    mainTweetOwnerID: null,
-    mainTweetOwnerUsername: null,
-    tweetImageInfos: [
-      {
-        id: '1',
-        imagePath: 'mockImagePath',
-      },
-    ],
-  };
-
-  mockUserProfile = {
-    userProfileCard: this.mockUserProfileCard,
-    ownTweets: [this.mockTweet],
-    nonReplyOwnTweets: [this.mockTweet],
-    likedTweets: [this.mockTweet],
-    mediaTypeTweets: [this.mockTweet],
-  };
-}

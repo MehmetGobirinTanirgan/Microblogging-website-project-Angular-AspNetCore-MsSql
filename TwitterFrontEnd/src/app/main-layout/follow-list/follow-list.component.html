@@ -25,58 +25,58 @@
       </div>
     </div>
   </div>
-
-  <div *ngIf="displaySection == 'followers'" class="pb-5" [class.hgt-offset]="followList.followers.length < 11">
-    <div *ngIf="followList.followers.length > 0" class="d-flex flex-column">
-      <article *ngFor="let follower of followList.followers" class="follow-article py-2">
-        <div class="d-flex ps-3">
-          <div class="col-1 d-flex justify-content-center">
-            <div class="square">
-              <a routerLink="/{{follower.id}}">
-                <div class="rounded-img-container">
-                  <img class="rounded-img" [src]="follower.profilePicPath">
-                </div>
-              </a>
+  <section class="hgt-offset">
+    <div *ngIf="displaySection == 'followers'" class="pb-5">
+      <div *ngIf="followList.followers.length > 0" class="d-flex flex-column">
+        <article *ngFor="let follower of followList.followers" class="follow-article py-2">
+          <div class="d-flex ps-3">
+            <div class="col-1 d-flex justify-content-center">
+              <div class="square">
+                <a routerLink="/{{follower.username}}">
+                  <div class="rounded-img-container">
+                    <img class="rounded-img" [src]="follower.profilePicPath">
+                  </div>
+                </a>
+              </div>
+            </div>
+            <div class="col-11 ms-2">
+              <div class="d-flex">
+                <h6 class="fw-bold clr-blck m-0">{{follower.fullname}} </h6>
+              </div>
+              <div class="d-flex">
+                <h6 class="transp-text m-0">@{{follower.username}} </h6>
+              </div>
+              <a class="stretched-link" routerLink="/{{follower.username}}"></a>
             </div>
           </div>
-          <div class="col-11 ms-2">
-            <div class="d-flex">
-              <h6 class="fw-bold clr-blck m-0">{{follower.fullname}} </h6>
-            </div>
-            <div class="d-flex">
-              <h6 class="transp-text m-0">@{{follower.username}} </h6>
-            </div>
-            <a class="stretched-link" routerLink="/{{follower.id}}"></a>
-          </div>
-        </div>
-      </article>
+        </article>
+      </div>
     </div>
-  </div>
-
-  <div *ngIf="displaySection == 'following'" class="pb-5" [class.hgt-offset]="followList.followings.length < 11">
-    <div *ngIf="followList.followings.length > 0" class="d-flex flex-column">
-      <article *ngFor="let following of followList.followings" class="follow-article py-2">
-        <div class="d-flex ps-3">
-          <div class="col-1 d-flex justify-content-center">
-            <div class="square">
-              <a routerLink="/{{following.id}}">
-                <div class="rounded-img-container">
-                  <img class="rounded-img" [src]="following.profilePicPath">
-                </div>
-              </a>
+    <div *ngIf="displaySection == 'following'" class="pb-5">
+      <div *ngIf="followList.followings.length > 0" class="d-flex flex-column">
+        <article *ngFor="let following of followList.followings" class="follow-article py-2">
+          <div class="d-flex ps-3">
+            <div class="col-1 d-flex justify-content-center">
+              <div class="square">
+                <a routerLink="/{{following.username}}">
+                  <div class="rounded-img-container">
+                    <img class="rounded-img" [src]="following.profilePicPath">
+                  </div>
+                </a>
+              </div>
+            </div>
+            <div class="col-11 ms-2">
+              <div class="d-flex">
+                <h6 class="fw-bold clr-blck m-0">{{following.fullname}} </h6>
+              </div>
+              <div class="d-flex">
+                <h6 class="transp-text m-0">@{{following.username}} </h6>
+              </div>
+              <a class="stretched-link" routerLink="/{{following.username}}"></a>
             </div>
           </div>
-          <div class="col-11 ms-2">
-            <div class="d-flex">
-              <h6 class="fw-bold clr-blck m-0">{{following.fullname}} </h6>
-            </div>
-            <div class="d-flex">
-              <h6 class="transp-text m-0">@{{following.username}} </h6>
-            </div>
-            <a class="stretched-link" routerLink="/{{following.id}}"></a>
-          </div>
-        </div>
-      </article>
+        </article>
+      </div>
     </div>
-  </div>
+  </section>
 </div>

@@ -19,7 +19,7 @@ const routes: Routes = [
     children: [{ path: '', component: HomeComponent }],
   },
   {
-    path: ':id', // => it's gonna be username
+    path: ':username',
     component: MainLayoutComponent,
     canActivate: [RouteGuardService],
     children: [
@@ -34,7 +34,7 @@ const routes: Routes = [
       },
       {
         path: 'status/:tweetID',
-        component: TweetReplyStreamComponent
+        component: TweetReplyStreamComponent,
       },
     ],
   },

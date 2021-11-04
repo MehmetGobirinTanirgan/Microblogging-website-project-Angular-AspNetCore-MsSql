@@ -1,5 +1,5 @@
 .new-tweet-text {
-  resize:none;
+  resize: none;
   border: none;
   width: 100%;
   height: 100px;
@@ -15,15 +15,15 @@
 
 .upload-image-svg {
   width: 25px;
-  fill: #1DA1F2;
+  fill: #1da1f2;
 }
 
 .upload-image-svg-cap:hover {
   cursor: pointer;
-  background-color: #E8F5FD;
+  background-color: #e8f5fd;
   border-radius: 9999px;
 }
 
-.square{
+.square {
   min-width: 50px;
 }

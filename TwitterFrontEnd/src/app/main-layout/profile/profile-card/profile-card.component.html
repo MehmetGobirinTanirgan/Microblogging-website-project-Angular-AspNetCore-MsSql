@@ -1,4 +1,5 @@
-<div class="d-flex border-bottom pos-stc top-0 z-3 bg-white p-1">
+<div *ngIf="userProfileCard">
+  <div class="d-flex border-bottom pos-stc top-0 z-3 bg-white p-1">
     <header>
       <h3 class="ms-5">{{userProfileCard.fullname}}</h3>
     </header>
@@ -6,7 +7,7 @@
   <div class="d-flex px-4 pt-0 pb-4 cover" style="background-image: url({{userProfileCard.backgroundPath}});">
     <div class="profile-head col-4">
       <div class="square mt-3">
-        <a routerLink="/{{userProfileCard.id}}">
+        <a routerLink="/{{userProfileCard.username}}">
           <div class="rounded-img-container">
             <img [src]="userProfileCard.profilePicPath" class="rounded-img card-profile-img">
           </div>
@@ -16,22 +17,21 @@
   </div>
   <div class="px-4 pt-4">
     <div class="row justify-content-end">
-      <button *ngIf="userProfileCard.followFlag == null && userProfileCard.id === userID"
+      <button *ngIf="userProfileCard.followFlag == null && userProfileCard.username === authenticatedUsername"
         class="btn btn-outline-primary rd20x wdt-max" (click)="openModal()">
         <b>Set up profile</b>
       </button>
       <div class="row justify-content-end">
-        <button *ngIf="userProfileCard.followFlag === true && userProfileCard.id !== userID"
+        <button *ngIf="userProfileCard.followFlag === true && userProfileCard.username !== authenticatedUsername"
           class="btn btn-primary rd20x wdt-max" (click)="unfollow()">
           <b>Following</b>
         </button>
-        <button *ngIf="userProfileCard.followFlag === false && userProfileCard.id !== userID"
+        <button *ngIf="userProfileCard.followFlag === false && userProfileCard.username !== authenticatedUsername"
           class="btn btn-outline-primary rd20x wdt-max" (click)="follow()">
           <b>Follow</b>
         </button>
       </div>
     </div>
-
     <div class="row justify-content-start">
       <ul class="list-inline">
         <li>
@@ -48,7 +48,8 @@
           </label>
           <div *ngIf="userProfileCard.personalWebSiteURL != null">
             <label *ngIf="userProfileCard.personalWebSiteURL !== null" class="ms-2 fw500">
-              <i class="fas fa-link me-1"></i><a [href]="userProfileCard.personalWebSiteURL" class="web-site-link dec-none" target="_blank">
+              <i class="fas fa-link me-1"></i><a [attr.href]="'//' + userProfileCard.personalWebSiteURL"
+                class="web-site-link dec-none" target="_blank">
                 <label
                   *ngIf="userProfileCard.personalWebSiteURL.length > 30; else shortVer">{{userProfileCard.personalWebSiteURL
                   | slice:0:25}}...</label>
@@ -75,7 +76,8 @@
       </ul>
     </div>
   </div>
-
   <app-profile-edit-modal (sendUpdatedUserData)='updateProfile($event)' #editModal
-    *ngIf="userProfileCard.fullname != undefined && userProfileCard.followFlag == null" [profileData]="userProfileCard">
+    *ngIf="userProfileCard.fullname != undefined && userProfileCard.followFlag == null"
+    [userProfileCard]="userProfileCard">
   </app-profile-edit-modal>
+</div>

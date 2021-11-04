@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -6,7 +6,7 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { ReactiveFormsModule } from '@angular/forms';
 import { LoginComponent } from './login/login.component';
 import { HttpRequestInterceptor } from 'src/interceptors/HttpRequestInterceptor';
-import { CustomValidatorService } from 'src/services/customValidator.service';
+import { ValidatorService } from 'src/services/validator.service';
 import { AuthenticationService } from 'src/services/authentication.service';
 import { FrontPageComponent } from './front-page/front-page.component';
 import { RouteGuardService } from 'src/services/route-guard.service';
@@ -18,11 +18,7 @@ import { MainLayoutModule } from './main-layout/main-layout.module';
 import { NgCircleProgressModule } from 'ng-circle-progress';
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    FrontPageComponent,
-    LoginComponent,
-  ],
+  declarations: [AppComponent, FrontPageComponent, LoginComponent],
   imports: [
     AppRoutingModule,
     BrowserModule,
@@ -32,7 +28,7 @@ import { NgCircleProgressModule } from 'ng-circle-progress';
     NgbModule,
     SharedModule,
     MainLayoutModule,
-    NgCircleProgressModule.forRoot()
+    NgCircleProgressModule.forRoot(),
   ],
   providers: [
     {
@@ -40,11 +36,12 @@ import { NgCircleProgressModule } from 'ng-circle-progress';
       useClass: HttpRequestInterceptor,
       multi: true,
     },
-    CustomValidatorService,
+    ValidatorService,
     AuthenticationService,
     RouteGuardService,
     DataService,
   ],
   bootstrap: [AppComponent],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
 export class AppModule {}

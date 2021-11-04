@@ -56,7 +56,6 @@
   text-decoration: none;
 }
 
-
 .tweet-opts {
   color: #5b7092;
 }
@@ -66,24 +65,23 @@
   text-decoration: none;
 }
 
-.tweet-img{
+.tweet-img {
   height: 100%;
   width: 100%;
 }
 
-.twt-img-link{
+.twt-img-link {
   height: 100%;
   width: 100%;
   display: flex;
 }
 
-.tweet-menu-link:hover{
-  background-color: #F7F9F9;
+.tweet-menu-link:hover {
+  background-color: #f7f9f9;
 }
 
-.square{
+.square {
   z-index: 2;
   min-width: 35px;
   width: 70%;
 }
-

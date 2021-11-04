@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { TweetModel } from 'src/models/TweetModel';
+import { TweetDisplayDTO } from 'src/dtos/TweetDisplayDTO';
 import { AuthenticationService } from 'src/services/authentication.service';
 import { DataService } from 'src/services/data.service';
 import { TweetService } from 'src/services/tweet.service';
@@ -11,44 +11,49 @@ import { TweetService } from 'src/services/tweet.service';
   providers: [TweetService],
 })
 export class HomeComponent implements OnInit {
-  constructor(
-    private tweetService: TweetService,
-    private authService: AuthenticationService,
-    private dataService: DataService
-  ) {}
-  tweets: TweetModel[] = [] as TweetModel[];
-  followFlag: boolean | null;
-  ngOnInit(): void {
-    this.getAllTweets();
+  constructor(private tweetService: TweetService, private authService: AuthenticationService, private dataService: DataService) {}
 
-    this.dataService.getFollowUserID().subscribe((id) => {
-      this.tweets.forEach((tweet) => {
-        if (tweet.userID == id) {
-          this.getAllTweets();
+  tweets: Array<TweetDisplayDTO> | null = null;
+  loadingFlag: boolean = false;
+  followFlag: boolean | null;
+
+  ngOnInit(): void {
+    this.getAllRelationalTweets();
+
+    this.dataService.getFollowUsername().subscribe((username) => {
+      this.tweets?.forEach((tweet) => {
+        if (tweet.username == username) {
+          this.getAllRelationalTweets();
         }
       });
     });
 
     this.dataService.getNewReplyTweet().subscribe((newReplyTweet) => {
       if (newReplyTweet != null) {
-        this.tweets.unshift(newReplyTweet);
+        this.tweets?.unshift(newReplyTweet);
       }
     });
   }
 
-  getAllTweets() {
-    const userID = this.authService.getUserData()?.id;
-    if (userID != undefined) {
-      this.tweetService.getAllTweets(userID).subscribe(
-        (data) => (this.tweets = data),
-        (error) => alert("Error: Can't load tweets")
+  getAllRelationalTweets() {
+    const username = this.authService.getAuthenticatedUserInfos()?.username;
+    if (username) {
+      this.tweetService.getAllRelationalTweets(username).subscribe(
+        (data) => {
+          this.tweets = data;
+          this.loadingFlag = true;
+        },
+        (error) => alert('Error: Cant load tweets')
       );
     } else {
       alert('Local storage error');
     }
   }
 
-  addNewTweet(tweet: any) {
-    this.tweets.unshift(JSON.parse(tweet));
+  addNewTweet(tweet: TweetDisplayDTO) {
+    if (this.tweets == null) {
+      this.tweets = new Array<TweetDisplayDTO>();
+    }
+    this.tweets.unshift(tweet);
   }
 }

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
+using TwitterAPI.Objects.Mappers.Dtos;
 using TwitterCore.Models;
 
 namespace TwitterAPI.Services.Abstract
@@ -11,12 +12,14 @@ namespace TwitterAPI.Services.Abstract
         Task<User> GetUserWithAllTweetsAsync(Expression<Func<User, bool>> exp);
         Task<User> GetUserByUsernameAsync(string username);
         Task<User> GetUserByIDAsync(Guid id);
-        Task<User> GetUserWithFollowersAsync(Guid id);
+        Task<User> GetUserWithFollowersAsync(string username);
         Task<User> GetUserWithFollowingsAsync(Guid id);
-        Task<User> GetUserWithFollowersAndFollowingsAsync(Guid id);
+        Task<User> GetUserWithFollowersAndFollowingsAsync(string username);
         Task<bool> IsUserExistAsync(Expression<Func<User, bool>> exp);
-        Task CreateUserAsync(User user);
-        Task UpdateUserAsync(User user);
-        Task<List<User>> SearchUsersAsync(string searchText);
+        Task<bool> CreateUserAsync(SignUpDTO signupDTO);
+        Task<List<SearchUserDTO>> SearchUsersAsync(string searchText);
+        Task<MainUserProfileDTO> GetMainUserProfileAsync(string username);
+        Task<ForeignUserProfileDTO> GetForeignUserProfileAsync(string foreignUsername, string mainUsername);
+        Task<MainUserProfileCardDTO> UpdateProfileAsync(ProfileEditDTO profileEditDTO);
     }
 }

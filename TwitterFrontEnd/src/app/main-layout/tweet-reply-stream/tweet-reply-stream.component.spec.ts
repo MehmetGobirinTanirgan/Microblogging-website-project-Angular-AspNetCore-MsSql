@@ -1,11 +1,13 @@
 import { HttpResponse } from '@angular/common/http';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { ActivatedRoute } from '@angular/router';
 import { of, throwError } from 'rxjs';
 import { AuthenticationService } from 'src/services/authentication.service';
 import { DataService } from 'src/services/data.service';
 import { TweetService } from 'src/services/tweet.service';
-
+import { MockTweetDisplay } from 'src/testObjects/MockTweetDisplay';
+import { MockUserInfo } from 'src/testObjects/MockUserInfo';
 import { TweetReplyStreamComponent } from './tweet-reply-stream.component';
 
 describe('TweetReplyStreamComponent', () => {
@@ -14,15 +16,15 @@ describe('TweetReplyStreamComponent', () => {
   let mockAuthService: jasmine.SpyObj<AuthenticationService>;
   let mockDataService: jasmine.SpyObj<DataService>;
   let mockTweetService: jasmine.SpyObj<TweetService>;
-  let mockData:MockData;
+  let activatedRoute: ActivatedRoute;
+
   beforeEach(async () => {
     const dataServiceSpy = jasmine.createSpy();
-    const authServiceSpyObj = jasmine.createSpyObj('AuthenticationService', [
-      'getUserData',
-    ]);
-    const tweetServiceSpyObj = jasmine.createSpyObj('TweetService', [
-      'getTweetReplyStream','getTweetID'
-    ]);
+    const authServiceSpyObj = jasmine.createSpyObj('AuthenticationService', ['getAuthenticatedUserInfos']);
+    const tweetServiceSpyObj = jasmine.createSpyObj('TweetService', ['getTweetReplyStream', 'getTweetID']);
+    const mockActivatedRoute = {
+      params: of({ tweetID: 'mockTweetID' }),
+    };
 
     await TestBed.configureTestingModule({
       declarations: [TweetReplyStreamComponent],
@@ -30,97 +32,55 @@ describe('TweetReplyStreamComponent', () => {
       providers: [
         { provide: DataService, useValue: dataServiceSpy },
         { provide: AuthenticationService, useValue: authServiceSpyObj },
+        { provide: ActivatedRoute, useValue: mockActivatedRoute },
       ],
     })
       .overrideProvider(TweetService, { useValue: tweetServiceSpyObj })
       .compileComponents();
 
-    mockAuthService = TestBed.inject(
-      AuthenticationService
-    ) as jasmine.SpyObj<AuthenticationService>;
-    mockDataService = TestBed.inject(
-      DataService
-    ) as jasmine.SpyObj<DataService>;
-    mockTweetService = TestBed.inject(
-      TweetService
-    ) as jasmine.SpyObj<TweetService>;
+    mockAuthService = TestBed.inject(AuthenticationService) as jasmine.SpyObj<AuthenticationService>;
+    mockDataService = TestBed.inject(DataService) as jasmine.SpyObj<DataService>;
+    mockTweetService = TestBed.inject(TweetService) as jasmine.SpyObj<TweetService>;
+    activatedRoute = TestBed.inject(ActivatedRoute);
   });
 
   beforeEach(() => {
     fixture = TestBed.createComponent(TweetReplyStreamComponent);
     component = fixture.componentInstance;
-    mockData = new MockData();
   });
 
   it('should create', () => {
     expect(component).toBeTruthy();
   });
 
-  it('#ngOnInit should call #refreshPage when data service returns null', () =>{
-    const refreshSpy = spyOn(component,'getTweetReplyStream');
+  it('#ngOnInit should call #getTweetReplyStream', () => {
+    const getTweetReplyStreamSpy = spyOn(component, 'getTweetReplyStream');
     fixture.detectChanges();
-
-    expect(refreshSpy).toHaveBeenCalled();
+    expect(getTweetReplyStreamSpy).toHaveBeenCalled();
   });
 
-  it('#refreshPage should return expected data if request is succesfull', () =>{
-    const mockTweet = mockData.mockTweet;
-    mockAuthService.getUserData.and.returnValue(mockData.mockUserData);
-    mockTweetService.getTweetReplyStream.and.returnValue(of([mockTweet]))
+  it('#getTweetReplyStream should return expected data if request is succesfull', () => {
+    const mockTweet = new MockTweetDisplay();
+    mockAuthService.getAuthenticatedUserInfos.and.returnValue(new MockUserInfo());
+    component.tweetID = 'mockTweetID';
+    mockTweetService.getTweetReplyStream.and.returnValue(of([mockTweet]));
     component.getTweetReplyStream();
-
     expect(component.tweetReplyStream).toEqual([mockTweet]);
   });
 
-  it('#refreshPage should display error alert if request fails', () =>{
-    spyOn(window,'alert');
-    mockAuthService.getUserData.and.returnValue(mockData.mockUserData);
-    mockTweetService.getTweetReplyStream.and.returnValue(throwError(new HttpResponse({status:400})))
+  it('#getTweetReplyStream should display error alert if request fails', () => {
+    spyOn(window, 'alert');
+    mockAuthService.getAuthenticatedUserInfos.and.returnValue(new MockUserInfo());
+    component.tweetID = 'mockTweetID';
+    mockTweetService.getTweetReplyStream.and.returnValue(throwError(new HttpResponse({ status: 400 })));
     component.getTweetReplyStream();
-
     expect(window.alert).toHaveBeenCalledWith('Error: Cant load tweet reply stream');
   });
 
-  it('#refreshPage should display error alert if none data comes from local storage', () =>{
-    spyOn(window,'alert');
-    mockAuthService.getUserData.and.returnValue(null);
+  it('#getTweetReplyStream should display error alert if #getAuthenticatedUserInfos returns null', () => {
+    spyOn(window, 'alert');
+    mockAuthService.getAuthenticatedUserInfos.and.returnValue(null);
     component.getTweetReplyStream();
-
     expect(window.alert).toHaveBeenCalledWith('Local storage error');
   });
 });
-
-class MockData {
-  mockUserData = {
-    username: 'mockUsername',
-    fullname: 'mockFullname',
-    id: 'mockID',
-    profilePicPath: 'mockProfilePicPath',
-    token: 'mockToken',
-  };
-
-  mockTweet = {
-    id: '1',
-    userID: 'mockUserID',
-    createdDate: new Date(2001, 1, 1),
-    tweetDetail: 'mockTweetDetail',
-    profilePicPath: 'mockProfilePicPath',
-    fullname: 'mockFullname',
-    username: 'mockUsername',
-    replyCounter: 1,
-    retweetCounter: 1,
-    likeCounter: 1,
-    followFlag: true,
-    likeFlag: false,
-    ownershipStatus: true,
-    mainTweetOwnerID: null,
-    mainTweetOwnerUsername: null,
-    tweetFlag: true,
-    tweetImageInfos: [
-      {
-        id: '1',
-        imagePath: 'mockImagePath',
-      },
-    ],
-  };
-}

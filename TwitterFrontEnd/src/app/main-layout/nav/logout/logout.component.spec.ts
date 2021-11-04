@@ -2,6 +2,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { Router } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
 import { AuthenticationService } from 'src/services/authentication.service';
+import { MockUserInfo } from 'src/testObjects/MockUserInfo';
 
 import { LogoutComponent } from './logout.component';
 
@@ -10,21 +11,17 @@ describe('LogoutComponent', () => {
   let fixture: ComponentFixture<LogoutComponent>;
   let mockAuthService: jasmine.SpyObj<AuthenticationService>;
   let router: Router;
+
   beforeEach(async () => {
-    const authServiceSpyObj = jasmine.createSpyObj('AuthenticationService', [
-      'getUserData',
-      'logOut',
-    ]);
+    const authServiceSpyObj = jasmine.createSpyObj('AuthenticationService', ['getAuthenticatedUserInfos', 'logOut']);
+
     await TestBed.configureTestingModule({
       declarations: [LogoutComponent],
       imports: [RouterTestingModule.withRoutes([])],
-      providers: [
-        { provide: AuthenticationService, useValue: authServiceSpyObj },
-      ],
+      providers: [{ provide: AuthenticationService, useValue: authServiceSpyObj }],
     }).compileComponents();
-    mockAuthService = TestBed.inject(
-      AuthenticationService
-    ) as jasmine.SpyObj<AuthenticationService>;
+
+    mockAuthService = TestBed.inject(AuthenticationService) as jasmine.SpyObj<AuthenticationService>;
     router = TestBed.inject(Router);
   });
 
@@ -37,42 +34,26 @@ describe('LogoutComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it('#ngOnInit should change #userData`s value if authentication service gets user`s data correctly', () => {
-    const mockUserData = {
-      username: 'mockUsername',
-      fullname: 'mockFullname',
-      id: 'mockID',
-      profilePicPath: 'mockProfilePicPath',
-      token: 'mockToken',
-    };
-    mockAuthService.getUserData.and.returnValue(mockUserData);
+  it('#ngOnInit should get userInfo from #getAuthenticatedUserInfos', () => {
+    const mockUserInfo = new MockUserInfo();
+    mockAuthService.getAuthenticatedUserInfos.and.returnValue(mockUserInfo);
     fixture.detectChanges();
-
-    expect(component.userData).toEqual(mockUserData);
-    expect(mockAuthService.getUserData).toHaveBeenCalled();
+    expect(component.userInfo).toEqual(mockUserInfo);
+    expect(mockAuthService.getAuthenticatedUserInfos).toHaveBeenCalled();
   });
 
-  it('#ngOnInit should display alert if authentication service gets null data', () => {
-    const mockUserData = {
-      username: 'mockUsername',
-      fullname: 'mockFullname',
-      id: 'mockID',
-      profilePicPath: 'mockProfilePicPath',
-      token: 'mockToken',
-    };
+  it('#ngOnInit should display alert if #getAuthenticatedUserInfos returns null', () => {
     spyOn(window, 'alert');
-    mockAuthService.getUserData.and.returnValue(null);
+    mockAuthService.getAuthenticatedUserInfos.and.returnValue(null);
     fixture.detectChanges();
-
     expect(window.alert).toHaveBeenCalledWith('Local storage error');
-    expect(mockAuthService.getUserData).toHaveBeenCalled();
+    expect(mockAuthService.getAuthenticatedUserInfos).toHaveBeenCalled();
   });
 
   it('#logOut should navigato to front page', () => {
     mockAuthService.logOut.and.callThrough();
     const routerSpy = spyOn(router, 'navigate');
     component.logOut();
-
     expect(routerSpy).toHaveBeenCalledWith(['']);
     expect(mockAuthService.logOut).toHaveBeenCalled();
   });

@@ -1,3 +1,7 @@
-.tweet-stream{
+.tweet-stream {
   height: 710px;
+}
+
+.hgt-offset {
+  min-height: 100vh;
 }

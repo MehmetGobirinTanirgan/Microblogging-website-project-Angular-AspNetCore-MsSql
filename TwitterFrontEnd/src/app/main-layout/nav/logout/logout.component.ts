@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { UserStoreModel } from 'src/models/UserStoreModel';
+import { UserInfoDTO } from 'src/dtos/UserInfoDTO';
 import { AuthenticationService } from 'src/services/authentication.service';
 
 @Component({
@@ -9,16 +9,14 @@ import { AuthenticationService } from 'src/services/authentication.service';
   styleUrls: ['./logout.component.css'],
 })
 export class LogoutComponent implements OnInit {
-  constructor(
-    public authService: AuthenticationService,
-    private router: Router
-  ) {}
-  userData: UserStoreModel;
+  constructor(public authService: AuthenticationService, private router: Router) {}
+
+  userInfo: UserInfoDTO;
 
   ngOnInit(): void {
-    const _userData = this.authService.getUserData();
-    if (_userData != null) {
-      this.userData = _userData;
+    const authenticatedUserInfos = this.authService.getAuthenticatedUserInfos();
+    if (authenticatedUserInfos != null) {
+      this.userInfo = authenticatedUserInfos;
     } else {
       alert('Local storage error');
     }

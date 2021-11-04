@@ -1,22 +1,14 @@
-span {
-    font-size: 12px;
-}
-
-.btn-primary {
- background-color: #86CDFE;
- border: none;
- padding:15px;
-}
-
- .btn-primary:hover {
-  background-color: #1DA1F2;
- }
-
- .login-mini-logo {
+.login-mini-logo {
   width: 50px;
   fill: #1d9bf0;
 }
 
-.wdt340x{
-  width: 340px;
+.btn-login {
+  background-color: #86cdfe;
+  border: none;
+  padding: 15px;
+}
+
+.btn-login:hover {
+  background-color: #1da1f2;
 }

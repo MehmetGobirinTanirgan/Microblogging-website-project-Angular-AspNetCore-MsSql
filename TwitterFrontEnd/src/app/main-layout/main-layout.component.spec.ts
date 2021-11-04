@@ -9,10 +9,9 @@ describe('MainLayoutComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ MainLayoutComponent ],
-      schemas:[NO_ERRORS_SCHEMA]
-    })
-    .compileComponents();
+      declarations: [MainLayoutComponent],
+      schemas: [NO_ERRORS_SCHEMA],
+    }).compileComponents();
   });
 
   beforeEach(() => {

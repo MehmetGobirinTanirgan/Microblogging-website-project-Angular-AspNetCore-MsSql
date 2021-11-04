@@ -3,7 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { ReplyModalModel } from 'src/models/ReplyModalModel';
 import { AuthenticationService } from 'src/services/authentication.service';
-import { CustomValidatorService } from 'src/services/customValidator.service';
+import { ValidatorService } from 'src/services/validator.service';
 import { DataService } from 'src/services/data.service';
 import { TweetService } from 'src/services/tweet.service';
 
@@ -20,35 +20,35 @@ export class ReplyModalComponent implements OnInit {
     private formBuilder: FormBuilder,
     private authService: AuthenticationService,
     private tweetService: TweetService,
-    private validatorService:CustomValidatorService
+    private validatorService: ValidatorService
   ) {}
+
   @ViewChild('replyModal')
   private modalContent: TemplateRef<ReplyModalComponent>;
   private modalRef: NgbModalRef;
   replyModalData: ReplyModalModel;
   replyForm: FormGroup;
   imageFiles: FileList;
-  tweetImgWidth:number;
+  tweetImgWidth: number;
   ngOnInit(): void {}
 
   open() {
     this.replyModalData = JSON.parse(this.dataService.replyModalData);
     this.createReplyForm();
     this.modalRef = this.modalService.open(this.modalContent);
-    this.tweetImgWidth = 100/this.replyModalData.MainTweetImagePaths.length;
+    this.tweetImgWidth = 100 / this.replyModalData.mainTweetImagePaths.length;
   }
 
   createReplyForm() {
-    this.replyForm = this.formBuilder.group({
-      replyTweetDetail: ['', [Validators.maxLength(280)]],
-      replyTweetImageFiles: [],
-    },
-    {
-      validator: this.validatorService.atLeastOne(Validators.required, [
-        'replyTweetDetail',
-        'replyTweetImageFiles',
-      ]),
-    });
+    this.replyForm = this.formBuilder.group(
+      {
+        replyTweetDetail: ['', [Validators.maxLength(280)]],
+        replyTweetImageFiles: [],
+      },
+      {
+        validator: this.validatorService.atLeastOne(Validators.required, ['replyTweetDetail', 'replyTweetImageFiles']),
+      }
+    );
   }
 
   addFiles(files: FileList) {
@@ -58,14 +58,14 @@ export class ReplyModalComponent implements OnInit {
   }
 
   addReply() {
-    const userID = this.authService.getUserData()?.id;
-    if (userID != null) {
+    const username = this.authService.getAuthenticatedUserInfos()?.username;
+    if (username) {
       if (this.replyForm.valid) {
         const replyData = Object.assign({}, this.replyForm.value);
         const formData = new FormData();
         formData.append('TweetDetail', replyData.replyTweetDetail);
-        formData.append('UserID', userID);
-        formData.append('MainTweetID', this.replyModalData.MainTweetID);
+        formData.append('Username', username);
+        formData.append('MainTweetID', this.replyModalData.mainTweetID);
         if (this.imageFiles != null) {
           for (let i = 0; i < this.imageFiles.length; i++) {
             formData.append('ImageFiles', this.imageFiles[i]);

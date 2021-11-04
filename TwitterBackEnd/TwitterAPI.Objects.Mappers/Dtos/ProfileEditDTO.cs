@@ -5,7 +5,7 @@ namespace TwitterAPI.Objects.Mappers.Dtos
 {
     public class ProfileEditDTO
     {
-        public Guid ID { get; set; }
+        public string Username { get; set; }
         public string Fullname { get; set; }
         public string PersonalInfo { get; set; }
         public string Location { get; set; }

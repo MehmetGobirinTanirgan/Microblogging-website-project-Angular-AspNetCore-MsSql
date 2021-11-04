@@ -1,9 +1,6 @@
-﻿using AutoMapper;
-using Microsoft.AspNetCore.Authorization;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using System.Collections.Generic;
 using System.Threading.Tasks;
-using TwitterAPI.Objects.Mappers.Dtos;
 using TwitterAPI.Services.Abstract;
 
 namespace TwitterAPI.Controllers
@@ -14,12 +11,10 @@ namespace TwitterAPI.Controllers
     public class SearchController : ControllerBase
     {
         private readonly IUserService userService;
-        private readonly IMapper mapper;
 
-        public SearchController(IUserService userService,IMapper mapper)
+        public SearchController(IUserService userService)
         {
             this.userService = userService;
-            this.mapper = mapper;
         }
 
         [HttpGet("{searchText}")]
@@ -27,9 +22,12 @@ namespace TwitterAPI.Controllers
         {
             if (searchText != null)
             {
-                var users = await userService.SearchUsersAsync(searchText);
-                var searchUserDTOs = mapper.Map<List<SearchUserDTO>>(users);
-                return Ok(searchUserDTOs);
+                var searchUserDTOs = await userService.SearchUsersAsync(searchText);
+                if (searchUserDTOs != null)
+                {
+                    return Ok(searchUserDTOs);
+                }
+                return NoContent();
             }
             return BadRequest();
         }

@@ -11,10 +11,9 @@ namespace TwitterCore.RepositoryAbstractions
         Task<User> GetUserWithAllTweetsAsync(Expression<Func<User, bool>> exp);
         Task<User> GetUserByUsernameAsync(string username);
         Task<User> GetUserByIDAsync(Guid id);
-        Task<User> GetUserWithFollowersAsync(Guid id);
+        Task<User> GetUserWithFollowersAsync(string username);
         Task<User> GetUserWithFollowingsAsync(Guid id);
-        Task<User> GetUserWithFollowersAndFollowingsAsync(Guid id);
-        void UpdateUser(User user);
+        Task<User> GetUserWithFollowersAndFollowingsAsync(string username);
         Task<List<User>> SearchUsersAsync(string searchText);
     }
 }

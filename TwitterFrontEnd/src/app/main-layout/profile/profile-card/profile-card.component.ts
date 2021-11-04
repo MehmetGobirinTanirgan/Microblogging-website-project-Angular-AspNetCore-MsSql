@@ -1,7 +1,7 @@
 import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
-import { UserProfileCardModel } from 'src/models/UserProfileCardModel';
-import { UserStoreModel } from 'src/models/UserStoreModel';
+import { UserInfoDTO } from 'src/dtos/UserInfoDTO';
+import { UserProfileCardDTO } from 'src/dtos/UserProfileCardDTO';
 import { AuthenticationService } from 'src/services/authentication.service';
 import { DataService } from 'src/services/data.service';
 import { FollowService } from 'src/services/follow.service';
@@ -20,20 +20,20 @@ export class ProfileCardComponent implements OnInit {
     private router: Router,
     private dataService: DataService
   ) {}
-  @Input() userProfileCard: UserProfileCardModel;
+  @Input() userProfileCard: UserProfileCardDTO;
   @ViewChild('editModal') modalComponent: ProfileEditModalComponent;
-  userID: string;
-  dataServiceUserID: string | null = null;
+  authenticatedUsername: string;
+  dataServiceUsername: string | null = null;
   ngOnInit(): void {
-    const id = this.authService.getUserData()?.id;
-    if (id != null) {
-      this.userID = id;
-      this.dataService.getFollowUserID().subscribe((id) => {
-        this.dataServiceUserID = id;
+    const authenticatedUsername = this.authService.getAuthenticatedUserInfos()?.username;
+    if (authenticatedUsername != null) {
+      this.authenticatedUsername = authenticatedUsername;
+      this.dataService.getFollowUsername().subscribe((username) => {
+        this.dataServiceUsername = username;
       });
 
       this.dataService.getFollowFlag().subscribe((flag) => {
-        if (this.dataServiceUserID === this.userProfileCard.id) {
+        if (this.dataServiceUsername === this.userProfileCard.username) {
           if (flag) {
             this.userProfileCard.followFlag = true;
             this.userProfileCard.followerCounter++;
@@ -53,9 +53,9 @@ export class ProfileCardComponent implements OnInit {
   }
 
   follow() {
-    this.followService.follow(this.userProfileCard.id, this.userID).subscribe(
+    this.followService.follow(this.userProfileCard.username, this.authenticatedUsername).subscribe(
       (success) => {
-        this.dataService.setFollowUserID(this.userProfileCard.id);
+        this.dataService.setFollowUsername(this.userProfileCard.username);
         this.dataService.setFollowFlag(true);
       },
       (error) => {
@@ -65,9 +65,9 @@ export class ProfileCardComponent implements OnInit {
   }
 
   unfollow() {
-    this.followService.unfollow(this.userProfileCard.id, this.userID).subscribe(
+    this.followService.unfollow(this.userProfileCard.username, this.authenticatedUsername).subscribe(
       (success) => {
-        this.dataService.setFollowUserID(this.userProfileCard.id);
+        this.dataService.setFollowUsername(this.userProfileCard.username);
         this.dataService.setFollowFlag(false);
       },
       (error) => {
@@ -78,23 +78,22 @@ export class ProfileCardComponent implements OnInit {
 
   followList(flag: boolean) {
     if (flag) {
-      this.router.navigate([`${this.userProfileCard.id}/follow/following`]);
+      this.router.navigate([`${this.userProfileCard.username}/follow/following`]);
     } else if (!flag) {
-      this.router.navigate([`${this.userProfileCard.id}/follow/followers`]);
+      this.router.navigate([`${this.userProfileCard.username}/follow/followers`]);
     }
   }
 
   updateProfile(updatedProfileStr: string) {
-    const updatedUserProfileData: UserProfileCardModel =
+    const updatedUserProfileCard: UserProfileCardDTO =
       JSON.parse(updatedProfileStr);
-    this.userProfileCard = updatedUserProfileData;
-    const updatedUserData: UserStoreModel = {
-      id: updatedUserProfileData.id,
-      profilePicPath: updatedUserProfileData.profilePicPath,
-      username: updatedUserProfileData.username,
-      fullname: updatedUserProfileData.fullname,
-      token: this.authService.getToken()!,
+    this.userProfileCard = updatedUserProfileCard;
+    const updatedUserInfo: UserInfoDTO = {
+      profilePicPath: updatedUserProfileCard.profilePicPath,
+      username: updatedUserProfileCard.username,
+      fullname: updatedUserProfileCard.fullname,
+      token: this.authService.getAuthenticationToken()!,
     };
-    this.authService.saveData(updatedUserData);
+    this.authService.saveUserInfos(updatedUserInfo);
   }
 }

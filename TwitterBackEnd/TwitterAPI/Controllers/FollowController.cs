@@ -1,13 +1,8 @@
-﻿using AutoMapper;
-using Microsoft.AspNetCore.Authorization;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using TwitterAPI.Objects.Mappers.Dtos;
 using TwitterAPI.Services.Abstract;
-using TwitterCore.Models;
 
 namespace TwitterAPI.Controllers
 {
@@ -16,88 +11,53 @@ namespace TwitterAPI.Controllers
     [ApiController]
     public class FollowController : ControllerBase
     {
-        private readonly IUserService userService;
         private readonly IFollowService followService;
-        private readonly IMapper mapper;
 
-        public FollowController(IUserService userService, IFollowService followService, IMapper mapper)
+        public FollowController(IFollowService followService)
         {
-            this.userService = userService;
             this.followService = followService;
-            this.mapper = mapper;
         }
 
         [HttpPost]
-        public async Task<IActionResult> Follow([FromBody] FollowDTO followDTO)
+        public async Task<IActionResult> Follow([FromBody] FollowCreationDTO followDTO)
         {
             if (ModelState.IsValid)
             {
-                var followingUser = await userService.GetUserByIDAsync(followDTO.FollowingUserID);
-                var followerUser = await userService.GetUserByIDAsync(followDTO.FollowerUserID);
-
-                var follow = mapper.Map<Follow>(followDTO);
-                var isUserBeingFollowedAlready = await followService.AnyFollowAsync(follow);
-
-                if (!isUserBeingFollowedAlready)
+                var result = await followService.FollowAsync(followDTO);
+                if (result)
                 {
-                    await followService.AddFollowAsync(follow);
-                    followerUser.FollowingCounter++;
-                    followingUser.FollowerCounter++;
-                    await userService.UpdateUserAsync(followerUser);
-                    await userService.UpdateUserAsync(followingUser);
                     return Ok();
                 }
             }
             return BadRequest();
         }
 
-        [HttpDelete("{followerUserID}/{followingUserID}")]
-        public async Task<IActionResult> Unfollow([FromRoute] Guid followerUserID, Guid followingUserID)
+        [HttpDelete("{followerUsername}/{followingUsername}")]
+        public async Task<IActionResult> Unfollow([FromRoute] string followerUsername, string followingUsername)
         {
             if (ModelState.IsValid)
             {
-                var followingUser = await userService.GetUserByIDAsync(followingUserID);
-                var followerUser = await userService.GetUserByIDAsync(followerUserID);
-
-                var follow = new Follow()
+                var result = await followService.UnfollowAsync(followerUsername, followingUsername);
+                if (result)
                 {
-                    FollowerUserID = followerUserID,
-                    FollowingUserID = followingUserID
-                };
-
-                var isUserBeingFollowedAlready = await followService.AnyFollowAsync(follow);
-
-                if (isUserBeingFollowedAlready)
-                {
-                    await followService.RemoveFollowAsync(follow);
-                    followerUser.FollowingCounter--;
-                    followingUser.FollowerCounter--;
-                    await userService.UpdateUserAsync(followerUser);
-                    await userService.UpdateUserAsync(followingUser);
                     return Ok();
                 }
             }
             return BadRequest();
         }
 
-        [HttpGet("{userID}")]
-        public async Task<IActionResult> GetAllFollowersFollowings([FromRoute] Guid userID)
+        [HttpGet("{username}")]
+        public async Task<IActionResult> GetAllFollowersFollowings([FromRoute] string username)
         {
-            if (userID != Guid.Empty)
+            if (username != null)
             {
-                var user = await userService.GetUserWithFollowersAndFollowingsAsync(userID);
-                var followersDTO = mapper.Map<List<FollowerFollowingDTO>>(user.Followers.Select(x => x.FollowerUser));
-                var followingsDTO = mapper.Map<List<FollowerFollowingDTO>>(user.Followings.Select(x => x.FollowingUser));
+                var followList = await followService.GetAllFollowersFollowingsAsync(username);
 
-                var followList = new FollowListDTO()
+                if (followList != null)
                 {
-                    Fullname = user.Fullname,
-                    Username = user.Username,
-                    Followers = followersDTO,
-                    Followings = followingsDTO
-                };
-
-                return Ok(followList);
+                    return Ok(followList);
+                }
+                return NoContent();
             }
             return BadRequest();
         }

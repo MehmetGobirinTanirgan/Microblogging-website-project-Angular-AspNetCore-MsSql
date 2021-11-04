@@ -1,36 +1,28 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { SignUpModel } from 'src/models/SignUpModel';
-import { UserProfileCardModel } from 'src/models/UserProfileCardModel';
-import { UserProfileModel } from 'src/models/UserProfileModel';
+import { SignUpDTO } from 'src/dtos/SignUpDTO';
+import { UserProfileCardDTO } from 'src/dtos/UserProfileCardDTO';
+import { UserProfileDTO } from 'src/dtos/UserProfileDTO';
 
 @Injectable()
 export class UserService {
   constructor(private httpClient: HttpClient) {}
 
-  signUp(signUpModel: SignUpModel) {
-    return this.httpClient.post('Login/SignUp', signUpModel, {
+  signUp(signUpDTO: SignUpDTO) {
+    return this.httpClient.post('Login/SignUp', signUpDTO, {
       observe: 'response',
     });
   }
 
-  getUserProfile(userID: string) {
-    return this.httpClient.get<UserProfileModel>(
-      'Profile/GetUserProfile/' + userID
-    );
+  getMainUserProfile(username: string) {
+    return this.httpClient.get<UserProfileDTO>('Profile/GetMainUserProfile/' + username);
   }
 
-  getForeignUserProfile(userID: string, foreignUserID: string) {
-    return this.httpClient.get<UserProfileModel>(
-      'Profile/GetForeignUserProfile/' + foreignUserID + '/' + userID
-    );
+  getForeignUserProfile(username: string, foreignUsername: string) {
+    return this.httpClient.get<UserProfileDTO>('Profile/GetForeignUserProfile/' + foreignUsername + '/' + username);
   }
 
   updateProfile(updatedProfile: FormData) {
-    return this.httpClient.put<UserProfileCardModel>(
-      'Profile/UpdateProfile',
-      updatedProfile,
-      { observe: 'response' }
-    );
+    return this.httpClient.put<UserProfileCardDTO>('Profile/UpdateProfile', updatedProfile, { observe: 'response' });
   }
 }

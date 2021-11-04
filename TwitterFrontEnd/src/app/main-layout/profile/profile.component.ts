@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { TweetModel } from 'src/models/TweetModel';
-import { UserProfileCardModel } from 'src/models/UserProfileCardModel';
-import { UserProfileModel } from 'src/models/UserProfileModel';
+import { TweetDisplayDTO } from 'src/dtos/TweetDisplayDTO';
+import { UserProfileCardDTO } from 'src/dtos/UserProfileCardDTO';
+import { UserProfileDTO } from 'src/dtos/UserProfileDTO';
 import { AuthenticationService } from 'src/services/authentication.service';
 import { UserService } from 'src/services/user.service';
 import { Location } from '@angular/common';
@@ -23,26 +23,25 @@ export class ProfileComponent implements OnInit {
   ) {
     this.router.routeReuseStrategy.shouldReuseRoute = () => false;
   }
-  userID: string | null = null;
-  upcomingUserID: string | null = null;
-  userProfile: UserProfileModel = new UserProfileModel();
-  userProfileCard: UserProfileCardModel = new UserProfileCardModel();
-  ownTweets: TweetModel[];
-  nonReplyOwnTweets: TweetModel[];
-  mediaTypeTweets: TweetModel[];
-  likedTweets: TweetModel[];
+
+  username: string | null = null;
+  incomingUsername: string | null = null;
+  userProfile: UserProfileDTO = new UserProfileDTO();
+  userProfileCard: UserProfileCardDTO | null = null;
+  tweetsAndReplies: Array<TweetDisplayDTO>;
+  tweets: Array<TweetDisplayDTO>;
+  media: Array<TweetDisplayDTO>;
+  likes: Array<TweetDisplayDTO>;
   displaySection: string = '';
   mainUrl: string;
 
   ngOnInit(): void {
-    const id = this.authService.getUserData()?.id;
-    if (id != undefined) {
-      this.userID = id;
+    const authenticatedUsername = this.authService.getAuthenticatedUserInfos()?.username;
+    if (authenticatedUsername != undefined) {
+      this.username = authenticatedUsername;
     }
 
-    this.activatedRoute.parent?.params.subscribe(
-      (params) => (this.upcomingUserID = params['id'])
-    );
+    this.activatedRoute.parent?.params.subscribe((params) => (this.incomingUsername = params['username']));
     this.mainUrl = this.router.url;
 
     this.activatedRoute.params.subscribe((params) => {
@@ -52,12 +51,12 @@ export class ProfileComponent implements OnInit {
       }
     });
 
-    if (this.userID !== null) {
-      if (this.upcomingUserID !== null) {
-        if (this.userID === this.upcomingUserID) {
-          this.getUserProfile(this.userID);
+    if (this.username !== null) {
+      if (this.incomingUsername !== null) {
+        if (this.username === this.incomingUsername) {
+          this.getMainUserProfile(this.username);
         } else {
-          this.getForeignUserProfile(this.userID, this.upcomingUserID);
+          this.getForeignUserProfile(this.username, this.incomingUsername);
         }
       } else {
         alert('Routing URL error');
@@ -67,27 +66,27 @@ export class ProfileComponent implements OnInit {
     }
   }
 
-  getUserProfile(userID: string) {
-    this.userService.getUserProfile(userID).subscribe(
+  getMainUserProfile(username: string) {
+    this.userService.getMainUserProfile(username).subscribe(
       (data) => {
         (this.userProfileCard = data.userProfileCard),
-          (this.ownTweets = data.ownTweets),
-          (this.nonReplyOwnTweets = data.nonReplyOwnTweets),
-          (this.mediaTypeTweets = data.mediaTypeTweets),
-          (this.likedTweets = data.likedTweets);
+          (this.tweets = data.tweets),
+          (this.tweetsAndReplies = data.tweetsAndReplies),
+          (this.media = data.media),
+          (this.likes = data.likes);
       },
       (error) => alert('Profile loading failed')
     );
   }
 
-  getForeignUserProfile(userID: string, foreignUserID: string) {
-    this.userService.getForeignUserProfile(userID, foreignUserID).subscribe(
+  getForeignUserProfile(username: string, foreignUsername: string) {
+    this.userService.getForeignUserProfile(username, foreignUsername).subscribe(
       (data) => {
         (this.userProfileCard = data.userProfileCard),
-          (this.ownTweets = data.ownTweets),
-          (this.nonReplyOwnTweets = data.nonReplyOwnTweets),
-          (this.mediaTypeTweets = data.mediaTypeTweets),
-          (this.likedTweets = data.likedTweets);
+          (this.tweets = data.tweets),
+          (this.tweetsAndReplies = data.tweetsAndReplies),
+          (this.media = data.media),
+          (this.likes = data.likes);
       },
       (error) => alert('Profile loading failed')
     );
@@ -96,9 +95,7 @@ export class ProfileComponent implements OnInit {
   show1() {
     this.displaySection = '';
     if (this.mainUrl.lastIndexOf('/')) {
-      this.location.replaceState(
-        this.mainUrl.substring(0, this.mainUrl.lastIndexOf('/'))
-      );
+      this.location.replaceState(this.mainUrl.substring(0, this.mainUrl.lastIndexOf('/')));
     } else {
       this.location.replaceState(this.mainUrl);
     }
@@ -107,10 +104,7 @@ export class ProfileComponent implements OnInit {
   show2() {
     this.displaySection = 'with_replies';
     if (this.mainUrl.lastIndexOf('/')) {
-      this.location.replaceState(
-        this.mainUrl.substring(0, this.mainUrl.lastIndexOf('/')) +
-          `/${this.displaySection}`
-      );
+      this.location.replaceState(this.mainUrl.substring(0, this.mainUrl.lastIndexOf('/')) + `/${this.displaySection}`);
     } else {
       this.location.replaceState(this.mainUrl + `/${this.displaySection}`);
     }
@@ -119,10 +113,7 @@ export class ProfileComponent implements OnInit {
   show3() {
     this.displaySection = 'media';
     if (this.mainUrl.lastIndexOf('/')) {
-      this.location.replaceState(
-        this.mainUrl.substring(0, this.mainUrl.lastIndexOf('/')) +
-          `/${this.displaySection}`
-      );
+      this.location.replaceState(this.mainUrl.substring(0, this.mainUrl.lastIndexOf('/')) + `/${this.displaySection}`);
     } else {
       this.location.replaceState(this.mainUrl + `/${this.displaySection}`);
     }
@@ -131,10 +122,7 @@ export class ProfileComponent implements OnInit {
   show4() {
     this.displaySection = 'likes';
     if (this.mainUrl.lastIndexOf('/')) {
-      this.location.replaceState(
-        this.mainUrl.substring(0, this.mainUrl.lastIndexOf('/')) +
-          `/${this.displaySection}`
-      );
+      this.location.replaceState(this.mainUrl.substring(0, this.mainUrl.lastIndexOf('/')) + `/${this.displaySection}`);
     } else {
       this.location.replaceState(this.mainUrl + `/${this.displaySection}`);
     }

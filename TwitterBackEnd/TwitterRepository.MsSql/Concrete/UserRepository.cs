@@ -32,33 +32,32 @@ namespace TwitterRepository.MsSql.Concrete
         {
             return await GetOneByExpressionAsync(x =>x.Username == username && x.Status != ComplexEntityStatus.Passive);
         }
+
         public async Task<User> GetUserByIDAsync(Guid id)
         {
             return await GetOneByIDAsync(id);
         }
 
-        public async Task<User> GetUserWithFollowersAsync(Guid id)
+        public async Task<User> GetUserWithFollowersAsync(string username)
         {
-            return await GetActives().Where(x => x.ID.Equals(id))
+            return await GetActives().Where(x => x.Username.Equals(username))
                 .Include(x => x.Followers)
                 .FirstOrDefaultAsync();
         }
+
         public async Task<User> GetUserWithFollowingsAsync(Guid id)
         {
             return await GetActives().Where(x => x.ID.Equals(id))
                 .Include(x => x.Followings)
                 .FirstOrDefaultAsync();
         }
-        public async Task<User> GetUserWithFollowersAndFollowingsAsync(Guid id)
+
+        public async Task<User> GetUserWithFollowersAndFollowingsAsync(string username)
         {
-            return await GetActives().Where(x => x.ID.Equals(id))
+            return await GetActives().Where(x => x.Username.Equals(username))
                 .Include(x => x.Followers).ThenInclude(y =>y.FollowerUser)
                 .Include(x => x.Followings).ThenInclude(y =>y.FollowingUser)
                 .FirstOrDefaultAsync();
-        }
-        public void UpdateUser(User user)
-        {
-            Update(user);
         }
 
         public async Task<List<User>> SearchUsersAsync(string searchText)

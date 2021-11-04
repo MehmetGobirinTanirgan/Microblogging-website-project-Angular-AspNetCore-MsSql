@@ -17,16 +17,7 @@ namespace TwitterRepository.MsSql.Concrete
             
         }
 
-        public async Task AddLikeAsync(Like like)
-        {
-            await AddAsync(like);
-        }
-        public async Task RemoveLikeAsync(Like like)
-        {
-            await DeleteAsync(x => x.TweetID.Equals(like.TweetID) && x.UserID.Equals(like.UserID));
-        }
-
-        public async Task<List<Tweet>> GetUserLikedTweetsAsync(Guid id)
+        public async Task<List<Tweet>> GetMainUserLikedTweetsAsync(Guid id)
         {
             return await GetListByExpression(x => x.UserID.Equals(id))
                 .Where(x => x.Tweet.Status.Equals(ComplexEntityStatus.Active))

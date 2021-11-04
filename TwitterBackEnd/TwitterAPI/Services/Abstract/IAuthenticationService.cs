@@ -5,6 +5,6 @@ namespace TwitterAPI.Services.Abstract
 {
     public interface IAuthenticationService
     {
-        Task<HomePageDTO> AuthenticateAsync(string usernameOrPhoneOrEmail, string password, string secretKey);
+        Task<UserInfoDTO> AuthenticateAsync(string usernameOrPhoneOrEmail, string password);
     }
 }

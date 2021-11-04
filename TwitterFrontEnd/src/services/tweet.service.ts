@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { LikeModel } from 'src/models/LikeModel';
-import { TweetModel } from 'src/models/TweetModel';
+import { LikeCreationDTO } from 'src/dtos/LikeCreationDTO';
+import { TweetDisplayDTO } from 'src/dtos/TweetDisplayDTO';
 
 @Injectable()
 export class TweetService {
@@ -15,51 +15,30 @@ export class TweetService {
   };
 
   addNewTweet(newTweet: FormData) {
-    return this.httpClient.post<TweetModel>(
-      'Tweet/AddNewTweet',
-      newTweet,
-      this.HttpOptions
-    );
+    return this.httpClient.post<TweetDisplayDTO>('Tweet/AddTweet', newTweet, this.HttpOptions);
   }
 
-  getAllTweets(id: string) {
-    return this.httpClient.get<TweetModel[]>(
-      'Tweet/GetAllRelationalTweets/' + id
-    );
+  getAllRelationalTweets(username: string) {
+    return this.httpClient.get<TweetDisplayDTO[]>('Tweet/GetAllRelationalTweets/' + username);
   }
 
   delete(id: string) {
-    return this.httpClient.delete('Tweet/DeleteTweet/' + id, {
-      observe: 'response',
-    });
+    return this.httpClient.delete('Tweet/DeleteTweet/' + id, { observe: 'response' });
   }
 
-  addLike(like: LikeModel) {
-    return this.httpClient.post('Tweet/AddLike', like, {
-      observe: 'response',
-    });
+  addLike(like: LikeCreationDTO) {
+    return this.httpClient.post('Tweet/AddLike', like, { observe: 'response' });
   }
 
   removeLike(tweetID: string, userID: string) {
-    return this.httpClient.delete(
-      'Tweet/RemoveLike/' + tweetID + '/' + userID,
-      {
-        observe: 'response',
-      }
-    );
+    return this.httpClient.delete('Tweet/RemoveLike/' + tweetID + '/' + userID, { observe: 'response' });
   }
 
   addReplyTweet(ReplyTweet: FormData) {
-    return this.httpClient.post<TweetModel>(
-      'Tweet/AddReplyTweet',
-      ReplyTweet,
-      this.HttpOptions
-    );
+    return this.httpClient.post<TweetDisplayDTO>('Tweet/AddReplyTweet', ReplyTweet, this.HttpOptions);
   }
 
-  getTweetReplyStream(tweetID: string, userID: string) {
-    return this.httpClient.get<TweetModel[]>(
-      'Tweet/GetTweetWithReplyTweets/' + tweetID + '/' + userID
-    );
+  getTweetReplyStream(tweetID: string, username: string) {
+    return this.httpClient.get<Array<TweetDisplayDTO>>('Tweet/GetTweetWithReplyTweets/' + tweetID + '/' + username);
   }
 }

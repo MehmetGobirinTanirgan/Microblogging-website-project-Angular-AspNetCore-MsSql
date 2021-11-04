@@ -1,8 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { TweetModel } from 'src/models/TweetModel';
+import { TweetDisplayDTO } from 'src/dtos/TweetDisplayDTO';
 import { AuthenticationService } from 'src/services/authentication.service';
-import { DataService } from 'src/services/data.service';
 import { TweetService } from 'src/services/tweet.service';
 
 @Component({
@@ -12,14 +11,11 @@ import { TweetService } from 'src/services/tweet.service';
   providers: [TweetService],
 })
 export class TweetReplyStreamComponent implements OnInit {
-  constructor(
-    private dataService: DataService,
-    private tweetService: TweetService,
-    private authService: AuthenticationService,
-    private activatedRoute: ActivatedRoute
-  ) {}
-  tweetReplyStream: TweetModel[] | null = null;
+  constructor(private tweetService: TweetService, private authService: AuthenticationService, private activatedRoute: ActivatedRoute) {}
+
+  tweetReplyStream: Array<TweetDisplayDTO> | null = null;
   tweetID: string;
+
   ngOnInit(): void {
     this.activatedRoute.params.subscribe((params) => {
       this.tweetID = params['tweetID'];
@@ -28,9 +24,9 @@ export class TweetReplyStreamComponent implements OnInit {
   }
 
   getTweetReplyStream() {
-    const userID = this.authService.getUserData()?.id;
-    if (userID != null && this.tweetID != null) {
-      this.tweetService.getTweetReplyStream(this.tweetID, userID).subscribe(
+    const authenticatedUsername = this.authService.getAuthenticatedUserInfos()?.username;
+    if (authenticatedUsername && this.tweetID) {
+      this.tweetService.getTweetReplyStream(this.tweetID, authenticatedUsername).subscribe(
         (data) => {
           this.tweetReplyStream = data;
         },

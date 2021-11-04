@@ -6,12 +6,8 @@
   padding: 15px;
 }
 
-form {
+.modal-body form {
   padding: 30px;
-}
-
-.modal-content {
-  border-radius: 50px;
 }
 
 .switch-btn {
@@ -52,7 +48,7 @@ span {
   fill: #ffffff;
 }
 
-.fp-modal-logo{
+.fp-modal-logo {
   width: 40px;
   fill: #1d9bf0;
 }
@@ -97,7 +93,7 @@ span {
   text-decoration: none;
 }
 
-.footer-link > span{
+.footer-link span {
   font-size: 13px;
 }
 

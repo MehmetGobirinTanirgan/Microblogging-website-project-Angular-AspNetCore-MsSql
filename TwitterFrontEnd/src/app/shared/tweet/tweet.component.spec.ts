@@ -10,7 +10,9 @@ import { AuthenticationService } from 'src/services/authentication.service';
 import { DataService } from 'src/services/data.service';
 import { FollowService } from 'src/services/follow.service';
 import { TweetService } from 'src/services/tweet.service';
-
+import { MockReplyModalData } from 'src/testObjects/MockReplyModalData';
+import { MockTweetDisplay } from 'src/testObjects/MockTweetDisplay';
+import { MockUserInfo } from 'src/testObjects/MockUserInfo';
 import { TweetComponent } from './tweet.component';
 
 describe('TweetComponent', () => {
@@ -20,320 +22,222 @@ describe('TweetComponent', () => {
   let mockDataService: jasmine.SpyObj<DataService>;
   let mockTweetService: jasmine.SpyObj<TweetService>;
   let mockFollowService: jasmine.SpyObj<FollowService>;
-  let router:Router;
+  let router: Router;
+  let mockUserInfo: MockUserInfo;
+  let mockTweet: MockTweetDisplay;
 
   beforeEach(async () => {
-    const authServiceSpyObj = jasmine.createSpyObj('AuthenticationService', [
-      'getUserData',
+    const authServiceSpyObj = jasmine.createSpyObj('AuthenticationService', ['getAuthenticatedUserInfos']);
+    const dataServiceSpyObj = jasmine.createSpyObj('DataService', [
+      'getFollowUsername',
+      'setFollowUsername',
+      'getFollowFlag',
+      'setFollowFlag',
     ]);
-    const dataServiceSpy = jasmine.createSpy();
-    const tweetServiceSpyObj = jasmine.createSpyObj('TweetService', [
-      'delete',
-      'addLike',
-      'removeLike',
-      'getTweetReplyStream',
-      'setTweetID',
-    ]);
-    const followServiceSpyObj = jasmine.createSpyObj('FollowService', [
-      'follow',
-      'unfollow',
-    ]);
+    const tweetServiceSpyObj = jasmine.createSpyObj('TweetService', ['delete', 'addLike', 'removeLike', 'getTweetReplyStream']);
+    const followServiceSpyObj = jasmine.createSpyObj('FollowService', ['follow', 'unfollow']);
 
     await TestBed.configureTestingModule({
       declarations: [TweetComponent],
-      imports: [
-        HttpClientTestingModule,
-        RouterTestingModule.withRoutes([]),
-        NgbDropdownModule,
-      ],
+      imports: [HttpClientTestingModule, RouterTestingModule.withRoutes([]), NgbDropdownModule],
       providers: [
         { provide: AuthenticationService, useValue: authServiceSpyObj },
-        { provide: DataService, useValue: dataServiceSpy },
+        { provide: DataService, useValue: dataServiceSpyObj },
       ],
-      schemas:[NO_ERRORS_SCHEMA]
+      schemas: [NO_ERRORS_SCHEMA],
     })
       .overrideProvider(TweetService, { useValue: tweetServiceSpyObj })
       .overrideProvider(FollowService, { useValue: followServiceSpyObj })
       .compileComponents();
 
-    mockAuthService = TestBed.inject(
-      AuthenticationService
-    ) as jasmine.SpyObj<AuthenticationService>;
-    mockDataService = TestBed.inject(
-      DataService
-    ) as jasmine.SpyObj<DataService>;
-    mockTweetService = TestBed.inject(
-      TweetService
-    ) as jasmine.SpyObj<TweetService>;
-    mockFollowService = TestBed.inject(
-      FollowService
-    ) as jasmine.SpyObj<FollowService>;
+    mockAuthService = TestBed.inject(AuthenticationService) as jasmine.SpyObj<AuthenticationService>;
+    mockDataService = TestBed.inject(DataService) as jasmine.SpyObj<DataService>;
+    mockTweetService = TestBed.inject(TweetService) as jasmine.SpyObj<TweetService>;
+    mockFollowService = TestBed.inject(FollowService) as jasmine.SpyObj<FollowService>;
     router = TestBed.inject(Router);
   });
 
   beforeEach(() => {
     fixture = TestBed.createComponent(TweetComponent);
     component = fixture.componentInstance;
+    mockUserInfo = new MockUserInfo();
+    mockTweet = new MockTweetDisplay();
+    mockDataService.getFollowUsername.and.returnValue(of('mockUsername'));
+    mockDataService.getFollowFlag.and.returnValue(of(true));
   });
 
   it('should create', () => {
     expect(component).toBeTruthy();
   });
 
-  it('#ngOnInit should change #userID and #userProfilePicPath values when auth. service returns user`s data correctly', () => {
-    const mockData = new MockData();
-    const mockUserData = mockData.mockUserData;
-    mockAuthService.getUserData.and.returnValue(mockUserData);
-    fixture.detectChanges();
+  describe('When #getAuthenticatedUserInfos returns user infos', () => {
+    beforeEach(() => {
+      mockAuthService.getAuthenticatedUserInfos.and.returnValue(mockUserInfo);
+    });
 
-    expect(component.userID).toEqual(mockUserData.id);
-    expect(component.userProfilePicPath).toEqual(mockUserData.profilePicPath);
-    expect(mockAuthService.getUserData).toHaveBeenCalled();
+    it('#ngOnInit should change #username and #userProfilePicPath values', () => {
+      component.tweet = mockTweet;
+      fixture.detectChanges();
+      expect(component.username).toEqual(mockUserInfo.username);
+      expect(component.userProfilePicPath).toEqual(mockUserInfo.profilePicPath);
+      expect(mockAuthService.getAuthenticatedUserInfos).toHaveBeenCalled();
+    });
+
+    it('#openModal should change the values of #replyModalModel and open the modal', () => {
+      mockTweet.tweetImageInfos = [
+        {
+          id: 'mockTweetImageID',
+          imagePath: 'mockTweetImagePath',
+        },
+      ];
+      component.tweet = mockTweet;
+      fixture.detectChanges();
+      const inputTweet = component.tweet;
+      component.modalComponent = jasmine.createSpyObj('ReplyModalComponent', ['open']);
+      component.openModal();
+      const replyModel = component.replyModalModel;
+      expect(replyModel.mainTweetCreatedDate).toEqual(inputTweet.createdDate);
+      expect(replyModel.mainTweetID).toEqual(inputTweet.id);
+      expect(replyModel.mainTweetDetail).toEqual(inputTweet.tweetDetail);
+      expect(replyModel.mainTweetImagePaths.length).toEqual(inputTweet.tweetImageInfos.length);
+      expect(replyModel.mainTweetFullname).toEqual(inputTweet.fullname);
+      expect(replyModel.mainTweetUsername).toEqual(inputTweet.username);
+      expect(replyModel.mainTweetUserProfilePicPath).toEqual(component.userProfilePicPath);
+      expect(replyModel.replyTweetUserProfilePicPath).toEqual(inputTweet.profilePicPath);
+      expect(mockDataService.replyModalData).toEqual(JSON.stringify(replyModel));
+      expect(component.modalComponent.open).toHaveBeenCalled();
+    });
+
+    it('#deleteTweet should delete tweet and #tweetFlag should be false', () => {
+      component.tweet = mockTweet;
+      mockTweetService.delete.and.returnValue(of(new HttpResponse({ status: 200 })));
+      component.deleteTweet();
+      expect(component.tweet.tweetFlag).toBeFalse();
+    });
+
+    it('#deleteTweet should display alert when request fails', () => {
+      spyOn(window, 'alert');
+      component.tweet = mockTweet;
+      mockTweetService.delete.and.returnValue(throwError(new HttpResponse({ status: 400 })));
+      component.deleteTweet();
+      expect(window.alert).toHaveBeenCalledWith('Deletion failed');
+    });
+
+    it('#likeCheck should call #removeLike when #likeFlag is true', () => {
+      mockTweet.likeFlag = true;
+      component.tweet = mockTweet;
+      const removeLikeSpy = spyOn(component, 'removeLike');
+      component.likeCheck();
+      expect(removeLikeSpy).toHaveBeenCalled();
+    });
+
+    it('#likeCheck should call #like when #likeFlag is false', () => {
+      mockTweet.likeFlag = false;
+      component.tweet = mockTweet;
+      const likeSpy = spyOn(component, 'like');
+      component.likeCheck();
+      expect(likeSpy).toHaveBeenCalled();
+    });
+
+    it('#like should change values', () => {
+      component.tweet = mockTweet;
+      fixture.detectChanges();
+      mockTweetService.addLike.and.returnValue(of(new HttpResponse({ status: 200 })));
+      component.like();
+      expect(component.tweet.likeCounter).toEqual(1);
+      expect(component.tweet.likeFlag).toBeTrue();
+    });
+
+    it('#like should display alert when request fails', () => {
+      spyOn(window, 'alert');
+      component.tweet = mockTweet;
+      mockTweetService.addLike.and.returnValue(throwError(new HttpResponse({ status: 400 })));
+      component.like();
+      expect(window.alert).toHaveBeenCalledWith('Like failed');
+    });
+
+    it('#removeLike should change values', () => {
+      mockTweet.likeFlag = true;
+      component.tweet = mockTweet;
+      component.tweet.likeCounter = 1;
+      fixture.detectChanges();
+      mockTweetService.removeLike.and.returnValue(of(new HttpResponse({ status: 200 })));
+      component.removeLike();
+      expect(component.tweet.likeCounter).toEqual(0);
+      expect(component.tweet.likeFlag).toBeFalse();
+    });
+
+    it('#removeLike should display alert when request fails', () => {
+      spyOn(window, 'alert');
+      component.tweet = mockTweet;
+      mockTweetService.removeLike.and.returnValue(throwError(new HttpResponse({ status: 400 })));
+      component.removeLike();
+      expect(window.alert).toHaveBeenCalledWith('Dislike failed');
+    });
+
+    it('#follow should set follow signals via data service', () => {
+      component.tweet = mockTweet;
+      fixture.detectChanges();
+      mockFollowService.follow.and.returnValue(of(new HttpResponse({ status: 200 })));
+      component.follow();
+      expect(mockDataService.setFollowUsername).toHaveBeenCalledWith(component.tweet.username);
+      expect(mockDataService.setFollowFlag).toHaveBeenCalledWith(true);
+    });
+
+    it('#follow should display fail alert when request fails', () => {
+      spyOn(window, 'alert');
+      component.tweet = mockTweet;
+      fixture.detectChanges();
+      mockFollowService.follow.and.returnValue(throwError(new HttpResponse({ status: 400 })));
+      component.follow();
+      expect(window.alert).toHaveBeenCalledWith('Follow failed');
+    });
+
+    it('#unfollow should set follow signals via data service', () => {
+      component.tweet = mockTweet;
+      fixture.detectChanges();
+      mockFollowService.unfollow.and.returnValue(of(new HttpResponse({ status: 200 })));
+      component.unfollow();
+      expect(mockDataService.setFollowUsername).toHaveBeenCalledWith(component.tweet.username);
+      expect(mockDataService.setFollowFlag).toHaveBeenCalledWith(false);
+    });
+
+    it('#unfollow should display fail alert when request fails', () => {
+      spyOn(window, 'alert');
+      component.tweet = mockTweet;
+      fixture.detectChanges();
+      mockFollowService.unfollow.and.returnValue(throwError(new HttpResponse({ status: 400 })));
+      component.unfollow();
+      expect(window.alert).toHaveBeenCalledWith('Unfollow failed');
+    });
+
+    it('#tweetReplyStream should return expected data and navigate to tweet reply page', () => {
+      const routerSpy = spyOn(router, 'navigate');
+      component.tweet = mockTweet;
+      fixture.detectChanges();
+      mockTweetService.getTweetReplyStream.and.returnValue(of([mockTweet, mockTweet]));
+      component.tweetReplyStream();
+      expect(routerSpy).toHaveBeenCalledWith([`${mockTweet.username}/status/${component.tweet.id}`]);
+    });
+
+    it('#tweetReplyStream should display alert when request fails', () => {
+      const routerSpy = spyOn(router, 'navigate');
+      component.tweet = mockTweet;
+      fixture.detectChanges();
+      mockTweetService.getTweetReplyStream.and.returnValue(throwError(new HttpResponse({ status: 400 })));
+      component.tweetReplyStream();
+      expect(routerSpy).toHaveBeenCalledWith([`${component.tweet.username}/status/${component.tweet.id}`]);
+    });
   });
 
-  it('#ngOnInit display alert when auth. service returns null', () => {
-    spyOn(window,'alert');
-    mockAuthService.getUserData.and.returnValue(null);
-    fixture.detectChanges();
-
-    expect(window.alert).toHaveBeenCalledWith('Error: Tweet loading failed');
-    expect(mockAuthService.getUserData).toHaveBeenCalled();
-  });
-
-  it('#openModal should change the values of #replyModalModel and open the modal', () => {
-    const mockData = new MockData();
-    mockAuthService.getUserData.and.returnValue(mockData.mockUserData);
-    fixture.detectChanges();
-
-    const mockTweet = mockData.mockTweet;
-    component.tweet = mockTweet;
-    const replyModel = component.replyModalModel;
-    const inputTweet = component.tweet;
-    const modalSpy = jasmine.createSpyObj('ReplyModalComponent',['open']);
-    component.modalComponent = modalSpy;
-    component.openModal();
-
-    expect(replyModel.MainTweetCreatedDate).toEqual(inputTweet.createdDate);
-    expect(replyModel.MainTweetID).toEqual(inputTweet.id);
-    expect(replyModel.MainTweetDetail).toEqual(inputTweet.tweetDetail);
-    expect(replyModel.MainTweetImagePaths.length).toEqual(inputTweet.tweetImageInfos.length);
-    expect(replyModel.MainTweetUserFullname).toEqual(inputTweet.fullname);
-    expect(replyModel.MainTweetUserUsername).toEqual(inputTweet.username);
-    expect(replyModel.MainTweetUserProfilePicPath).toEqual(component.userProfilePicPath);
-    expect(replyModel.UserID).toEqual(component.userID);
-    expect(replyModel.ReplyTweetUserProfilePicPath).toEqual(inputTweet.profilePicPath);
-    expect(mockDataService.replyModalData).toEqual(JSON.stringify(replyModel));
-    expect(component.modalComponent.open).toHaveBeenCalled();
-  });
-
-  it('#deleteTweet should delete tweet and #tweetFlag should be false', () => {
-    const mockData = new MockData();
-    component.tweet = mockData.mockTweet;
-    mockTweetService.delete.and.returnValue(of(new HttpResponse({status:200})));
-    component.deleteTweet();
-
-    expect(component.tweetFlag).toBeFalse();
-  });
-
-  it('#deleteTweet should display alert when request fails', () => {
-    const mockData = new MockData();
-    spyOn(window,'alert');
-    component.tweet = mockData.mockTweet;
-    mockTweetService.delete.and.returnValue(throwError(new HttpResponse({status:400})));
-    component.deleteTweet();
-
-    expect(window.alert).toHaveBeenCalledWith('Deletion failed');
-  });
-
-  it('#likeCheck should call #removeLike when #likeFlag is true', () => {
-    const mockData = new MockData();
-    mockData.mockTweet.likeFlag = true;
-    component.tweet = mockData.mockTweet;
-    const removeLikeSpy = spyOn(component,'removeLike');
-    component.likeCheck();
-
-    expect(removeLikeSpy).toHaveBeenCalled();
-  });
-
-  it('#likeCheck should call #like when #likeFlag is false', () => {
-    const mockData = new MockData();
-    mockData.mockTweet.likeFlag = false;
-    component.tweet = mockData.mockTweet;
-    const likeSpy = spyOn(component,'like');
-    component.likeCheck();
-
-    expect(likeSpy).toHaveBeenCalled();
-  });
-
-  it('#like should change values', () => {
-    const mockData = new MockData();
-    const mockTweet = mockData.mockTweet;
-    component.tweet = mockTweet;
-    mockAuthService.getUserData.and.returnValue(mockData.mockUserData);
-    fixture.detectChanges();
-
-    mockTweetService.addLike.and.returnValue(of(new HttpResponse({status:200})));
-    component.like();
-
-    expect(component.tweet.likeCounter).toEqual(2);
-    expect(component.tweet.likeFlag).toBeTrue();
-  });
-
-  it('#like should display alert when request fails', () => {
-    const mockData = new MockData();
-    const mockTweet = mockData.mockTweet;
-    spyOn(window,'alert');
-    component.tweet = mockTweet;
-    mockTweetService.addLike.and.returnValue(throwError(new HttpResponse({status:400})));
-    component.like();
-
-    expect(window.alert).toHaveBeenCalledWith('Like failed');
-  });
-
-  it('#removeLike should change values', () => {
-    const mockData = new MockData();
-    const mockTweet = mockData.mockTweet;
-    mockTweet.likeFlag = true;
-    component.tweet = mockTweet;
-    mockAuthService.getUserData.and.returnValue(mockData.mockUserData);
-    fixture.detectChanges();
-    mockTweetService.removeLike.and.returnValue(of(new HttpResponse({status:200})));
-    component.removeLike();
-
-    expect(component.tweet.likeCounter).toEqual(0);
-    expect(component.tweet.likeFlag).toBeFalse();
-  });
-
-  it('#removeLike should display alert when request fails', () => {
-    const mockData = new MockData();
-    const mockTweet = mockData.mockTweet;
-    spyOn(window,'alert');
-    component.tweet = mockTweet;
-    mockTweetService.removeLike.and.returnValue(throwError(new HttpResponse({status:400})));
-    component.removeLike();
-
-    expect(window.alert).toHaveBeenCalledWith('Dislike failed');
-  });
-
-  it('#follow should display success alert', () => {
-    spyOn(window,'alert');
-    const mockData = new MockData();
-    mockAuthService.getUserData.and.returnValue(mockData.mockUserData);
-    component.tweet = mockData.mockTweet;
-    fixture.detectChanges();
-    mockFollowService.follow.and.returnValue(of(new HttpResponse({status:200})));
-    component.follow();
-
-    expect(window.alert).toHaveBeenCalledWith('Following');
-  });
-
-  it('#follow should display fail alert', () => {
-    spyOn(window,'alert');
-    const mockData = new MockData();
-    mockAuthService.getUserData.and.returnValue(mockData.mockUserData);
-    component.tweet = mockData.mockTweet;
-    fixture.detectChanges();
-    mockFollowService.follow.and.returnValue(throwError(new HttpResponse({status:400})));
-    component.follow();
-
-    expect(window.alert).toHaveBeenCalledWith('Follow failed');
-  });
-
-  it('#unfollow should display success alert', () => {
-    spyOn(window,'alert');
-    const mockData = new MockData();
-    mockAuthService.getUserData.and.returnValue(mockData.mockUserData);
-    component.tweet = mockData.mockTweet;
-    fixture.detectChanges();
-    mockFollowService.unfollow.and.returnValue(of(new HttpResponse({status:200})));
-    component.unfollow();
-
-    expect(window.alert).toHaveBeenCalledWith('Unfollowed');
-  });
-
-  it('#unfollow should display fail alert', () => {
-    spyOn(window,'alert');
-    const mockData = new MockData();
-    mockAuthService.getUserData.and.returnValue(mockData.mockUserData);
-    component.tweet = mockData.mockTweet;
-    fixture.detectChanges();
-    mockFollowService.unfollow.and.returnValue(throwError(new HttpResponse({status:400})));
-    component.unfollow();
-
-    expect(window.alert).toHaveBeenCalledWith('Unfollow failed');
-  });
-
-  it('#tweetReplyStream should return expected data and navigate to tweet reply page', () => {
-    const routerSpy = spyOn(router, 'navigate');
-    const mockData = new MockData();
-    const mockTweet = mockData.mockTweet;
-    mockAuthService.getUserData.and.returnValue(mockData.mockUserData);
-    component.tweet = mockTweet;
-    fixture.detectChanges();
-    mockTweetService.getTweetReplyStream.and.returnValue(of([mockTweet,mockTweet]));
-    component.tweetReplyStream();
-
-    expect(mockDataService.tweetReplyStream).toEqual([mockTweet,mockTweet]);
-    expect(mockTweetService.setTweetID).toHaveBeenCalledWith(component.tweet.id);
-    expect(routerSpy).toHaveBeenCalledWith([`${mockTweet.userID}/status/${component.tweet.id}`]);
-  });
-
-  it('#tweetReplyStream should display alert when request fails', () => {
-    spyOn(window,'alert');
-    const mockData = new MockData();
-    const mockTweet = mockData.mockTweet;
-    mockAuthService.getUserData.and.returnValue(mockData.mockUserData);
-    component.tweet = mockTweet;
-    fixture.detectChanges();
-    mockTweetService.getTweetReplyStream.and.returnValue(throwError(new HttpResponse({status:400})));
-    component.tweetReplyStream();
-
-    expect(window.alert).toHaveBeenCalledWith('Error: Cant load tweet reply stream');
+  describe('When #getAuthenticatedUserInfos returns null', () => {
+    it('#ngOnInit display alert when #getAuthenticatedUserInfos returns null', () => {
+      spyOn(window, 'alert');
+      component.tweet = mockTweet;
+      mockAuthService.getAuthenticatedUserInfos.and.returnValue(null);
+      fixture.detectChanges();
+      expect(window.alert).toHaveBeenCalledWith('Error: Tweet loading failed');
+      expect(mockAuthService.getAuthenticatedUserInfos).toHaveBeenCalled();
+    });
   });
 });
-
-class MockData {
-  mockReplyModal = {
-    MainTweetID: 'mockID',
-    MainTweetUserProfilePicPath: 'mockPath',
-    MainTweetUserFullname: 'mockFullname',
-    MainTweetUserUsername: 'mockUsername',
-    MainTweetCreatedDate: new Date(),
-    MainTweetDetail: 'mockDetail',
-    MainTweetImagePaths: ['mockPath1', 'mockPath2'],
-    ReplyTweetUserProfilePicPath: 'mockPath',
-    UserID: 'mockID',
-  };
-
-  mockUserData = {
-    username: 'mockUsername',
-    fullname: 'mockFullname',
-    id: 'mockID',
-    profilePicPath: 'mockProfilePicPath',
-    token: 'mockToken',
-  };
-
-  mockTweet = {
-    id: '1',
-    userID: 'mockUserID',
-    createdDate: new Date(2001, 1, 1),
-    tweetDetail: 'mockTweetDetail',
-    profilePicPath: 'mockProfilePicPath',
-    fullname: 'mockFullname',
-    username: 'mockUsername',
-    replyCounter: 1,
-    retweetCounter: 1,
-    likeCounter: 1,
-    followFlag: true,
-    likeFlag: false,
-    ownershipStatus: true,
-    mainTweetOwnerID: null,
-    mainTweetOwnerUsername: null,
-    tweetImageInfos: [
-      {
-        id: '1',
-        imagePath: 'mockImagePath',
-      },
-    ],
-  };
-}

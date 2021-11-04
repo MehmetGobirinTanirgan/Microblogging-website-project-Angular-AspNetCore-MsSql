@@ -2,10 +2,10 @@
   <div class="d-flex">
     <div class="col-2 pt-2 pb-3 pe-3">
       <div class="square">
-        <a routerLink="/{{tweet.userID}}">
+        <a routerLink="/{{tweet.username}}">
           <div class="rounded-img-container mx-3 mb-4">
-            <img *ngIf="tweet.userID == userID; else foreignUserPic" class="rounded-img"
-              [src]="authService.getUserData()?.profilePicPath" alt="tweet-user-profile-picture">
+            <img *ngIf="tweet.username == username; else foreignUserPic" class="rounded-img"
+              [src]="authService.getAuthenticatedUserInfos()?.profilePicPath" alt="tweet-user-profile-picture">
             <ng-template #foreignUserPic>
               <img class="rounded-img" [src]="tweet.profilePicPath" alt="tweet-user-profile-picture">
             </ng-template>
@@ -17,7 +17,7 @@
       <div class="d-flex justify-content-between flex-column">
         <div class="d-flex justify-content-between">
           <div class="d-inline-block">
-            <a routerLink="/{{tweet.userID}}" class="tweet-link fw-bold clr-blck">{{tweet.fullname}} </a>
+            <a routerLink="/{{tweet.username}}" class="tweet-link fw-bold clr-blck">{{tweet.fullname}} </a>
             <label class="transp-text">@{{tweet.username}} </label>
             <span class="ms-1">&#183;</span><a (click)="tweetReplyStream()"
               class="tweet-link ms-1 transp-text">{{tweet.createdDate
@@ -28,22 +28,25 @@
                 class="fas fa-ellipsis-h"></i></a>
             <div ngbDropdownMenu>
               <a ngbDropdownItem *ngIf="tweet.ownershipStatus === true && tweet.followFlag === false"
-                (click)="deleteTweet()" class="tweet-delete-btn tweet-link dec-none tweet-menu-link"><i class="far fa-trash-alt"></i>
+                (click)="deleteTweet()" class="tweet-delete-btn tweet-link dec-none tweet-menu-link"><i
+                  class="far fa-trash-alt"></i>
                 Delete</a>
               <div>
                 <a ngbDropdownItem *ngIf="tweet.ownershipStatus === false && tweet.followFlag === true"
-                  (click)="unfollow()" class="tweet-link follow-unfollow-btn dec-none tweet-menu-link"><i class="fas fa-user-times"></i>
+                  (click)="unfollow()" class="tweet-link follow-unfollow-btn dec-none tweet-menu-link"><i
+                    class="fas fa-user-times"></i>
                   Unfollow</a>
                 <a ngbDropdownItem *ngIf="tweet.ownershipStatus === false && tweet.followFlag === false"
-                  (click)="follow()" class="tweet-link follow-unfollow-btn dec-none tweet-menu-link"><i class="fas fa-user-plus"></i>
+                  (click)="follow()" class="tweet-link follow-unfollow-btn dec-none tweet-menu-link"><i
+                    class="fas fa-user-plus"></i>
                   Follow</a>
               </div>
             </div>
           </div>
         </div>
-        <div *ngIf="tweet.mainTweetOwnerID !== null && tweet.mainTweetOwnerUsername !== null">
+        <div *ngIf="tweet.mainTweetOwnerUsername !== null">
           <label class="transp-text me-1">Replying to </label>
-          <a routerLink="/{{tweet.mainTweetOwnerID}}" class="tweet-link">@{{tweet.mainTweetOwnerUsername}} </a>
+          <a routerLink="/{{tweet.mainTweetOwnerUsername}}" class="tweet-link">@{{tweet.mainTweetOwnerUsername}} </a>
         </div>
       </div>
       <div *ngIf="tweet.tweetDetail !== null">
@@ -51,12 +54,15 @@
           {{tweet.tweetDetail}}
         </p>
       </div>
-      <div *ngIf="tweet.tweetImageInfos.length > 0" class="d-flex rd20x ov-hidden me-5">
-        <div *ngFor="let img of tweet.tweetImageInfos; let i = index" style="max-width:500px;"
-          [style.width.%]="tweet.tweetImageInfos.length%2 == 0?'50':'100'" [style.margin-left.px]="i>0?'2':'0'">
-          <a class="twt-img-link" aria-label="image-link">
-            <img [src]="img.imagePath" class="tweet-img" alt="tweet-image" style="object-fit: cover;" />
-          </a>
+      <div *ngIf="tweet.tweetImageInfos">
+        <div *ngIf="tweet.tweetImageInfos.length > 0" class="d-flex rd20x ov-hidden me-5">
+          <div *ngFor="let img of tweet.tweetImageInfos; let i = index" style="max-width:500px; max-height: 300px;"
+            [style.width.%]="tweet.tweetImageInfos.length%2 == 0?'50':'100'" [style.margin-left.px]="i>0?'2':'0'">
+            <a class="twt-img-link" aria-label="image-link">
+              <img [src]="img.imagePath" class="tweet-img" alt="tweet-image"
+                style="object-fit: cover; object-position: top;" />
+            </a>
+          </div>
         </div>
       </div>
       <div class="mt-3 tweet-btns">
@@ -74,5 +80,4 @@
     </div>
   </div>
 </article>
-
 <app-reply-modal #replyModal></app-reply-modal>

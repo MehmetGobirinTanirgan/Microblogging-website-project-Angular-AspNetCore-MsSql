@@ -1,8 +1,8 @@
 import { Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
-import { LikeModel } from 'src/models/LikeModel';
+import { LikeCreationDTO } from 'src/dtos/LikeCreationDTO';
 import { ReplyModalModel } from 'src/models/ReplyModalModel';
-import { TweetModel } from 'src/models/TweetModel';
+import { TweetDisplayDTO } from 'src/dtos/TweetDisplayDTO';
 import { AuthenticationService } from 'src/services/authentication.service';
 import { DataService } from 'src/services/data.service';
 import { FollowService } from 'src/services/follow.service';
@@ -23,29 +23,30 @@ export class TweetComponent implements OnInit {
     private followService: FollowService,
     private router: Router
   ) {}
-  userID: string;
+
+  username: string;
   userProfilePicPath: string;
-  @Input() tweet: TweetModel;
+  @Input() tweet: TweetDisplayDTO;
   @ViewChild('replyModal') modalComponent: ReplyModalComponent;
   @ViewChild('likeBtn') likeBtn: ElementRef;
   @ViewChild('dislikeBtn') dislikeBtn: ElementRef;
   @ViewChild('heart') heart: ElementRef;
-  replyModalModel: ReplyModalModel = new ReplyModalModel();
-  dataServiceUserID: string | null = null;
+  replyModalModel: ReplyModalModel;
+  dataServiceUsername: string | null = null;
 
   ngOnInit(): void {
-    const data = this.authService.getUserData();
-    if (data != null) {
+    const userInfos = this.authService.getAuthenticatedUserInfos();
+    if (userInfos != null) {
       this.tweet.tweetFlag = true;
-      this.userID = data.id;
-      this.userProfilePicPath = data.profilePicPath;
+      this.username = userInfos.username;
+      this.userProfilePicPath = userInfos.profilePicPath;
 
-      this.dataService.getFollowUserID().subscribe((id) => {
-        this.dataServiceUserID = id;
+      this.dataService.getFollowUsername().subscribe((username) => {
+        this.dataServiceUsername = username;
       });
 
       this.dataService.getFollowFlag().subscribe((flag) => {
-        if (this.dataServiceUserID == this.tweet.userID) {
+        if (this.dataServiceUsername == this.tweet.username) {
           if (flag) {
             this.tweet.followFlag = true;
           } else if (!flag) {
@@ -59,19 +60,17 @@ export class TweetComponent implements OnInit {
   }
 
   openModal() {
-    this.replyModalModel.MainTweetCreatedDate = this.tweet.createdDate;
-    this.replyModalModel.MainTweetDetail = this.tweet.tweetDetail;
-    this.replyModalModel.MainTweetID = this.tweet.id;
-    this.replyModalModel.MainTweetImagePaths = [];
-    this.tweet.tweetImageInfos.forEach((x) =>
-      this.replyModalModel.MainTweetImagePaths.push(x.imagePath)
+    this.replyModalModel = new ReplyModalModel(
+      this.tweet.createdDate,
+      this.tweet.tweetDetail,
+      this.tweet.id,
+      this.tweet.tweetImageInfos,
+      this.tweet.fullname,
+      this.tweet.username,
+      this.tweet.profilePicPath,
+      this.userProfilePicPath,
+      this.username
     );
-    this.replyModalModel.MainTweetUserFullname = this.tweet.fullname;
-    this.replyModalModel.MainTweetUserUsername = this.tweet.username;
-    this.replyModalModel.ReplyTweetUserProfilePicPath =
-      this.tweet.profilePicPath;
-    this.replyModalModel.MainTweetUserProfilePicPath = this.userProfilePicPath;
-    this.replyModalModel.UserID = this.userID;
     this.dataService.replyModalData = JSON.stringify(this.replyModalModel);
     this.modalComponent.open();
   }
@@ -94,9 +93,7 @@ export class TweetComponent implements OnInit {
   }
 
   like() {
-    const like = new LikeModel();
-    like.TweetID = this.tweet.id;
-    like.UserID = this.userID;
+    const like = new LikeCreationDTO(this.tweet.id, this.username);
     this.tweetService.addLike(like).subscribe(
       (data) => {
         this.tweet.likeCounter++;
@@ -107,7 +104,7 @@ export class TweetComponent implements OnInit {
   }
 
   removeLike() {
-    this.tweetService.removeLike(this.tweet.id, this.userID).subscribe(
+    this.tweetService.removeLike(this.tweet.id, this.username).subscribe(
       (data) => {
         this.tweet.likeCounter--;
         this.tweet.likeFlag = false;
@@ -117,9 +114,9 @@ export class TweetComponent implements OnInit {
   }
 
   follow() {
-    this.followService.follow(this.tweet.userID, this.userID).subscribe(
+    this.followService.follow(this.tweet.username, this.username).subscribe(
       (success) => {
-        this.dataService.setFollowUserID(this.tweet.userID);
+        this.dataService.setFollowUsername(this.tweet.username);
         this.dataService.setFollowFlag(true);
       },
       (error) => {
@@ -129,9 +126,9 @@ export class TweetComponent implements OnInit {
   }
 
   unfollow() {
-    this.followService.unfollow(this.tweet.userID, this.userID).subscribe(
+    this.followService.unfollow(this.tweet.username, this.username).subscribe(
       (success) => {
-        this.dataService.setFollowUserID(this.tweet.userID);
+        this.dataService.setFollowUsername(this.tweet.username);
         this.dataService.setFollowFlag(false);
       },
       (error) => {
@@ -141,6 +138,6 @@ export class TweetComponent implements OnInit {
   }
 
   tweetReplyStream() {
-    this.router.navigate([`${this.tweet.userID}/status/${this.tweet.id}`]);
+    this.router.navigate([`${this.tweet.username}/status/${this.tweet.id}`]);
   }
 }

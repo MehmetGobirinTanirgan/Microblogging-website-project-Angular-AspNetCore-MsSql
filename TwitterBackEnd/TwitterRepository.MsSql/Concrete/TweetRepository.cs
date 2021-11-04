@@ -24,7 +24,7 @@ namespace TwitterRepository.MsSql.Concrete
                 .FirstOrDefaultAsync();
         }
 
-        public async Task<List<Tweet>> GetUserOwnTweetsAsync(Guid id)
+        public async Task<List<Tweet>> GetMainUserTweetsAndRepliesAsync(Guid id)
         {
             return await GetActives().Where(x => x.UserID.Equals(id))
                 .Include(x => x.User)
@@ -33,7 +33,7 @@ namespace TwitterRepository.MsSql.Concrete
                 .ToListAsync();
         }
 
-        public async Task<List<Tweet>> GetForeignUserOwnTweetsAsync(Guid id)
+        public async Task<List<Tweet>> GetForeignUserTweetsAndRepliesAsync(Guid id)
         {
             return await GetActives().Where(x => x.UserID.Equals(id))
                 .Include(x => x.User).ThenInclude(y =>y.Followers)
@@ -41,6 +41,7 @@ namespace TwitterRepository.MsSql.Concrete
                 .Include(x => x.ImagesOfTweet)
                 .ToListAsync();
         }
+
         public async Task<Tweet> GetTweetWithReplyTweetsAsync(Guid id)
         {
             return await GetActives().Where(x => x.ID.Equals(id))
@@ -51,16 +52,6 @@ namespace TwitterRepository.MsSql.Concrete
                 .Include(x => x.UsersWhoLiked)
                 .Include(x => x.ImagesOfTweet)
                 .FirstOrDefaultAsync();
-        }
-
-        public void UpdateTweet(Tweet tweet)
-        {
-            Update(tweet);
-        }
-
-        public async Task DeleteTweetAsync(Guid id)
-        {
-            await DeleteAsync(id);
         }
     }
 }

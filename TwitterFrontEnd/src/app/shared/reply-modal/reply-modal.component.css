@@ -2,13 +2,9 @@
   border-radius: 50px;
 }
 
-.profile-img {
-  width: 60px;
-  height: 60px;
-}
-
 .img-div {
-  width: 90%;
+  width: 50%;
+  max-height: 200px;
   overflow: hidden;
 }
 
@@ -19,10 +15,10 @@
   height: 120px;
 }
 
-.reply-tweet-text::-webkit-scrollbar{
+.reply-tweet-text::-webkit-scrollbar {
   width: 0;
 }
 
-.btn-div{
+.btn-div {
   width: 92%;
 }

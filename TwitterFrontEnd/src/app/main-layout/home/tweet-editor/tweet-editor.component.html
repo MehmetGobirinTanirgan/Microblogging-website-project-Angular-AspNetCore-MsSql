@@ -1,9 +1,9 @@
-<div *ngIf="userData != null" class="d-flex border-bottom mt-3">
+<div *ngIf="userInfo != null" class="d-flex border-bottom mt-3">
   <div class="col-2 d-flex justify-content-center align-items-start">
     <div class="square">
-      <a routerLink="/{{userData.id}}">
+      <a routerLink="/{{userInfo.username}}">
         <div class="rounded-img-container">
-          <img class="rounded-img" [src]="userData.profilePicPath" alt="user-profile-picture">
+          <img class="rounded-img" [src]="userInfo.profilePicPath" alt="user-profile-picture">
         </div>
       </a>
     </div>
@@ -31,7 +31,7 @@
               </g>
             </svg>
           </div>
-         <input formControlName="imageFiles" (change)="addFiles($any($event.target).files)" id="image-files"
+          <input formControlName="imageFiles" (change)="addFiles($any($event.target).files)" id="image-files"
             title="image-files" class="form-control-file" type="file" name="files" hidden multiple>
         </label>
         <div class="mb-3 d-flex align-items-center">
@@ -41,8 +41,9 @@
             [titleFontSize]="'8'" [unitsFontSize]="'8'" [showSubtitle]="false" [showUnits]="true" [animation]="false"
             [lazy]="false" [startFromZero]="true">
           </circle-progress>
-          <button [disabled]="tweetSubmitForm.invalid" class="btn btn-primary tweet-submit-btn rd20x bg-twt-blu2 borderless"
-            id="add-new-tweet-btn" type="submit">Tweet</button>
+          <button [disabled]="tweetSubmitForm.invalid"
+            class="btn btn-primary tweet-submit-btn rd20x bg-twt-blu2 borderless" id="add-new-tweet-btn"
+            type="submit">Tweet</button>
         </div>
       </div>
     </form>

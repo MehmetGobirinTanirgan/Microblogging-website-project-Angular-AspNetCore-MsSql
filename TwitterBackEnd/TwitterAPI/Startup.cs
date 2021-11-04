@@ -58,6 +58,7 @@ namespace TwitterAPI
             services.AddScoped<ITweetImageService, TweetImageService>();
             services.AddScoped<IFollowService, FollowService>();
             services.AddScoped<IAuthenticationService, AuthenticationService>();
+            services.AddScoped<IUploadService, UploadService>();
 
             services.Configure<CloudinarySettings>(Configuration.GetSection("CloudinarySettings"));
 

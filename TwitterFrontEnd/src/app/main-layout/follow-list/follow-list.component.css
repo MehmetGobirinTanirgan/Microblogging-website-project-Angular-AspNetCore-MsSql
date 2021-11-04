@@ -56,10 +56,10 @@
   color: #5b7083;
 }
 
-.hgt-offset{
-  height: 85.9vh;
+.hgt-offset {
+  min-height: 90vh;
 }
 
-.square{
+.square {
   width: 100%;
 }

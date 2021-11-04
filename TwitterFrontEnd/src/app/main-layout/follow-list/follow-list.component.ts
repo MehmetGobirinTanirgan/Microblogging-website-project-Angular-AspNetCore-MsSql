@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FollowListModel } from 'src/models/FollowListModel';
-import { DataService } from 'src/services/data.service';
+import { FollowListDTO } from 'src/dtos/FollowListDTO';
 import { FollowService } from 'src/services/follow.service';
 import { Location } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -13,20 +12,21 @@ import { ActivatedRoute, Router } from '@angular/router';
 })
 export class FollowListComponent implements OnInit {
   constructor(
-    private dataService: DataService,
     private followService: FollowService,
     private router: Router,
     private activatedRoute: ActivatedRoute,
     private location: Location
   ) {}
-  followList: FollowListModel | null = null;
+
+  followList: FollowListDTO | null = null;
   displaySection: string | null = null;
-  upcomingUserID: string;
+  incomingUsername: string;
   mainUrl: string;
+
   ngOnInit(): void {
     this.mainUrl = this.router.url;
     this.activatedRoute.parent?.params.subscribe((params) => {
-      this.upcomingUserID = params['id'];
+      this.incomingUsername = params['username'];
     });
 
     this.activatedRoute.params.subscribe((params) => {
@@ -37,29 +37,23 @@ export class FollowListComponent implements OnInit {
   }
 
   getFollowList() {
-    this.followService.getFollowList(this.upcomingUserID).subscribe(
+    this.followService.getFollowList(this.incomingUsername).subscribe(
       (data) => {
         this.followList = data;
       },
       (error) => {
-        alert("Can't load follow list");
+        alert('Cant load follow list');
       }
     );
   }
 
   showFollowers() {
     this.displaySection = 'followers';
-    this.location.replaceState(
-      this.router.url.substring(0, this.mainUrl.lastIndexOf('/')) +
-        `/${this.displaySection}`
-    );
+    this.location.replaceState(this.router.url.substring(0, this.mainUrl.lastIndexOf('/')) + `/${this.displaySection}`);
   }
 
   showFollowings() {
     this.displaySection = 'following';
-    this.location.replaceState(
-      this.router.url.substring(0, this.mainUrl.lastIndexOf('/')) +
-        `/${this.displaySection}`
-    );
+    this.location.replaceState(this.router.url.substring(0, this.mainUrl.lastIndexOf('/')) + `/${this.displaySection}`);
   }
 }

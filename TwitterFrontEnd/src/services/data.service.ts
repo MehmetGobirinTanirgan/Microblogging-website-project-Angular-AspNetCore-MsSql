@@ -1,37 +1,45 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
-import { FollowListModel } from 'src/models/FollowListModel';
-import { TweetModel } from 'src/models/TweetModel';
+import { TweetDisplayDTO } from 'src/dtos/TweetDisplayDTO';
 
 @Injectable()
 export class DataService {
   constructor() {}
   replyModalData: string;
-  followUserID:BehaviorSubject<string | null> = new BehaviorSubject<string | null>(null);
-  followFlag:BehaviorSubject<boolean | null> = new BehaviorSubject<boolean | null>(null);
-  newReplyTweet:BehaviorSubject<TweetModel | null> = new BehaviorSubject<TweetModel | null>(null);
+  private followUsername: BehaviorSubject<string | null> = new BehaviorSubject<string | null>(null);
+  private followFlag: BehaviorSubject<boolean | null> = new BehaviorSubject<boolean | null>(null);
+  private newReplyTweet: BehaviorSubject<TweetDisplayDTO | null> = new BehaviorSubject<TweetDisplayDTO | null>(null);
+  private loadingFlag: BehaviorSubject<boolean | null> = new BehaviorSubject<boolean | null>(null);
 
-  getFollowFlag():Observable<boolean | null>{
+  getFollowFlag(): Observable<boolean | null> {
     return this.followFlag.asObservable();
   }
 
-  setFollowFlag(flag:boolean | null): void{
+  setFollowFlag(flag: boolean | null): void {
     this.followFlag.next(flag);
   }
 
-  getFollowUserID():Observable<string | null>{
-    return this.followUserID.asObservable();
+  getFollowUsername(): Observable<string | null> {
+    return this.followUsername.asObservable();
   }
 
-  setFollowUserID(userID:string | null): void{
-    this.followUserID.next(userID);
+  setFollowUsername(username: string | null): void {
+    this.followUsername.next(username);
   }
 
-  getNewReplyTweet():Observable<TweetModel | null>{
+  getNewReplyTweet(): Observable<TweetDisplayDTO | null> {
     return this.newReplyTweet.asObservable();
   }
 
-  setNewReplyTweet(newReplyTweet:TweetModel):void{
+  setNewReplyTweet(newReplyTweet: TweetDisplayDTO): void {
     this.newReplyTweet.next(newReplyTweet);
+  }
+
+  setLoadingFlag(flag: boolean) {
+    this.loadingFlag.next(flag);
+  }
+
+  getLoadingFlag(): Observable<boolean | null> {
+    return this.loadingFlag.asObservable();
   }
 }

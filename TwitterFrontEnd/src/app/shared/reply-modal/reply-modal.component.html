@@ -5,30 +5,34 @@
   <div class="modal-body" id="reply-modal-body">
     <div class="row">
       <div class="col-lg-2">
-        <div class="rounded-img-container">
-          <img class="rounded-img profile-img" [src]="replyModalData.MainTweetUserProfilePicPath">
+        <div class="square">
+          <div class="rounded-img-container">
+            <img class="rounded-img" [src]="replyModalData.replyTweetUserProfilePicPath">
+          </div>
         </div>
       </div>
       <div class="col-lg-10">
         <div>
-          <label class="fw-bold clr-blck">{{replyModalData.MainTweetUserFullname}} </label>
-          <label class="transp-text ms-1">@{{replyModalData.MainTweetUserUsername}} </label>
-          <label class="transp-text ms-1">{{replyModalData.MainTweetCreatedDate |
+          <label class="fw-bold clr-blck">{{replyModalData.mainTweetFullname}} </label>
+          <label class="transp-text ms-1">@{{replyModalData.mainTweetUsername}} </label>
+          <label class="transp-text ms-1">{{replyModalData.mainTweetCreatedDate |
             date:'dd.MM.yyyy'}}</label>
         </div>
-        <div *ngIf="replyModalData.MainTweetDetail != null" class="text-break">
-          <p>{{replyModalData.MainTweetDetail}}</p>
+        <div *ngIf="replyModalData.mainTweetDetail != null" class="text-break">
+          <p>{{replyModalData.mainTweetDetail}}</p>
         </div>
-        <div *ngIf="replyModalData.MainTweetImagePaths !== null" class="mb-2 rd20x img-div">
-          <img *ngFor="let imgPath of replyModalData.MainTweetImagePaths" [src]="imgPath"
-            [style.width.%]="tweetImgWidth" />
+        <div *ngIf="replyModalData.mainTweetImagePaths !== null" class="mb-2 rd20x img-div">
+          <img *ngFor="let imgPath of replyModalData.mainTweetImagePaths" [src]="imgPath"
+            style="object-fit: cover; object-position: top;" [style.width.%]="tweetImgWidth" />
         </div>
       </div>
     </div>
     <div class="row mt-3">
       <div class="col-lg-2">
-        <div class="rounded-img-container">
-          <img class="rounded-img profile-img" [src]="replyModalData.ReplyTweetUserProfilePicPath">
+        <div class="square">
+          <div class="rounded-img-container">
+            <img class="rounded-img" [src]="replyModalData.mainTweetUserProfilePicPath ">
+          </div>
         </div>
       </div>
       <div class="col-lg-10">
@@ -44,8 +48,7 @@
                 name="reply-image-files" id="reply-image-files" title="reply-image-files" class="form-control-file"
                 hidden multiple>
             </label>
-            <button id="add-reply-tweet-btn" class="btn btn-primary rd20x"
-               type="submit"
+            <button id="add-reply-tweet-btn" class="btn btn-primary rd20x" type="submit"
               [disabled]="replyForm.invalid">Tweet</button>
           </div>
         </form>

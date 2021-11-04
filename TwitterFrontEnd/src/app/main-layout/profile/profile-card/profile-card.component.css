@@ -18,19 +18,19 @@
   cursor: pointer;
 }
 
-.web-site-link{
-  color: #44ACF3;
+.web-site-link {
+  color: #44acf3;
 }
 
-.web-site-link:hover{
+.web-site-link:hover {
   cursor: pointer;
   text-decoration: underline !important;
 }
 
-.fw500{
+.fw500 {
   font-weight: 500;
 }
 
-.square{
+.square {
   min-width: 100px;
 }

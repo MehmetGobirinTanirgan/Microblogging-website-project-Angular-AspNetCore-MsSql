@@ -1,20 +1,20 @@
 .logout-div {
-  background-color: rgb(255,255,255);
+  background-color: rgb(255, 255, 255);
 }
 
 .logout-btn {
   width: 100% !important;
 }
 
-.logout-btn:hover{
-  background-color: #E7E7E8;
+.logout-btn:hover {
+  background-color: #e7e7e8;
 }
 
-.logout-link:hover{
- background-color: #F7F9F9;
+.logout-link:hover {
+  background-color: #f7f9f9;
 }
 
-.logout-link:active{
+.logout-link:active {
   color: black;
 }
 
@@ -23,16 +23,18 @@
   width: 100%;
   text-align: center;
   overflow: hidden;
-  box-shadow: rgb(101 119 134 / 20%) 0px 0px 15px,
-    rgb(101 119 134 / 15%) 0px 0px 3px 1px;
+  box-shadow: rgb(101 119 134 / 20%) 0px 0px 15px, rgb(101 119 134 / 15%) 0px 0px 3px 1px;
 }
 
 .dropdown-toggle::after {
-  display:none;
+  display: none;
 }
 
-.icon-ok{
+.icon-ok {
   height: 20px;
-  fill: #1D9BF0;
+  fill: #1d9bf0;
 }
 
+.square {
+  min-width: 30px;
+}

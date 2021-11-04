@@ -1,43 +1,69 @@
-<div *ngIf="userData != null" ngbDropdown placement="top-right" class="logout-div">
+<div *ngIf="userInfo != null" ngbDropdown placement="top-right" class="logout-div">
   <button class="btn btn-outline-light d-flex rd40x logout-btn pt-2 pb-2 px-0 my-2" ngbDropdownToggle role="button">
-    <div class="d-flex">
-      <div class="col-5">
+    <div class="row justify-content-center w-100">
+      <div class="col-4 pe-0 d-flex justify-content-center">
         <div class="square">
           <div class="rounded-img-container">
-            <img title="user-image" class="rounded-img" [src]="authService.getUserData()?.profilePicPath">
+            <img title="user-image" class="rounded-img" [src]="authService.getAuthenticatedUserInfos()?.profilePicPath"
+              alt="user-profile-picture">
           </div>
         </div>
       </div>
-      <div class="col-7 ms-2 ps-2">
+      <div class="col-7 p-0">
         <div class="d-flex">
-          <h6 class="fw-bold clr-blck m-0">{{userData.fullname}} </h6>
+          <h6 class="fw-bold clr-blck m-0"><span
+              *ngIf="userInfo.fullname.length < 15; else shortName;">{{userInfo.fullname}}</span>
+            <ng-template #shortName>
+              <span>{{userInfo.fullname | slice:0:15}}... </span>
+            </ng-template>
+          </h6>
         </div>
         <div class="d-flex">
-          <h6 class="transp-text m-0">@{{userData.username}} </h6>
+          <h6 class="transp-text m-0">
+            @<span *ngIf="userInfo.username.length < 13; else shortuserName;">{{userInfo.username}}</span>
+            <ng-template #shortuserName>
+              <span>{{userInfo.username | slice:0:13}}... </span>
+            </ng-template>
+          </h6>
         </div>
       </div>
     </div>
   </button>
   <div ngbDropdownMenu class="rd20x logout-menu">
-    <div class="d-flex justify-content-between pt-3 pb-3 pe-2 border-bottom">
-      <div class="d-flex justify-content-start">
-        <div class="col-5">
-          <div class="square">
-            <div class="rounded-img-container">
-              <img title="user-image" class="rounded-img" [src]="authService.getUserData()?.profilePicPath">
+    <div class="d-flex justify-content-between pt-3 pb-3 border-bottom w-100">
+      <div class="col-10">
+        <div class="row justify-content-start w-100">
+          <div class="col-6 d-flex justify-content-center pe-0">
+            <div class="square">
+              <div class="rounded-img-container">
+                <img title="user-image" class="rounded-img"
+                  [src]="authService.getAuthenticatedUserInfos()?.profilePicPath" alt="user-profile-picture">
+              </div>
+            </div>
+          </div>
+          <div class="col-6 ps-0">
+            <div class="d-flex">
+              <h6 class="fw-bold clr-blck m-0"><span
+                  *ngIf="userInfo.fullname.length <= 20; else shortCardName;">{{userInfo.fullname}}</span>
+                <ng-template #shortCardName>
+                  <span>
+                    {{userInfo.fullname | slice:0:17}}...
+                  </span>
+                </ng-template>
+              </h6>
+            </div>
+            <div class="d-flex">
+              <h6 class="transp-text m-0">@<span
+                  *ngIf="userInfo.fullname.length < 10; else shortCardUsername;">{{userInfo.username}}</span>
+                <ng-template #shortCardUsername>
+                  <span>{{userInfo.username | slice:0:7}}...</span>
+                </ng-template>
+              </h6>
             </div>
           </div>
         </div>
-        <div class="col-7 ms-2 ps-2">
-          <div class="d-flex">
-            <h6 class="fw-bold clr-blck m-0">{{userData.fullname}} </h6>
-          </div>
-          <div class="d-flex">
-            <h6 class="transp-text m-0">@{{userData.username}} </h6>
-          </div>
-        </div>
       </div>
-      <div>
+      <div class="col-1 d-flex justify-content-center me-2">
         <svg viewBox="0 0 24 24" class="icon-ok">
           <g>
             <path d="M9 20c-.264 0-.52-.104-.707-.293l-4.785-4.785c-.39-.39-.39-1.023
@@ -49,7 +75,12 @@
       </div>
     </div>
     <div class="d-flex justify-content-start" style="text-align: start;">
-      <a ngbDropdownItem (click)="logOut()" class="logout-link ps-3 pt-2 pb-2">Log out @{{userData.username}}</a>
+      <a ngbDropdownItem (click)="logOut()" class="logout-link ps-3 pt-2 pb-2">Log out @<span
+          *ngIf="userInfo.fullname.length < 15; else shortLogoutUsername;">{{userInfo.username}}</span>
+        <ng-template #shortLogoutUsername>
+          <span>{{userInfo.username | slice:0:15}}...</span>
+        </ng-template>
+      </a>
     </div>
   </div>
 </div>

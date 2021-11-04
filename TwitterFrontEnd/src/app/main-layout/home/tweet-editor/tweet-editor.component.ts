@@ -1,16 +1,10 @@
-import {
-  Component,
-  ElementRef,
-  EventEmitter,
-  OnInit,
-  Output,
-  ViewChild,
-} from '@angular/core';
+import { Component, ElementRef, EventEmitter, OnInit, Output, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { UserStoreModel } from 'src/models/UserStoreModel';
+import { UserInfoDTO } from 'src/dtos/UserInfoDTO';
 import { AuthenticationService } from 'src/services/authentication.service';
-import { CustomValidatorService } from 'src/services/customValidator.service';
+import { ValidatorService } from 'src/services/validator.service';
 import { TweetService } from 'src/services/tweet.service';
+import { TweetDisplayDTO } from 'src/dtos/TweetDisplayDTO';
 
 @Component({
   selector: 'app-tweet-editor',
@@ -23,19 +17,21 @@ export class TweetEditorComponent implements OnInit {
     private authService: AuthenticationService,
     private formBuilder: FormBuilder,
     private tweetService: TweetService,
-    private validatorService: CustomValidatorService,
+    private validatorService: ValidatorService
   ) {}
-  @Output() addedNewTweet: EventEmitter<any> = new EventEmitter();
+
+  @Output() addedNewTweet: EventEmitter<TweetDisplayDTO> = new EventEmitter();
   tweetSubmitForm: FormGroup;
-  userData: UserStoreModel;
+  userInfo: UserInfoDTO;
   imageFiles: FileList;
   tweetTextLength: number = 0;
   circleColor: string;
   @ViewChild('circleProg') circleBar: ElementRef;
+
   ngOnInit(): void {
-    const _userData = this.authService.getUserData();
-    if (_userData != null) {
-      this.userData = _userData;
+    const authenticatedUserInfos = this.authService.getAuthenticatedUserInfos();
+    if (authenticatedUserInfos != null) {
+      this.userInfo = authenticatedUserInfos;
       this.createTweetSubmitForm();
       this.circleColor = '#1D9BF0';
     } else {
@@ -50,10 +46,7 @@ export class TweetEditorComponent implements OnInit {
         imageFiles: [],
       },
       {
-        validator: this.validatorService.atLeastOne(Validators.required, [
-          'tweetDetail',
-          'imageFiles',
-        ]),
+        validator: this.validatorService.atLeastOne(Validators.required, ['tweetDetail', 'imageFiles']),
       }
     );
   }
@@ -68,7 +61,7 @@ export class TweetEditorComponent implements OnInit {
     if (this.tweetSubmitForm.valid) {
       const newTweet = Object.assign({}, this.tweetSubmitForm.value);
       const formData = new FormData();
-      formData.append('UserID', this.userData.id);
+      formData.append('Username', this.userInfo.username);
       formData.append('TweetDetail', newTweet.tweetDetail);
 
       if (this.imageFiles != null) {
@@ -80,7 +73,8 @@ export class TweetEditorComponent implements OnInit {
       this.tweetService.addNewTweet(formData).subscribe(
         (data) => {
           this.tweetSubmitForm.reset();
-          this.addedNewTweet.emit(JSON.stringify(data));
+          this.tweetTextLength = 0;
+          this.addedNewTweet.emit(data);
         },
         (error) => {
           alert('Error: Tweet posting failed');
@@ -91,10 +85,9 @@ export class TweetEditorComponent implements OnInit {
 
   countTextLength(tweetText: string) {
     this.tweetTextLength = tweetText.length;
-    let circlBarEl = this.circleBar.nativeElement;
     if (tweetText.length > 260 && tweetText.length < 280) {
       this.circleColor = '#FFD400';
-    } else if(tweetText.length > 280){
+    } else if (tweetText.length > 280) {
       this.circleColor = '#F42E3B';
     }
   }
