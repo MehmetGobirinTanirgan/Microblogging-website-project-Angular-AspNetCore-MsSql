@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { RouterModule, Routes, UrlSegment } from '@angular/router';
+import { RouterModule, Routes } from '@angular/router';
 import { RouteGuardService } from 'src/services/route-guard.service';
 import { FollowListComponent } from './main-layout/follow-list/follow-list.component';
 import { FrontPageComponent } from './front-page/front-page.component';
