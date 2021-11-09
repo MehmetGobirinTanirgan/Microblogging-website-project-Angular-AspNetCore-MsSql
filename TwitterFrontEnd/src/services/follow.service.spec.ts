@@ -34,10 +34,7 @@ describe('Service: Follow', () => {
     it('#follow should post and return OK', () => {
       const follow = new MockFollowCreation('mockFollowingUsername', 'mockFollowerUsername');
       service.follow(follow.followingUsername, follow.followerUsername).subscribe((res) => {
-        expect(res.body).toEqual('');
-        expect(res.ok).toBeTrue();
-        expect(res.status).toEqual(200);
-        expect(res.statusText).toEqual('OK');
+        expect(res).toEqual('');
       });
 
       const req = mockHttp.expectOne({
@@ -52,10 +49,7 @@ describe('Service: Follow', () => {
     it('#unfollow should remove follow and return OK', () => {
       const follow = new MockFollowCreation('mockFollowerUsername', 'mockFollowingUsername');
       service.unfollow(follow.followerUsername, follow.followingUsername).subscribe((res) => {
-        expect(res.body).toEqual('');
-        expect(res.statusText).toEqual('OK');
-        expect(res.ok).toBeTrue();
-        expect(res.status).toEqual(200);
+        expect(res).toEqual('');
       });
 
       const req = mockHttp.expectOne({

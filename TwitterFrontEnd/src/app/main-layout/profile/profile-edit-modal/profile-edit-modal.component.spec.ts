@@ -108,7 +108,7 @@ describe('ProfileEditModalComponent', () => {
     component.open();
     const mockUserInfo = new MockUserInfo();
     mockAuthService.getAuthenticatedUserInfos.and.returnValue(mockUserInfo);
-    mockUserService.updateProfile.and.returnValue(of(new HttpResponse({ status: 200 })));
+    mockUserService.updateProfile.and.returnValue(of(mockUserProfileCard));
     const editForm = component.profileEditForm;
     editForm.controls.fullname.setValue('mockFullname');
     editForm.controls.personalInfo.setValue('mockPersonalInfo');

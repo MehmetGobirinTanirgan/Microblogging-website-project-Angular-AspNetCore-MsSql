@@ -42,12 +42,10 @@ describe('Service: Authentication', () => {
       const mockLoggingUser = new MockLogin();
       service.login(mockLoggingUser).subscribe((res) => {
         expect(res).toEqual(mockUserInfo);
-        expect(service.authenticatedUserInfos).toEqual(res);
         expect(saveDataSpy).toHaveBeenCalledTimes(1);
-        expect(JSON.parse(localStorage.getItem('userInfo')!)).toEqual(Object.assign({}, service.authenticatedUserInfos));
+        expect(JSON.parse(localStorage.getItem('userInfo')!)).toEqual(Object.assign({}, res));
       });
 
-      expect(logOutSpy).toHaveBeenCalledTimes(1);
       const req = mockHttp.expectOne({
         url: 'Login/Authentication',
       });
@@ -70,17 +68,6 @@ describe('Service: Authentication', () => {
       localStorage.setItem('userInfo', 'mockUserInfo');
       service.saveUserInfos(mockUserInfo);
       expect(localStorage.getItem('userInfo')).toEqual(JSON.stringify(mockUserInfo));
-    });
-
-    it('#getAuthenticationToken should return token when user info is saved into localstorage', () => {
-      service.saveUserInfos(mockUserInfo);
-      const token = service.getAuthenticationToken();
-      expect(token).toEqual(mockUserInfo.token);
-    });
-
-    it('#getAuthenticationToken should return null when user info is not saved into localstorage', () => {
-      const token = service.getAuthenticationToken();
-      expect(token).toEqual(null);
     });
 
     it('#getAuthenticatedUserInfos should return data when user info is saved into localstorage', () => {

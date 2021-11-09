@@ -85,14 +85,13 @@ export class ProfileCardComponent implements OnInit {
   }
 
   updateProfile(updatedProfileStr: string) {
-    const updatedUserProfileCard: UserProfileCardDTO =
-      JSON.parse(updatedProfileStr);
+    const updatedUserProfileCard: UserProfileCardDTO = JSON.parse(updatedProfileStr);
     this.userProfileCard = updatedUserProfileCard;
     const updatedUserInfo: UserInfoDTO = {
       profilePicPath: updatedUserProfileCard.profilePicPath,
       username: updatedUserProfileCard.username,
       fullname: updatedUserProfileCard.fullname,
-      token: this.authService.getAuthenticationToken()!,
+      token: this.authService.getAuthenticatedUserInfos()!.token,
     };
     this.authService.saveUserInfos(updatedUserInfo);
   }

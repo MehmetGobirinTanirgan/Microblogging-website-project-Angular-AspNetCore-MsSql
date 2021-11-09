@@ -8,13 +8,11 @@ export class FollowService {
   constructor(private httpClient: HttpClient) {}
 
   follow(foreignUsername: string, username: string) {
-    return this.httpClient.post('Follow/Follow', new FollowCreationDTO(username, foreignUsername), {
-      observe: 'response',
-    });
+    return this.httpClient.post('Follow/Follow', new FollowCreationDTO(username, foreignUsername));
   }
 
   unfollow(foreignUsername: string, username: string) {
-    return this.httpClient.delete('Follow/Unfollow/' + username + '/' + foreignUsername, { observe: 'response' });
+    return this.httpClient.delete('Follow/Unfollow/' + username + '/' + foreignUsername);
   }
 
   getFollowList(username: string) {

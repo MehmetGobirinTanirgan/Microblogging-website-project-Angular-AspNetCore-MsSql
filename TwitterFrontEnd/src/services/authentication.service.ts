@@ -8,15 +8,13 @@ import { UserInfoDTO } from 'src/dtos/UserInfoDTO';
 @Injectable()
 export class AuthenticationService {
   constructor(private httpClient: HttpClient) {}
-  authenticatedUserInfos: UserInfoDTO;
+
   jwtHelper: JwtHelperService = new JwtHelperService();
 
   login(loginDTO: LoginDTO) {
-    this.logOut();
     return this.httpClient.post<UserInfoDTO>('Login/Authentication', loginDTO).pipe(
       tap((response) => {
-        this.authenticatedUserInfos = response;
-        this.saveUserInfos(this.authenticatedUserInfos);
+        this.saveUserInfos(response);
       })
     );
   }
@@ -25,17 +23,14 @@ export class AuthenticationService {
     localStorage.setItem('userInfo', JSON.stringify(userInfo));
   }
 
-  getAuthenticationToken(): string | null {
-    const userInfo: UserInfoDTO = JSON.parse(localStorage.getItem('userInfo')!);
-    if (userInfo == null) {
-      return null;
-    }
-    return userInfo.token;
-  }
-
   getAuthenticatedUserInfos(): UserInfoDTO | null {
-    const userInfo: UserInfoDTO = JSON.parse(localStorage.getItem('userInfo')!);
-    return userInfo ?? null;
+    const userInfoJson = localStorage.getItem('userInfo');
+    if (userInfoJson != null) {
+      const userInfo: UserInfoDTO = JSON.parse(userInfoJson);
+      return userInfo;
+    }
+    this.logOut();
+    return null;
   }
 
   logOut() {
@@ -43,7 +38,7 @@ export class AuthenticationService {
   }
 
   isLoggedIn(): boolean {
-    const token = this.getAuthenticationToken();
+    const token = this.getAuthenticatedUserInfos()?.token;
     if (token) {
       return !this.jwtHelper.isTokenExpired(token);
     }

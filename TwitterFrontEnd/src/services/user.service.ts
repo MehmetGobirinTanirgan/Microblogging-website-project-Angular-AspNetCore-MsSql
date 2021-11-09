@@ -9,9 +9,7 @@ export class UserService {
   constructor(private httpClient: HttpClient) {}
 
   signUp(signUpDTO: SignUpDTO) {
-    return this.httpClient.post('Login/SignUp', signUpDTO, {
-      observe: 'response',
-    });
+    return this.httpClient.post('Login/SignUp', signUpDTO);
   }
 
   getMainUserProfile(username: string) {
@@ -23,6 +21,6 @@ export class UserService {
   }
 
   updateProfile(updatedProfile: FormData) {
-    return this.httpClient.put<UserProfileCardDTO>('Profile/UpdateProfile', updatedProfile, { observe: 'response' });
+    return this.httpClient.put<UserProfileCardDTO>('Profile/UpdateProfile', updatedProfile);
   }
 }

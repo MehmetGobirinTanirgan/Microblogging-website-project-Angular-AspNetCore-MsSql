@@ -34,10 +34,7 @@ describe('Service: User', () => {
   it('#signUp should post and return OK', () => {
     const mockSignUpModel = new MockSignUp();
     service.signUp(mockSignUpModel).subscribe((res) => {
-      expect(res.body).toEqual('');
-      expect(res.status).toBe(200);
-      expect(res.ok).toBeTrue();
-      expect(res.statusText).toBe('OK');
+      expect(res).toEqual('');
     });
 
     const req = mockHttp.expectOne({
@@ -88,10 +85,7 @@ describe('Service: User', () => {
     formData.append('fullname', 'mockFullname');
     formData.append('location', 'mockLocation');
     service.updateProfile(formData).subscribe((res) => {
-      expect(res.body).toEqual(expectedMockData);
-      expect(res.status).toBe(200);
-      expect(res.ok).toBeTrue();
-      expect(res.statusText).toBe('OK');
+      expect(res).toEqual(expectedMockData);
     });
 
     const req = mockHttp.expectOne({

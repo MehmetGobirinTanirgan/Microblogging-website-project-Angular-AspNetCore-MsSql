@@ -79,7 +79,7 @@ export class ProfileEditModalComponent implements OnInit {
           (data) => {
             this.dataService.setLoadingFlag(false);
             this.modalRef.close();
-            this.sendUpdatedUserData.emit(JSON.stringify(data.body));
+            this.sendUpdatedUserData.emit(JSON.stringify(data));
           },
           (error) => alert('Profile update failed')
         );

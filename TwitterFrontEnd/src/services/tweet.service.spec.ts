@@ -68,10 +68,7 @@ describe('Service: Tweet', () => {
 
     it('#delete should delete tweet and return OK', () => {
       service.delete(username).subscribe((res) => {
-        expect(res.body).toEqual('');
-        expect(res.status).toBe(200);
-        expect(res.ok).toBeTrue();
-        expect(res.statusText).toBe('OK');
+        expect(res).toEqual('');
       });
 
       const req = mockHttp.expectOne({
@@ -89,10 +86,7 @@ describe('Service: Tweet', () => {
         tweetID: 'mockTweetID',
       };
       service.addLike(like).subscribe((res) => {
-        expect(res.body).toEqual('');
-        expect(res.status).toBe(200);
-        expect(res.ok).toBeTrue();
-        expect(res.statusText).toBe('OK');
+        expect(res).toEqual('');
       });
 
       const req = mockHttp.expectOne({
@@ -108,10 +102,7 @@ describe('Service: Tweet', () => {
       let username = 'mockUsername';
       let tweetID = 'mockTweetID';
       service.removeLike(tweetID, username).subscribe((res) => {
-        expect(res.body).toEqual('');
-        expect(res.status).toBe(200);
-        expect(res.ok).toBeTrue();
-        expect(res.statusText).toBe('OK');
+        expect(res).toEqual('');
       });
 
       const req = mockHttp.expectOne({

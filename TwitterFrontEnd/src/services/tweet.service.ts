@@ -7,15 +7,8 @@ import { TweetDisplayDTO } from 'src/dtos/TweetDisplayDTO';
 export class TweetService {
   constructor(private httpClient: HttpClient) {}
 
-  HttpOptions: Object = {
-    headers: new Headers({
-      Accept: 'text/html',
-      'Content-Type': 'multipart/form-data',
-    }),
-  };
-
   addNewTweet(newTweet: FormData) {
-    return this.httpClient.post<TweetDisplayDTO>('Tweet/AddTweet', newTweet, this.HttpOptions);
+    return this.httpClient.post<TweetDisplayDTO>('Tweet/AddTweet', newTweet);
   }
 
   getAllRelationalTweets(username: string) {
@@ -23,19 +16,19 @@ export class TweetService {
   }
 
   delete(id: string) {
-    return this.httpClient.delete('Tweet/DeleteTweet/' + id, { observe: 'response' });
+    return this.httpClient.delete('Tweet/DeleteTweet/' + id);
   }
 
   addLike(like: LikeCreationDTO) {
-    return this.httpClient.post('Tweet/AddLike', like, { observe: 'response' });
+    return this.httpClient.post('Tweet/AddLike', like);
   }
 
   removeLike(tweetID: string, userID: string) {
-    return this.httpClient.delete('Tweet/RemoveLike/' + tweetID + '/' + userID, { observe: 'response' });
+    return this.httpClient.delete('Tweet/RemoveLike/' + tweetID + '/' + userID);
   }
 
   addReplyTweet(ReplyTweet: FormData) {
-    return this.httpClient.post<TweetDisplayDTO>('Tweet/AddReplyTweet', ReplyTweet, this.HttpOptions);
+    return this.httpClient.post<TweetDisplayDTO>('Tweet/AddReplyTweet', ReplyTweet);
   }
 
   getTweetReplyStream(tweetID: string, username: string) {

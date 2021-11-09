@@ -1,4 +1,4 @@
-import { HttpEvent, HttpHandler, HttpInterceptor, HttpRequest } from '@angular/common/http';
+import { HttpEvent, HttpHandler, HttpHeaders, HttpInterceptor, HttpRequest } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { AuthenticationService } from 'src/services/authentication.service';
@@ -6,14 +6,12 @@ import { AuthenticationService } from 'src/services/authentication.service';
 @Injectable()
 export class HttpRequestInterceptor implements HttpInterceptor {
   constructor(private authenticationService: AuthenticationService) {}
-
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    const token = this.authenticationService.getAuthenticationToken();
-    if (token != null) {
+    const token = this.authenticationService.getAuthenticatedUserInfos()?.token;
+
+    if (token) {
       request = request.clone({
-        setHeaders: {
-          Authorization: `Bearer ${token}`,
-        },
+        headers: request.headers.set('Authorization', `Bearer ${token}`),
       });
     }
     request = request.clone({
