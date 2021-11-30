@@ -15,7 +15,6 @@ namespace TwitterDB.Maps
             builder.Property(x => x.ReplyStatus).IsRequired();
             builder.Property(x => x.UserID).IsRequired();
             builder.Property(x => x.ReplyMainTweetID).IsRequired(false);
-            builder.Property(x => x.RetweetMainTweetID).IsRequired(false);
             builder.Property(x => x.TopicID).IsRequired(false);
             builder.Ignore(x => x.LikeFlag);
             builder.Ignore(x => x.OwnershipStatus);
@@ -31,11 +30,7 @@ namespace TwitterDB.Maps
 
             builder.HasOne(t => t.ReplyMainTweet)
                 .WithMany(t => t.ReplyTweets)
-                .HasForeignKey(t => t.ReplyMainTweetID);
-
-            builder.HasOne(t => t.RetweetMainTweet)
-                .WithMany(t => t.Retweets)
-                .HasForeignKey(t => t.RetweetMainTweetID);               
+                .HasForeignKey(t => t.ReplyMainTweetID);              
            
             base.Configure(builder);
         }

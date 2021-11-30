@@ -15,7 +15,7 @@ using TwitterAPI.Services.Concrete;
 using TwitterAPI.Settings;
 using TwitterCore.RepositoryAbstractions;
 using TwitterDB.Context;
-using TwitterRepository.MsSql.Concrete;
+using TwitterRepository.Sql.Concrete;
 
 namespace TwitterAPI
 {
@@ -39,20 +39,19 @@ namespace TwitterAPI
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "TwitterAPI", Version = "v1" });
             });
 
+            var provider = Configuration.GetValue<string>("ConnectionStrings:Provider");
 
-            switch (Configuration.GetConnectionString("DbType"))
+            services.AddDbContext<TwitterContext>(options => _ = provider switch
             {
-                case "Sql":
-                    services.AddDbContext<TwitterContext>(options => options.UseSqlServer(Configuration.GetConnectionString("ConStr")));
-                    services.AddScoped(typeof(IComplexEntityRepository<>), typeof(ComplexEntityRepository<>));
-                    services.AddScoped(typeof(ISimpleEntityRepository<>), typeof(SimpleEntityRepository<>));
-                    services.AddScoped(typeof(IMTMEntityRepository<>), typeof(MTMEntityRepository<>));
-                    services.AddScoped<IUnitOfWork, UnitOfWork>();
-                    break;
-                default:
-                    throw new NotImplementedException();
-            }
-            
+                "MySql" => options.UseMySql(Configuration.GetConnectionString("MySqlConStr"), new MySqlServerVersion(new Version(8, 0, 27)),x => x.MigrationsAssembly("MySql.Migrations")),
+                "MsSql" => options.UseSqlServer(Configuration.GetConnectionString("MsSqlConStr"), x => x.MigrationsAssembly("MsSql.Migrations")),
+                _ => throw new Exception($"Unsupported provider: {provider}")
+            });
+
+            services.AddScoped(typeof(IComplexEntityRepository<>), typeof(ComplexEntityRepository<>));
+            services.AddScoped(typeof(ISimpleEntityRepository<>), typeof(SimpleEntityRepository<>));
+            services.AddScoped(typeof(IMTMEntityRepository<>), typeof(MTMEntityRepository<>));
+            services.AddScoped<IUnitOfWork, UnitOfWork>();
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<ITweetService, TweetService>();
             services.AddScoped<ITweetImageService, TweetImageService>();
@@ -68,23 +67,23 @@ namespace TwitterAPI
             var key = Encoding.ASCII.GetBytes(appSettings.SecretKey);
 
             services.AddAuthentication(x =>
-            {
-                x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-                x.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-            })
-
-            .AddJwtBearer(x =>
-            {
-                x.RequireHttpsMetadata = false;
-                x.SaveToken = true;
-                x.TokenValidationParameters = new TokenValidationParameters
                 {
-                    ValidateIssuerSigningKey = true,
-                    IssuerSigningKey = new SymmetricSecurityKey(key),
-                    ValidateIssuer = false,
-                    ValidateAudience = false
-                };
-            });
+                    x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                    x.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+                })
+
+                .AddJwtBearer(x =>
+                {
+                    x.RequireHttpsMetadata = false;
+                    x.SaveToken = true;
+                    x.TokenValidationParameters = new TokenValidationParameters
+                    {
+                        ValidateIssuerSigningKey = true,
+                        IssuerSigningKey = new SymmetricSecurityKey(key),
+                        ValidateIssuer = false,
+                        ValidateAudience = false
+                    };
+                });
 
         }
 

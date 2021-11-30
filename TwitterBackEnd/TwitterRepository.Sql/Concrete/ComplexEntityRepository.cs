@@ -8,7 +8,7 @@ using TwitterCore.Entities.Enums;
 using TwitterCore.RepositoryAbstractions;
 using TwitterDB.Context;
 
-namespace TwitterRepository.MsSql.Concrete
+namespace TwitterRepository.Sql.Concrete
 {
     public class ComplexEntityRepository<T> : IComplexEntityRepository<T> where T : ComplexEntity
     {
@@ -55,7 +55,7 @@ namespace TwitterRepository.MsSql.Concrete
         {
             return await twitterContext.Set<T>().FirstOrDefaultAsync(exp);
         }
-       
+
         public IQueryable<T> GetAll()
         {
             return twitterContext.Set<T>();
@@ -65,11 +65,11 @@ namespace TwitterRepository.MsSql.Concrete
         {
             return twitterContext.Set<T>().Where(x => x.Status != ComplexEntityStatus.Passive);
         }
-      
+
         public IQueryable<T> GetListByExpression(Expression<Func<T, bool>> exp)
         {
             return GetActives().Where(exp);
         }
-        
+
     }
 }

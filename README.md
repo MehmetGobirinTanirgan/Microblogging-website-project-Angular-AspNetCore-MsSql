@@ -23,6 +23,7 @@
   - [AutoMapper](https://automapper.org/)
 - Database & Cloud:
   - [Microsoft SQL Server](https://www.microsoft.com/en-us/sql-server/sql-server-downloads)
+  - [MySQL](https://www.mysql.com/)
   - [Cloudinary](https://cloudinary.com/)
 
 ### Installing / Getting started
@@ -44,8 +45,9 @@ npm install --save-dev @angular-devkit/build-angular
 ```
 {
   "ConnectionStrings": {
-    "ConStr": "YOUR_CONNECTION_STRING",
-    "DbType": "YOUR_DB_TYPE"
+    "MsSqlConStr": "YOUR_MSSQL_CONNECTION_STRING",
+    "MySqlConStr": "YOUR_MYSQL_CONNECTION_STRING",
+    "Provider": "OPTIONS = 'MsSql' or 'MySql'"
   },
   "AppSettings": {
     "SecretKey": "YOUR_SECRET_KEY"

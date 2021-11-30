@@ -16,8 +16,6 @@ namespace TwitterCore.Models
         public virtual User User { get; set; }
         public Guid? ReplyMainTweetID { get; set; }
         public virtual Tweet ReplyMainTweet { get; set; }
-        public Guid? RetweetMainTweetID { get; set; }
-        public virtual Tweet RetweetMainTweet { get; set; }
         public Guid? TopicID { get; set; }
         public virtual Topic Topic { get; set; }
         public bool FollowFlag { get; set; }
@@ -28,7 +26,7 @@ namespace TwitterCore.Models
         public virtual List<TweetMention> Mentions { get; set; }
         public virtual List<Like> UsersWhoLiked { get; set; }
         public virtual List<Tweet> ReplyTweets { get; set; }
-        public virtual List<Tweet> Retweets { get; set; }
+        public virtual List<Retweet> Retweets { get; set; }
 
         public override bool Equals(object obj)
         {

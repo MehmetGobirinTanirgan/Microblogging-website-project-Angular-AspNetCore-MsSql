@@ -7,7 +7,7 @@ using TwitterCore.Entities.CoreEntities.Concrete;
 using TwitterCore.RepositoryAbstractions;
 using TwitterDB.Context;
 
-namespace TwitterRepository.MsSql.Concrete
+namespace TwitterRepository.Sql.Concrete
 {
     public class SimpleEntityRepository<T> : ISimpleEntityRepository<T> where T : SimpleEntity
     {

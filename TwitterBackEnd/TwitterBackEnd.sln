@@ -11,7 +11,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TwitterDB", "TwitterDB\Twit
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TwitterAPI.Objects.Mappers", "TwitterAPI.Objects.Mappers\TwitterAPI.Objects.Mappers.csproj", "{97437D92-8536-4CED-9F25-DDF080FB22D3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TwitterRepository.MsSql", "TwitterRepository.MsSql\TwitterRepository.MsSql.csproj", "{4DACFA2F-8ED9-477B-956F-07F6A40ED9AB}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MsSql.Migrations", "MsSql.Migrations\MsSql.Migrations.csproj", "{C663BA4B-8166-4375-8E1D-F2739275A53B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MySql.Migrations", "MySql.Migrations\MySql.Migrations.csproj", "{E4DF704E-8537-439C-BA95-9F1BD89F84DC}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TwitterRepository.Sql", "TwitterRepository.Sql\TwitterRepository.Sql.csproj", "{C5B8F25D-2687-4B97-9D1B-5E33DC430F21}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -35,10 +39,18 @@ Global
 		{97437D92-8536-4CED-9F25-DDF080FB22D3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{97437D92-8536-4CED-9F25-DDF080FB22D3}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{97437D92-8536-4CED-9F25-DDF080FB22D3}.Release|Any CPU.Build.0 = Release|Any CPU
-		{4DACFA2F-8ED9-477B-956F-07F6A40ED9AB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{4DACFA2F-8ED9-477B-956F-07F6A40ED9AB}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{4DACFA2F-8ED9-477B-956F-07F6A40ED9AB}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{4DACFA2F-8ED9-477B-956F-07F6A40ED9AB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C663BA4B-8166-4375-8E1D-F2739275A53B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C663BA4B-8166-4375-8E1D-F2739275A53B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C663BA4B-8166-4375-8E1D-F2739275A53B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C663BA4B-8166-4375-8E1D-F2739275A53B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E4DF704E-8537-439C-BA95-9F1BD89F84DC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E4DF704E-8537-439C-BA95-9F1BD89F84DC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E4DF704E-8537-439C-BA95-9F1BD89F84DC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E4DF704E-8537-439C-BA95-9F1BD89F84DC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C5B8F25D-2687-4B97-9D1B-5E33DC430F21}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C5B8F25D-2687-4B97-9D1B-5E33DC430F21}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C5B8F25D-2687-4B97-9D1B-5E33DC430F21}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C5B8F25D-2687-4B97-9D1B-5E33DC430F21}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -17,8 +17,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\MsSql.Migrations\MsSql.Migrations.csproj" />
+    <ProjectReference Include="..\MySql.Migrations\MySql.Migrations.csproj" />
     <ProjectReference Include="..\TwitterAPI.Objects.Mappers\TwitterAPI.Objects.Mappers.csproj" />
-    <ProjectReference Include="..\TwitterRepository.MsSql\TwitterRepository.MsSql.csproj" />
+    <ProjectReference Include="..\TwitterRepository.Sql\TwitterRepository.Sql.csproj" />
   </ItemGroup>
 
 </Project>

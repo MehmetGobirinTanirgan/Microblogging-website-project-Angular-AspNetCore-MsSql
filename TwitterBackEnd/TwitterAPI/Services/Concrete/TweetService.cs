@@ -94,16 +94,8 @@ namespace TwitterAPI.Services.Concrete
                 if (user != null)
                 {
                     newTweet.UserID = user.ID;
+                    newTweet.ImagesOfTweet = imagePaths.Select(i => new TweetImage() { ImagePath = i }).ToList();
                     await unitOfWork.Tweets.CreateAsync(newTweet);
-                    foreach (var imagePath in imagePaths)
-                    {
-                        TweetImage tweetImage = new()
-                        {
-                            ImagePath = imagePath,
-                            TweetID = newTweet.ID,
-                        };
-                        await unitOfWork.TweetImages.AddAsync(tweetImage);
-                    }
                     await unitOfWork.SaveAsync();
                     var newTweetWithUserAndImages = await GetTweetAsync(newTweet.ID);
                     var tweetDTO = mapper.Map<TweetDisplayDTO>(newTweetWithUserAndImages);
@@ -148,21 +140,12 @@ namespace TwitterAPI.Services.Concrete
 
                 var newTweet = mapper.Map<Tweet>(newReplyTweetDTO);
                 var user = await unitOfWork.Users.GetUserByUsernameAsync(newReplyTweetDTO.Username);
-                newTweet.UserID = user.ID;
-                await unitOfWork.Tweets.CreateAsync(newTweet);
-
+                
                 if (user != null)
                 {
-                    foreach (var imagePath in imagePaths)
-                    {
-                        TweetImage tweetImage = new()
-                        {
-                            ImagePath = imagePath,
-                            TweetID = newTweet.ID,
-                        };
-                        await unitOfWork.TweetImages.AddAsync(tweetImage);
-                    }
-
+                    newTweet.UserID = user.ID;
+                    newTweet.ImagesOfTweet = imagePaths.Select(i => new TweetImage() { ImagePath = i }).ToList();
+                    await unitOfWork.Tweets.CreateAsync(newTweet);
                     var mainTweet = await GetTweetAsync(newReplyTweetDTO.MainTweetID);
                     mainTweet.ReplyCounter++;
                     unitOfWork.Tweets.Update(mainTweet);

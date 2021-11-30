@@ -1,7 +1,7 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace TwitterDB.Migrations
+namespace MsSql.Migrations.Migrations
 {
     public partial class Initial : Migration
     {
@@ -153,7 +153,6 @@ namespace TwitterDB.Migrations
                     ReplyStatus = table.Column<int>(type: "int", nullable: false),
                     UserID = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     ReplyMainTweetID = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
-                    RetweetMainTweetID = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
                     TopicID = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
                     Status = table.Column<int>(type: "int", nullable: false),
                     CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
@@ -171,12 +170,6 @@ namespace TwitterDB.Migrations
                     table.ForeignKey(
                         name: "FK_Tweets_Tweets_ReplyMainTweetID",
                         column: x => x.ReplyMainTweetID,
-                        principalTable: "Tweets",
-                        principalColumn: "ID",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "FK_Tweets_Tweets_RetweetMainTweetID",
-                        column: x => x.RetweetMainTweetID,
                         principalTable: "Tweets",
                         principalColumn: "ID",
                         onDelete: ReferentialAction.Restrict);
@@ -205,6 +198,28 @@ namespace TwitterDB.Migrations
                         principalColumn: "ID");
                     table.ForeignKey(
                         name: "FK_Likes_Users_UserID",
+                        column: x => x.UserID,
+                        principalTable: "Users",
+                        principalColumn: "ID");
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Retweet",
+                columns: table => new
+                {
+                    UserID = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    TweetID = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Retweet", x => new { x.TweetID, x.UserID });
+                    table.ForeignKey(
+                        name: "FK_Retweet_Tweets_TweetID",
+                        column: x => x.TweetID,
+                        principalTable: "Tweets",
+                        principalColumn: "ID");
+                    table.ForeignKey(
+                        name: "FK_Retweet_Users_UserID",
                         column: x => x.UserID,
                         principalTable: "Users",
                         principalColumn: "ID");
@@ -291,6 +306,11 @@ namespace TwitterDB.Migrations
                 column: "UserID");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Retweet_UserID",
+                table: "Retweet",
+                column: "UserID");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Topics_TopicCategoryID",
                 table: "Topics",
                 column: "TopicCategoryID");
@@ -304,11 +324,6 @@ namespace TwitterDB.Migrations
                 name: "IX_Tweets_ReplyMainTweetID",
                 table: "Tweets",
                 column: "ReplyMainTweetID");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Tweets_RetweetMainTweetID",
-                table: "Tweets",
-                column: "RetweetMainTweetID");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Tweets_TopicID",
@@ -336,6 +351,9 @@ namespace TwitterDB.Migrations
 
             migrationBuilder.DropTable(
                 name: "Likes");
+
+            migrationBuilder.DropTable(
+                name: "Retweet");
 
             migrationBuilder.DropTable(
                 name: "TweetImages");

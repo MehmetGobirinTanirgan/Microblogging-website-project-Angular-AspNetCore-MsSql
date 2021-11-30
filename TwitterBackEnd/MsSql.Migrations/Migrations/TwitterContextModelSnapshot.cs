@@ -3,17 +3,15 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
-using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using TwitterDB.Context;
 
-namespace TwitterDB.Migrations
+namespace MsSql.Migrations.Migrations
 {
     [DbContext(typeof(TwitterContext))]
-    [Migration("20210807152404_Initial")]
-    partial class Initial
+    partial class TwitterContextModelSnapshot : ModelSnapshot
     {
-        protected override void BuildTargetModel(ModelBuilder modelBuilder)
+        protected override void BuildModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -21,7 +19,7 @@ namespace TwitterDB.Migrations
                 .HasAnnotation("ProductVersion", "5.0.7")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-            modelBuilder.Entity("TwitterModel.Models.Admin", b =>
+            modelBuilder.Entity("TwitterCore.Models.Admin", b =>
                 {
                     b.Property<Guid>("ID")
                         .ValueGeneratedOnAdd()
@@ -64,7 +62,7 @@ namespace TwitterDB.Migrations
                     b.ToTable("Admins");
                 });
 
-            modelBuilder.Entity("TwitterModel.Models.Agenda", b =>
+            modelBuilder.Entity("TwitterCore.Models.Agenda", b =>
                 {
                     b.Property<Guid>("ID")
                         .ValueGeneratedOnAdd()
@@ -80,7 +78,7 @@ namespace TwitterDB.Migrations
                     b.ToTable("Agendas");
                 });
 
-            modelBuilder.Entity("TwitterModel.Models.Follow", b =>
+            modelBuilder.Entity("TwitterCore.Models.Follow", b =>
                 {
                     b.Property<Guid>("FollowerUserID")
                         .HasColumnType("uniqueidentifier");
@@ -95,7 +93,7 @@ namespace TwitterDB.Migrations
                     b.ToTable("Follows");
                 });
 
-            modelBuilder.Entity("TwitterModel.Models.HashTag", b =>
+            modelBuilder.Entity("TwitterCore.Models.HashTag", b =>
                 {
                     b.Property<Guid>("ID")
                         .ValueGeneratedOnAdd()
@@ -119,7 +117,7 @@ namespace TwitterDB.Migrations
                     b.ToTable("HashTags");
                 });
 
-            modelBuilder.Entity("TwitterModel.Models.Like", b =>
+            modelBuilder.Entity("TwitterCore.Models.Like", b =>
                 {
                     b.Property<Guid>("TweetID")
                         .HasColumnType("uniqueidentifier");
@@ -134,7 +132,22 @@ namespace TwitterDB.Migrations
                     b.ToTable("Likes");
                 });
 
-            modelBuilder.Entity("TwitterModel.Models.Topic", b =>
+            modelBuilder.Entity("TwitterCore.Models.Retweet", b =>
+                {
+                    b.Property<Guid>("TweetID")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("UserID")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("TweetID", "UserID");
+
+                    b.HasIndex("UserID");
+
+                    b.ToTable("Retweet");
+                });
+
+            modelBuilder.Entity("TwitterCore.Models.Topic", b =>
                 {
                     b.Property<Guid>("ID")
                         .ValueGeneratedOnAdd()
@@ -160,7 +173,7 @@ namespace TwitterDB.Migrations
                     b.ToTable("Topics");
                 });
 
-            modelBuilder.Entity("TwitterModel.Models.TopicCategory", b =>
+            modelBuilder.Entity("TwitterCore.Models.TopicCategory", b =>
                 {
                     b.Property<Guid>("ID")
                         .ValueGeneratedOnAdd()
@@ -176,7 +189,7 @@ namespace TwitterDB.Migrations
                     b.ToTable("TopicCategories");
                 });
 
-            modelBuilder.Entity("TwitterModel.Models.Tweet", b =>
+            modelBuilder.Entity("TwitterCore.Models.Tweet", b =>
                 {
                     b.Property<Guid>("ID")
                         .ValueGeneratedOnAdd()
@@ -203,9 +216,6 @@ namespace TwitterDB.Migrations
                     b.Property<int>("RetweetCounter")
                         .HasColumnType("int");
 
-                    b.Property<Guid?>("RetweetMainTweetID")
-                        .HasColumnType("uniqueidentifier");
-
                     b.Property<int>("Status")
                         .HasColumnType("int");
 
@@ -223,8 +233,6 @@ namespace TwitterDB.Migrations
 
                     b.HasIndex("ReplyMainTweetID");
 
-                    b.HasIndex("RetweetMainTweetID");
-
                     b.HasIndex("TopicID");
 
                     b.HasIndex("UserID");
@@ -232,7 +240,7 @@ namespace TwitterDB.Migrations
                     b.ToTable("Tweets");
                 });
 
-            modelBuilder.Entity("TwitterModel.Models.TweetHashTag", b =>
+            modelBuilder.Entity("TwitterCore.Models.TweetHashTag", b =>
                 {
                     b.Property<Guid>("TweetID")
                         .HasColumnType("uniqueidentifier");
@@ -247,7 +255,7 @@ namespace TwitterDB.Migrations
                     b.ToTable("TweetsAndHashTags");
                 });
 
-            modelBuilder.Entity("TwitterModel.Models.TweetImage", b =>
+            modelBuilder.Entity("TwitterCore.Models.TweetImage", b =>
                 {
                     b.Property<Guid>("ID")
                         .ValueGeneratedOnAdd()
@@ -268,7 +276,7 @@ namespace TwitterDB.Migrations
                     b.ToTable("TweetImages");
                 });
 
-            modelBuilder.Entity("TwitterModel.Models.TweetMention", b =>
+            modelBuilder.Entity("TwitterCore.Models.TweetMention", b =>
                 {
                     b.Property<Guid>("TweetID")
                         .HasColumnType("uniqueidentifier");
@@ -281,7 +289,7 @@ namespace TwitterDB.Migrations
                     b.ToTable("TweetsAndMentions");
                 });
 
-            modelBuilder.Entity("TwitterModel.Models.User", b =>
+            modelBuilder.Entity("TwitterCore.Models.User", b =>
                 {
                     b.Property<Guid>("ID")
                         .ValueGeneratedOnAdd()
@@ -353,15 +361,15 @@ namespace TwitterDB.Migrations
                     b.ToTable("Users");
                 });
 
-            modelBuilder.Entity("TwitterModel.Models.Follow", b =>
+            modelBuilder.Entity("TwitterCore.Models.Follow", b =>
                 {
-                    b.HasOne("TwitterModel.Models.User", "FollowerUser")
+                    b.HasOne("TwitterCore.Models.User", "FollowerUser")
                         .WithMany("Followings")
                         .HasForeignKey("FollowerUserID")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.HasOne("TwitterModel.Models.User", "FollowingUser")
+                    b.HasOne("TwitterCore.Models.User", "FollowingUser")
                         .WithMany("Followers")
                         .HasForeignKey("FollowingUserID")
                         .OnDelete(DeleteBehavior.Restrict)
@@ -372,24 +380,24 @@ namespace TwitterDB.Migrations
                     b.Navigation("FollowingUser");
                 });
 
-            modelBuilder.Entity("TwitterModel.Models.HashTag", b =>
+            modelBuilder.Entity("TwitterCore.Models.HashTag", b =>
                 {
-                    b.HasOne("TwitterModel.Models.Agenda", "Agenda")
+                    b.HasOne("TwitterCore.Models.Agenda", "Agenda")
                         .WithMany("HashTags")
                         .HasForeignKey("AgendaID");
 
                     b.Navigation("Agenda");
                 });
 
-            modelBuilder.Entity("TwitterModel.Models.Like", b =>
+            modelBuilder.Entity("TwitterCore.Models.Like", b =>
                 {
-                    b.HasOne("TwitterModel.Models.Tweet", "Tweet")
+                    b.HasOne("TwitterCore.Models.Tweet", "Tweet")
                         .WithMany("UsersWhoLiked")
                         .HasForeignKey("TweetID")
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
-                    b.HasOne("TwitterModel.Models.User", "User")
+                    b.HasOne("TwitterCore.Models.User", "User")
                         .WithMany("LikedTweets")
                         .HasForeignKey("UserID")
                         .OnDelete(DeleteBehavior.NoAction)
@@ -400,30 +408,45 @@ namespace TwitterDB.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("TwitterModel.Models.Topic", b =>
+            modelBuilder.Entity("TwitterCore.Models.Retweet", b =>
                 {
-                    b.HasOne("TwitterModel.Models.TopicCategory", "TopicCategory")
+                    b.HasOne("TwitterCore.Models.Tweet", "Tweet")
+                        .WithMany("Retweets")
+                        .HasForeignKey("TweetID")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.HasOne("TwitterCore.Models.User", "User")
+                        .WithMany("Retweets")
+                        .HasForeignKey("UserID")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.Navigation("Tweet");
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("TwitterCore.Models.Topic", b =>
+                {
+                    b.HasOne("TwitterCore.Models.TopicCategory", "TopicCategory")
                         .WithMany("Topics")
                         .HasForeignKey("TopicCategoryID");
 
                     b.Navigation("TopicCategory");
                 });
 
-            modelBuilder.Entity("TwitterModel.Models.Tweet", b =>
+            modelBuilder.Entity("TwitterCore.Models.Tweet", b =>
                 {
-                    b.HasOne("TwitterModel.Models.Tweet", "ReplyMainTweet")
+                    b.HasOne("TwitterCore.Models.Tweet", "ReplyMainTweet")
                         .WithMany("ReplyTweets")
                         .HasForeignKey("ReplyMainTweetID");
 
-                    b.HasOne("TwitterModel.Models.Tweet", "RetweetMainTweet")
-                        .WithMany("Retweets")
-                        .HasForeignKey("RetweetMainTweetID");
-
-                    b.HasOne("TwitterModel.Models.Topic", "Topic")
+                    b.HasOne("TwitterCore.Models.Topic", "Topic")
                         .WithMany("Tweets")
                         .HasForeignKey("TopicID");
 
-                    b.HasOne("TwitterModel.Models.User", "User")
+                    b.HasOne("TwitterCore.Models.User", "User")
                         .WithMany("Tweets")
                         .HasForeignKey("UserID")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -431,22 +454,20 @@ namespace TwitterDB.Migrations
 
                     b.Navigation("ReplyMainTweet");
 
-                    b.Navigation("RetweetMainTweet");
-
                     b.Navigation("Topic");
 
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("TwitterModel.Models.TweetHashTag", b =>
+            modelBuilder.Entity("TwitterCore.Models.TweetHashTag", b =>
                 {
-                    b.HasOne("TwitterModel.Models.HashTag", "HashTag")
+                    b.HasOne("TwitterCore.Models.HashTag", "HashTag")
                         .WithMany("TweetsOfHashtag")
                         .HasForeignKey("HashTagID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("TwitterModel.Models.Tweet", "Tweet")
+                    b.HasOne("TwitterCore.Models.Tweet", "Tweet")
                         .WithMany("HashtagsOfTweet")
                         .HasForeignKey("TweetID")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -457,9 +478,9 @@ namespace TwitterDB.Migrations
                     b.Navigation("Tweet");
                 });
 
-            modelBuilder.Entity("TwitterModel.Models.TweetImage", b =>
+            modelBuilder.Entity("TwitterCore.Models.TweetImage", b =>
                 {
-                    b.HasOne("TwitterModel.Models.Tweet", "Tweet")
+                    b.HasOne("TwitterCore.Models.Tweet", "Tweet")
                         .WithMany("ImagesOfTweet")
                         .HasForeignKey("TweetID")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -468,15 +489,15 @@ namespace TwitterDB.Migrations
                     b.Navigation("Tweet");
                 });
 
-            modelBuilder.Entity("TwitterModel.Models.TweetMention", b =>
+            modelBuilder.Entity("TwitterCore.Models.TweetMention", b =>
                 {
-                    b.HasOne("TwitterModel.Models.Tweet", "Tweet")
+                    b.HasOne("TwitterCore.Models.Tweet", "Tweet")
                         .WithMany("Mentions")
                         .HasForeignKey("TweetID")
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
-                    b.HasOne("TwitterModel.Models.User", "MentionedUser")
+                    b.HasOne("TwitterCore.Models.User", "MentionedUser")
                         .WithMany("MentionedTweets")
                         .HasForeignKey("TweetID")
                         .OnDelete(DeleteBehavior.NoAction)
@@ -487,27 +508,27 @@ namespace TwitterDB.Migrations
                     b.Navigation("Tweet");
                 });
 
-            modelBuilder.Entity("TwitterModel.Models.Agenda", b =>
+            modelBuilder.Entity("TwitterCore.Models.Agenda", b =>
                 {
                     b.Navigation("HashTags");
                 });
 
-            modelBuilder.Entity("TwitterModel.Models.HashTag", b =>
+            modelBuilder.Entity("TwitterCore.Models.HashTag", b =>
                 {
                     b.Navigation("TweetsOfHashtag");
                 });
 
-            modelBuilder.Entity("TwitterModel.Models.Topic", b =>
+            modelBuilder.Entity("TwitterCore.Models.Topic", b =>
                 {
                     b.Navigation("Tweets");
                 });
 
-            modelBuilder.Entity("TwitterModel.Models.TopicCategory", b =>
+            modelBuilder.Entity("TwitterCore.Models.TopicCategory", b =>
                 {
                     b.Navigation("Topics");
                 });
 
-            modelBuilder.Entity("TwitterModel.Models.Tweet", b =>
+            modelBuilder.Entity("TwitterCore.Models.Tweet", b =>
                 {
                     b.Navigation("HashtagsOfTweet");
 
@@ -522,7 +543,7 @@ namespace TwitterDB.Migrations
                     b.Navigation("UsersWhoLiked");
                 });
 
-            modelBuilder.Entity("TwitterModel.Models.User", b =>
+            modelBuilder.Entity("TwitterCore.Models.User", b =>
                 {
                     b.Navigation("Followers");
 
@@ -531,6 +552,8 @@ namespace TwitterDB.Migrations
                     b.Navigation("LikedTweets");
 
                     b.Navigation("MentionedTweets");
+
+                    b.Navigation("Retweets");
 
                     b.Navigation("Tweets");
                 });

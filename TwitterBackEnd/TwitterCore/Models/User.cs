@@ -21,6 +21,7 @@ namespace TwitterCore.Models
         public int FollowingCounter { get; set; }
         public bool FollowFlag { get; set; }
         public virtual List<Tweet> Tweets { get; set; }
+        public virtual List<Retweet> Retweets { get; set; }
         public virtual List<Like> LikedTweets { get; set; }
         public virtual List<TweetMention> MentionedTweets { get; set; }
         public virtual List<Follow> Followings { get; set; }
