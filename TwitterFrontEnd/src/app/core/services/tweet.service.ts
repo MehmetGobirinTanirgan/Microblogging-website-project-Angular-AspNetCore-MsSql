@@ -1,7 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { LikeCreation } from 'src/models/LikeCreation';
-import { TweetDisplay } from 'src/models/TweetDisplay';
+import { LikeCreation } from '../models/LikeCreation';
+import { TweetDisplay } from '../models/TweetDisplay';
+
 
 @Injectable()
 export class TweetService {

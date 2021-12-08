@@ -1,16 +1,16 @@
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
-import { AuthenticationService } from 'src/services/authentication.service';
-import { DataService } from 'src/services/data.service';
-import { TweetService } from 'src/services/tweet.service';
 import { of, throwError } from 'rxjs';
 import { ReplyModalComponent } from './reply-modal.component';
 import { HttpResponse } from '@angular/common/http';
-import { MockUserInfo } from 'src/testObjects/MockUserInfo';
-import { MockReplyModalData } from 'src/testObjects/MockReplyModalData';
-import { MockTweetDisplay } from 'src/testObjects/MockTweetDisplay';
-import { ValidatorService } from 'src/services/validator.service';
+import { MockUserInfo } from 'src/app/core/test-objects/MockUserInfo';
+import { MockReplyModalData } from 'src/app/core/test-objects/MockReplyModalData';
+import { MockTweetDisplay } from 'src/app/core/test-objects/MockTweetDisplay';
+import { DataService } from 'src/app/core/services/data.service';
+import { AuthenticationService } from 'src/app/core/services/authentication.service';
+import { TweetService } from 'src/app/core/services/tweet.service';
+import { ValidatorService } from 'src/app/core/services/validator.service';
 
 describe('ReplyModalComponent', () => {
   let component: ReplyModalComponent;

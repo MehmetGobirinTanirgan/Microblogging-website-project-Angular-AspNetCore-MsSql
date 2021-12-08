@@ -6,8 +6,8 @@ import { Router } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { of, throwError } from 'rxjs';
-import { UserService } from 'src/services/user.service';
-import { ValidatorService } from 'src/services/validator.service';
+import { UserService } from '../core/services/user.service';
+import { ValidatorService } from '../core/services/validator.service';
 import { FrontPageComponent } from './front-page.component';
 
 describe('FrontPageComponent', () => {

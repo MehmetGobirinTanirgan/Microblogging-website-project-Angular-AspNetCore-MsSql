@@ -5,10 +5,10 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ActivatedRoute } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
 import { of, throwError } from 'rxjs';
-import { AuthenticationService } from 'src/services/authentication.service';
-import { UserService } from 'src/services/user.service';
-import { MockUserInfo } from 'src/testObjects/MockUserInfo';
-import { MockUserProfile } from 'src/testObjects/MockUserProfile';
+import { AuthenticationService } from 'src/app/core/services/authentication.service';
+import { UserService } from 'src/app/core/services/user.service';
+import { MockUserInfo } from 'src/app/core/test-objects/MockUserInfo';
+import { MockUserProfile } from 'src/app/core/test-objects/MockUserProfile';
 import { ProfileComponent } from './profile.component';
 
 describe('ProfileComponent', () => {
@@ -157,22 +157,22 @@ describe('ProfileComponent', () => {
   });
 
   it('#show1', () => {
-    component.show1();
+    component.showTweets();
     expect(component.displaySection).toBe('');
   });
 
   it('#show2', () => {
-    component.show2();
+    component.showTweetsWithReplies();
     expect(component.displaySection).toBe('with_replies');
   });
 
   it('#show3', () => {
-    component.show3();
+    component.showMedia();
     expect(component.displaySection).toBe('media');
   });
 
   it('#show4', () => {
-    component.show4();
+    component.showLikes();
     expect(component.displaySection).toBe('likes');
   });
 });

@@ -1,8 +1,8 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { Router } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
-import { AuthenticationService } from 'src/services/authentication.service';
-import { MockUserInfo } from 'src/testObjects/MockUserInfo';
+import { AuthenticationService } from 'src/app/core/services/authentication.service';
+import { MockUserInfo } from 'src/app/core/test-objects/MockUserInfo';
 
 import { LogoutComponent } from './logout.component';
 

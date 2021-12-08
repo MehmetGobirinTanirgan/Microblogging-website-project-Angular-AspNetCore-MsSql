@@ -2,9 +2,9 @@
 
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 import { TestBed } from '@angular/core/testing';
-import { MockFollowCreation } from 'src/testObjects/MockFollowCreation';
-import { MockFollowList } from 'src/testObjects/MockFollowList';
-import { MockUserInfo } from 'src/testObjects/MockUserInfo';
+import { MockFollowCreation } from 'src/app/core/test-objects/MockFollowCreation';
+import { MockFollowList } from 'src/app/core/test-objects/MockFollowList';
+import { MockUserInfo } from 'src/app/core/test-objects/MockUserInfo';
 import { FollowService } from './follow.service';
 
 describe('Service: Follow', () => {

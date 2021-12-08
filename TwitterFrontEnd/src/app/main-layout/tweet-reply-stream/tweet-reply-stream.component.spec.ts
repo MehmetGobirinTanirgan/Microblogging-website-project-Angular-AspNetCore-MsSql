@@ -3,11 +3,11 @@ import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ActivatedRoute } from '@angular/router';
 import { of, throwError } from 'rxjs';
-import { AuthenticationService } from 'src/services/authentication.service';
-import { DataService } from 'src/services/data.service';
-import { TweetService } from 'src/services/tweet.service';
-import { MockTweetDisplay } from 'src/testObjects/MockTweetDisplay';
-import { MockUserInfo } from 'src/testObjects/MockUserInfo';
+import { AuthenticationService } from 'src/app/core/services/authentication.service';
+import { DataService } from 'src/app/core/services/data.service';
+import { TweetService } from 'src/app/core/services/tweet.service';
+import { MockTweetDisplay } from 'src/app/core/test-objects/MockTweetDisplay';
+import { MockUserInfo } from 'src/app/core/test-objects/MockUserInfo';
 import { TweetReplyStreamComponent } from './tweet-reply-stream.component';
 
 describe('TweetReplyStreamComponent', () => {

@@ -1,6 +1,6 @@
-import { UserProfileCardDTO } from 'src/dtos/UserProfileCardDTO';
+import { UserProfileCard } from "../models/UserProfileCard";
 
-export class MockUserProfileCard extends UserProfileCardDTO {
+export class MockUserProfileCard extends UserProfileCard {
   super() {
     this.createdDate = new Date();
   }

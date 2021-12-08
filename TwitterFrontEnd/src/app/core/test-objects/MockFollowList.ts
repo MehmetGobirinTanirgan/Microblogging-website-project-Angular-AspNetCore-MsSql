@@ -1,7 +1,7 @@
-import { FollowListDTO } from 'src/dtos/FollowListDTO';
+import { FollowList } from '../models/FollowList';
 import { MockFollowCard } from './MockFollowCard';
 
-export class MockFollowList extends FollowListDTO {
+export class MockFollowList extends FollowList {
   super() {
     this.followers.push(new MockFollowCard());
     this.followings.push(new MockFollowCard());

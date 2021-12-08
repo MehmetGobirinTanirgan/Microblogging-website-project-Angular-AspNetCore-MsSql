@@ -2,8 +2,9 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { tap } from 'rxjs/operators';
-import { Login } from 'src/models/Login';
-import { UserInfo } from 'src/models/UserInfo';
+import { Login } from '../models/Login';
+import { UserInfo } from '../models/UserInfo';
+
 
 @Injectable()
 export class AuthenticationService {
@@ -11,8 +12,8 @@ export class AuthenticationService {
 
   jwtHelper: JwtHelperService = new JwtHelperService();
 
-  login(loginDTO: Login) {
-    return this.httpClient.post<UserInfo>('Login/Authentication', loginDTO).pipe(
+  login(login: Login) {
+    return this.httpClient.post<UserInfo>('Login/Authentication', login).pipe(
       tap((response) => {
         this.saveUserInfos(response);
       })

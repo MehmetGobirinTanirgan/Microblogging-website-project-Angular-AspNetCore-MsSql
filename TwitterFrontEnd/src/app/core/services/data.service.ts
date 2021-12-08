@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
-import { TweetDisplay } from 'src/models/TweetDisplay';
+import { TweetDisplay } from '../models/TweetDisplay';
 
 @Injectable()
 export class DataService {

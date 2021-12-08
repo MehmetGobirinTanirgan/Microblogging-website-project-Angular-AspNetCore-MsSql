@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { AuthenticationService } from 'src/services/authentication.service';
-import { UserService } from 'src/services/user.service';
+import { TweetDisplay } from 'src/app/core/models/TweetDisplay';
+import { UserProfile } from 'src/app/core/models/UserProfile';
+import { UserProfileCard } from 'src/app/core/models/UserProfileCard';
+import { AuthenticationService } from 'src/app/core/services/authentication.service';
+import { UserService } from 'src/app/core/services/user.service';
 import { Location } from '@angular/common';
-import { UserProfile } from 'src/models/UserProfile';
-import { UserProfileCard } from 'src/models/UserProfileCard';
-import { TweetDisplay } from 'src/models/TweetDisplay';
 
 @Component({
   selector: 'app-profile',
@@ -29,7 +29,7 @@ export class ProfileComponent implements OnInit {
     this.displaySection = '';
   }
 
-  username: string | null ;
+  username: string | null;
   incomingUsername: string | null;
   userProfile: UserProfile;
   userProfileCard: UserProfileCard | null;
@@ -97,7 +97,7 @@ export class ProfileComponent implements OnInit {
     );
   }
 
-  show1() {
+  showTweets() {
     this.displaySection = '';
     if (this.mainUrl.lastIndexOf('/')) {
       this.location.replaceState(this.mainUrl.substring(0, this.mainUrl.lastIndexOf('/')));
@@ -106,7 +106,7 @@ export class ProfileComponent implements OnInit {
     }
   }
 
-  show2() {
+  showTweetsWithReplies() {
     this.displaySection = 'with_replies';
     if (this.mainUrl.lastIndexOf('/')) {
       this.location.replaceState(this.mainUrl.substring(0, this.mainUrl.lastIndexOf('/')) + `/${this.displaySection}`);
@@ -115,7 +115,7 @@ export class ProfileComponent implements OnInit {
     }
   }
 
-  show3() {
+  showMedia() {
     this.displaySection = 'media';
     if (this.mainUrl.lastIndexOf('/')) {
       this.location.replaceState(this.mainUrl.substring(0, this.mainUrl.lastIndexOf('/')) + `/${this.displaySection}`);
@@ -124,7 +124,7 @@ export class ProfileComponent implements OnInit {
     }
   }
 
-  show4() {
+  showLikes() {
     this.displaySection = 'likes';
     if (this.mainUrl.lastIndexOf('/')) {
       this.location.replaceState(this.mainUrl.substring(0, this.mainUrl.lastIndexOf('/')) + `/${this.displaySection}`);

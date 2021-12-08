@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { SearchUser } from 'src/models/SearchUser';
+import { SearchUser } from '../models/SearchUser';
 
 @Injectable()
 export class SearchService {

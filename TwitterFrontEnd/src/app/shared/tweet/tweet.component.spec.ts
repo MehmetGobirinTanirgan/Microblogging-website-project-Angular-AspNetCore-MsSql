@@ -6,13 +6,12 @@ import { Router } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
 import { NgbDropdownModule } from '@ng-bootstrap/ng-bootstrap';
 import { of, throwError } from 'rxjs';
-import { AuthenticationService } from 'src/services/authentication.service';
-import { DataService } from 'src/services/data.service';
-import { FollowService } from 'src/services/follow.service';
-import { TweetService } from 'src/services/tweet.service';
-import { MockReplyModalData } from 'src/testObjects/MockReplyModalData';
-import { MockTweetDisplay } from 'src/testObjects/MockTweetDisplay';
-import { MockUserInfo } from 'src/testObjects/MockUserInfo';
+import { AuthenticationService } from 'src/app/core/services/authentication.service';
+import { DataService } from 'src/app/core/services/data.service';
+import { FollowService } from 'src/app/core/services/follow.service';
+import { TweetService } from 'src/app/core/services/tweet.service';
+import { MockTweetDisplay } from 'src/app/core/test-objects/MockTweetDisplay';
+import { MockUserInfo } from 'src/app/core/test-objects/MockUserInfo';
 import { TweetComponent } from './tweet.component';
 
 describe('TweetComponent', () => {

@@ -1,10 +1,10 @@
 import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
-import { UserInfo } from 'src/models/UserInfo';
-import { UserProfileCard } from 'src/models/UserProfileCard';
-import { AuthenticationService } from 'src/services/authentication.service';
-import { DataService } from 'src/services/data.service';
-import { FollowService } from 'src/services/follow.service';
+import { UserInfo } from 'src/app/core/models/UserInfo';
+import { UserProfileCard } from 'src/app/core/models/UserProfileCard';
+import { AuthenticationService } from 'src/app/core/services/authentication.service';
+import { DataService } from 'src/app/core/services/data.service';
+import { FollowService } from 'src/app/core/services/follow.service';
 import { ProfileEditModalComponent } from '../profile-edit-modal/profile-edit-modal.component';
 
 @Component({

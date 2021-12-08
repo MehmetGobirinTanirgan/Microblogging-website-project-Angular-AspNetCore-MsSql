@@ -1,7 +1,7 @@
 /* tslint:disable:no-unused-variable */
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { of } from 'rxjs';
-import { DataService } from 'src/services/data.service';
+import { DataService } from 'src/app/core/services/data.service';
 import { LoadingComponent } from './loading.component';
 
 describe('LoadingComponent', () => {

@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { FollowService } from 'src/services/follow.service';
 import { Location } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
-import { FollowList } from 'src/models/FollowList';
+import { FollowService } from 'src/app/core/services/follow.service';
+import { FollowList } from 'src/app/core/models/FollowList';
 
 @Component({
   selector: 'app-follow-list',

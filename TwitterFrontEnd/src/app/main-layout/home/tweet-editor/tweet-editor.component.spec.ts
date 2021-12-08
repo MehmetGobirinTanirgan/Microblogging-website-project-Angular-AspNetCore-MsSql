@@ -1,14 +1,14 @@
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormBuilder, ReactiveFormsModule, Validator } from '@angular/forms';
-import { AuthenticationService } from 'src/services/authentication.service';
-import { TweetService } from 'src/services/tweet.service';
 import { of, throwError } from 'rxjs';
 import { TweetEditorComponent } from './tweet-editor.component';
 import { HttpResponse } from '@angular/common/http';
-import { MockUserInfo } from 'src/testObjects/MockUserInfo';
-import { MockTweetDisplay } from 'src/testObjects/MockTweetDisplay';
-import { ValidatorService } from 'src/services/validator.service';
+import { MockUserInfo } from 'src/app/core/test-objects/MockUserInfo';
+import { MockTweetDisplay } from 'src/app/core/test-objects/MockTweetDisplay';
+import { AuthenticationService } from 'src/app/core/services/authentication.service';
+import { TweetService } from 'src/app/core/services/tweet.service';
+import { ValidatorService } from 'src/app/core/services/validator.service';
 
 describe('TweetEditorComponent', () => {
   let component: TweetEditorComponent;

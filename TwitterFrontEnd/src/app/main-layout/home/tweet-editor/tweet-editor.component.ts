@@ -1,10 +1,10 @@
 import { Component, ElementRef, EventEmitter, OnInit, Output, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { AuthenticationService } from 'src/services/authentication.service';
-import { ValidatorService } from 'src/services/validator.service';
-import { TweetService } from 'src/services/tweet.service';
-import { TweetDisplay } from 'src/models/TweetDisplay';
-import { UserInfo } from 'src/models/UserInfo';
+import { TweetDisplay } from 'src/app/core/models/TweetDisplay';
+import { UserInfo } from 'src/app/core/models/UserInfo';
+import { AuthenticationService } from 'src/app/core/services/authentication.service';
+import { TweetService } from 'src/app/core/services/tweet.service';
+import { ValidatorService } from 'src/app/core/services/validator.service';
 
 @Component({
   selector: 'app-tweet-editor',

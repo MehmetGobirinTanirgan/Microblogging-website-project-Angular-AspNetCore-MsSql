@@ -1,8 +1,8 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { SignUp } from 'src/models/SignUp';
-import { UserProfile } from 'src/models/UserProfile';
-import { UserProfileCard } from 'src/models/UserProfileCard';
+import { SignUp } from '../models/SignUp';
+import { UserProfile } from '../models/UserProfile';
+import { UserProfileCard } from '../models/UserProfileCard';
 
 @Injectable()
 export class UserService {

@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { TweetDisplay } from 'src/models/TweetDisplay';
-import { AuthenticationService } from 'src/services/authentication.service';
-import { DataService } from 'src/services/data.service';
-import { TweetService } from 'src/services/tweet.service';
+import { TweetDisplay } from 'src/app/core/models/TweetDisplay';
+import { AuthenticationService } from 'src/app/core/services/authentication.service';
+import { DataService } from 'src/app/core/services/data.service';
+import { TweetService } from 'src/app/core/services/tweet.service';
 
 @Component({
   selector: 'app-home',

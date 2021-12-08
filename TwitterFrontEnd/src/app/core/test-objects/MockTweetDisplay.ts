@@ -1,7 +1,7 @@
-import { TweetDisplayDTO } from 'src/dtos/TweetDisplayDTO';
+import { TweetDisplay } from '../models/TweetDisplay';
 import { MockTweetImage } from './MockTweetImage';
 
-export class MockTweetDisplay extends TweetDisplayDTO {
+export class MockTweetDisplay extends TweetDisplay {
   super() {
     this.createdDate = new Date();
     this.tweetImageInfos.push(new MockTweetImage(), new MockTweetImage());

@@ -4,10 +4,10 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { Router } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
 import { of, throwError } from 'rxjs';
-import { DataService } from 'src/services/data.service';
-import { FollowService } from 'src/services/follow.service';
-import { MockFollowList } from 'src/testObjects/MockFollowList';
-import { MockLocalStorage } from 'src/testObjects/MockLocalStorage';
+import { DataService } from 'src/app/core/services/data.service';
+import { FollowService } from 'src/app/core/services/follow.service';
+import { MockFollowList } from 'src/app/core/test-objects/MockFollowList';
+import { MockLocalStorage } from 'src/app/core/test-objects/MockLocalStorage';
 import { FollowListComponent } from './follow-list.component';
 
 describe('FollowListComponent', () => {

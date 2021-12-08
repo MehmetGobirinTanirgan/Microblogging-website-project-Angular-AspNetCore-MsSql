@@ -1,6 +1,6 @@
-import { UserInfoDTO } from 'src/dtos/UserInfoDTO';
+import { UserInfo } from "../models/UserInfo";
 
-export class MockUserInfo extends UserInfoDTO {
+export class MockUserInfo extends UserInfo {
   username: string = 'mockUsername';
   fullname: string = 'mockFullname';
   profilePicPath: string = 'mockProfilePicPath';

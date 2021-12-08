@@ -2,7 +2,7 @@ import { HttpResponse } from '@angular/common/http';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { of, throwError } from 'rxjs';
-import { SearchService } from 'src/services/search.service';
+import { SearchService } from 'src/app/core/services/search.service';
 
 import { SearchBarComponent } from './search-bar.component';
 

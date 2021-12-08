@@ -2,13 +2,13 @@ import { HttpResponse } from '@angular/common/http';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
-import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { of, throwError } from 'rxjs';
-import { AuthenticationService } from 'src/services/authentication.service';
-import { DataService } from 'src/services/data.service';
-import { UserService } from 'src/services/user.service';
-import { MockUserInfo } from 'src/testObjects/MockUserInfo';
-import { MockUserProfileCard } from 'src/testObjects/MockUserProfileCard';
+import { AuthenticationService } from 'src/app/core/services/authentication.service';
+import { DataService } from 'src/app/core/services/data.service';
+import { UserService } from 'src/app/core/services/user.service';
+import { MockUserInfo } from 'src/app/core/test-objects/MockUserInfo';
+import { MockUserProfileCard } from 'src/app/core/test-objects/MockUserProfileCard';
 
 import { ProfileEditModalComponent } from './profile-edit-modal.component';
 

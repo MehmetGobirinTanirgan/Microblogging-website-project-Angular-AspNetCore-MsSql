@@ -2,7 +2,7 @@
 
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 import { TestBed } from '@angular/core/testing';
-import { MockTweetDisplay } from 'src/testObjects/MockTweetDisplay';
+import { MockTweetDisplay } from 'src/app/core/test-objects/MockTweetDisplay';
 import { TweetService } from './tweet.service';
 
 describe('Service: Tweet', () => {

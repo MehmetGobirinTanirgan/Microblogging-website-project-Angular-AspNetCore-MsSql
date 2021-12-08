@@ -2,9 +2,9 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { ValidatorService } from 'src/services/validator.service';
-import { UserService } from 'src/services/user.service';
-import { SignUp } from 'src/models/SignUp';
+import { SignUp } from '../core/models/SignUp';
+import { UserService } from '../core/services/user.service';
+import { ValidatorService } from '../core/services/validator.service';
 
 @Component({
   selector: 'app-front-page',

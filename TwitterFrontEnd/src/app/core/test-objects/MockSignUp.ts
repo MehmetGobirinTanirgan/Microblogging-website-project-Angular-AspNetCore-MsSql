@@ -1,4 +1,4 @@
-import { SignUp } from "src/models/SignUp";
+import { SignUp } from "../models/SignUp";
 
 export class MockSignUp extends SignUp {
   fullname: string = 'mockFullname';

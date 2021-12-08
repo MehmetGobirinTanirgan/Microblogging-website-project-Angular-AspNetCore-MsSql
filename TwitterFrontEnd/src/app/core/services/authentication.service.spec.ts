@@ -2,9 +2,9 @@
 
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 import { TestBed } from '@angular/core/testing';
-import { MockLocalStorage } from 'src/testObjects/MockLocalStorage';
-import { MockLogin } from 'src/testObjects/MockLogin';
-import { MockUserInfo } from 'src/testObjects/MockUserInfo';
+import { MockLocalStorage } from 'src/app/core/test-objects/MockLocalStorage';
+import { MockLogin } from 'src/app/core/test-objects/MockLogin';
+import { MockUserInfo } from 'src/app/core/test-objects/MockUserInfo';
 import { AuthenticationService } from './authentication.service';
 
 describe('Service: Authentication', () => {

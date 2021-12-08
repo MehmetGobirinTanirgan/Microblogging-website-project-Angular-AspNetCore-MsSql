@@ -1,11 +1,11 @@
 import { Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
-import { AuthenticationService } from 'src/services/authentication.service';
-import { ValidatorService } from 'src/services/validator.service';
-import { DataService } from 'src/services/data.service';
-import { TweetService } from 'src/services/tweet.service';
-import { ReplyModal } from 'src/models/ReplyModal';
+import { ReplyModal } from 'src/app/core/models/ReplyModal';
+import { AuthenticationService } from 'src/app/core/services/authentication.service';
+import { DataService } from 'src/app/core/services/data.service';
+import { TweetService } from 'src/app/core/services/tweet.service';
+import { ValidatorService } from 'src/app/core/services/validator.service';
 
 @Component({
   selector: 'app-reply-modal',

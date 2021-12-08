@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { NgbDropdown } from '@ng-bootstrap/ng-bootstrap';
-import { SearchUser } from 'src/models/SearchUser';
-import { SearchService } from 'src/services/search.service';
+import { SearchUser } from 'src/app/core/models/SearchUser';
+import { SearchService } from 'src/app/core/services/search.service';
 
 @Component({
   selector: 'app-search-bar',

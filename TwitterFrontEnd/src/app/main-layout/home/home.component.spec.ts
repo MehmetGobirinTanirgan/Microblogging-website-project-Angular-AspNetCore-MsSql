@@ -1,14 +1,14 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { AuthenticationService } from 'src/services/authentication.service';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { HomeComponent } from './home.component';
-import { TweetService } from 'src/services/tweet.service';
 import { of, throwError } from 'rxjs';
 import { HttpResponse } from '@angular/common/http';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
-import { MockUserInfo } from 'src/testObjects/MockUserInfo';
-import { MockTweetDisplay } from 'src/testObjects/MockTweetDisplay';
-import { DataService } from 'src/services/data.service';
+import { MockUserInfo } from 'src/app/core/test-objects/MockUserInfo';
+import { MockTweetDisplay } from 'src/app/core/test-objects/MockTweetDisplay';
+import { TweetService } from 'src/app/core/services/tweet.service';
+import { AuthenticationService } from 'src/app/core/services/authentication.service';
+import { DataService } from 'src/app/core/services/data.service';
 
 describe('HomeComponent', () => {
   let component: HomeComponent;

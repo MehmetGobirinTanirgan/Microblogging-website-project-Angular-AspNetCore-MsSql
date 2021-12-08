@@ -2,10 +2,10 @@
 
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 import { TestBed } from '@angular/core/testing';
-import { MockSignUp } from 'src/testObjects/MockSignUp';
-import { MockUserInfo } from 'src/testObjects/MockUserInfo';
-import { MockUserProfile } from 'src/testObjects/MockUserProfile';
-import { MockUserProfileCard } from 'src/testObjects/MockUserProfileCard';
+import { MockSignUp } from 'src/app/core/test-objects/MockSignUp';
+import { MockUserInfo } from 'src/app/core/test-objects/MockUserInfo';
+import { MockUserProfile } from 'src/app/core/test-objects/MockUserProfile';
+import { MockUserProfileCard } from 'src/app/core/test-objects/MockUserProfileCard';
 import { UserService } from './user.service';
 
 describe('Service: User', () => {

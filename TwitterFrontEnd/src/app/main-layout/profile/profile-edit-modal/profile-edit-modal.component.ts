@@ -1,10 +1,10 @@
 import { Component, EventEmitter, Injectable, Input, OnInit, Output, TemplateRef, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
-import { UserProfileCard } from 'src/models/UserProfileCard';
-import { AuthenticationService } from 'src/services/authentication.service';
-import { DataService } from 'src/services/data.service';
-import { UserService } from 'src/services/user.service';
+import { UserProfileCard } from 'src/app/core/models/UserProfileCard';
+import { AuthenticationService } from 'src/app/core/services/authentication.service';
+import { DataService } from 'src/app/core/services/data.service';
+import { UserService } from 'src/app/core/services/user.service';
 
 @Component({
   selector: 'app-profile-edit-modal',

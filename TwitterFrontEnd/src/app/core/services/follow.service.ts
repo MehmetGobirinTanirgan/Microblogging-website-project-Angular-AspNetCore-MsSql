@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { FollowCreation } from 'src/models/FollowCreatiom';
-import { FollowList } from 'src/models/FollowList';
+import { FollowCreation } from '../models/FollowCreatiom';
+import { FollowList } from '../models/FollowList';
 
 
 @Injectable()

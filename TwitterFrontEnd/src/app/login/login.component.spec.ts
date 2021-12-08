@@ -4,9 +4,9 @@ import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
 import { of, throwError } from 'rxjs';
-import { AuthenticationService } from 'src/services/authentication.service';
-import { DataService } from 'src/services/data.service';
-import { MockUserInfo } from 'src/testObjects/MockUserInfo';
+import { MockUserInfo } from 'src/app/core/test-objects/MockUserInfo';
+import { AuthenticationService } from '../core/services/authentication.service';
+import { DataService } from '../core/services/data.service';
 import { LoginComponent } from './login.component';
 
 describe('LoginComponent', () => {

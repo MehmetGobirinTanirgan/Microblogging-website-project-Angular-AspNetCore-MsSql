@@ -2,7 +2,7 @@
   <app-profile-card [userProfileCard]="userProfileCard"></app-profile-card>
   <div class="btn-group d-flex border-bottom mt-3" role="group">
     <div class="btn-caps">
-      <a type="button" class="btn nav-btn" (click)="show1()">
+      <a type="button" class="btn nav-btn" (click)="showTweets()">
         <div class="btn-inside" [class.fw-bolder]="displaySection == ''">
           Tweets
           <div *ngIf="displaySection == ''" class="btn-active"></div>
@@ -10,7 +10,7 @@
       </a>
     </div>
     <div class="btn-caps">
-      <a type="button" class="btn nav-btn" (click)="show2()">
+      <a type="button" class="btn nav-btn" (click)="showTweetsWithReplies()">
         <div class="btn-inside" [class.fw-bolder]="displaySection == 'with_replies'">
           Tweets & replies
           <div *ngIf="displaySection == 'with_replies'" class="btn-active"></div>
@@ -18,7 +18,7 @@
       </a>
     </div>
     <div class="btn-caps">
-      <a type="button" class="btn nav-btn" (click)="show3()">
+      <a type="button" class="btn nav-btn" (click)="showMedia()">
         <div class="btn-inside" [class.fw-bolder]="displaySection == 'media'">
           Media
           <div *ngIf="displaySection == 'media'" class="btn-active"></div>
@@ -26,7 +26,7 @@
       </a>
     </div>
     <div class="btn-caps">
-      <a type="button" class="btn nav-btn" (click)="show4()">
+      <a type="button" class="btn nav-btn" (click)="showLikes()">
         <div class="btn-inside" [class.fw-bolder]="displaySection == 'likes'">
           Likes
           <div *ngIf="displaySection == 'likes'" class="btn-active"></div>
