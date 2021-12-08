@@ -1,4 +1,4 @@
-export class UserProfileCardDTO {
+export class UserProfileCard {
   createdDate: Date;
   fullname: string;
   username: string;

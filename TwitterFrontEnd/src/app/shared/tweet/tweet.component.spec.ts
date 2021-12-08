@@ -95,16 +95,16 @@ describe('TweetComponent', () => {
       const inputTweet = component.tweet;
       component.modalComponent = jasmine.createSpyObj('ReplyModalComponent', ['open']);
       component.openModal();
-      const replyModel = component.replyModalModel;
-      expect(replyModel.mainTweetCreatedDate).toEqual(inputTweet.createdDate);
-      expect(replyModel.mainTweetID).toEqual(inputTweet.id);
-      expect(replyModel.mainTweetDetail).toEqual(inputTweet.tweetDetail);
-      expect(replyModel.mainTweetImagePaths.length).toEqual(inputTweet.tweetImageInfos.length);
-      expect(replyModel.mainTweetFullname).toEqual(inputTweet.fullname);
-      expect(replyModel.mainTweetUsername).toEqual(inputTweet.username);
-      expect(replyModel.mainTweetUserProfilePicPath).toEqual(component.userProfilePicPath);
-      expect(replyModel.replyTweetUserProfilePicPath).toEqual(inputTweet.profilePicPath);
-      expect(mockDataService.replyModalData).toEqual(JSON.stringify(replyModel));
+      const replyModalData = component.replyModal;
+      expect(replyModalData.mainTweetCreatedDate).toEqual(inputTweet.createdDate);
+      expect(replyModalData.mainTweetID).toEqual(inputTweet.id);
+      expect(replyModalData.mainTweetDetail).toEqual(inputTweet.tweetDetail);
+      expect(replyModalData.mainTweetImagePaths.length).toEqual(inputTweet.tweetImageInfos.length);
+      expect(replyModalData.mainTweetFullname).toEqual(inputTweet.fullname);
+      expect(replyModalData.mainTweetUsername).toEqual(inputTweet.username);
+      expect(replyModalData.mainTweetUserProfilePicPath).toEqual(component.userProfilePicPath);
+      expect(replyModalData.replyTweetUserProfilePicPath).toEqual(inputTweet.profilePicPath);
+      expect(mockDataService.replyModalData).toEqual(JSON.stringify(replyModalData));
       expect(component.modalComponent.open).toHaveBeenCalled();
     });
 

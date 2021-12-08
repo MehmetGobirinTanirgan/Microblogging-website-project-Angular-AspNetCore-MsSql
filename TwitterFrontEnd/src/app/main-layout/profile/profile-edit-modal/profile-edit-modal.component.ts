@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Injectable, Input, OnInit, Output, TemplateRef, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
-import { UserProfileCardDTO } from 'src/dtos/UserProfileCardDTO';
+import { UserProfileCard } from 'src/models/UserProfileCard';
 import { AuthenticationService } from 'src/services/authentication.service';
 import { DataService } from 'src/services/data.service';
 import { UserService } from 'src/services/user.service';
@@ -20,10 +20,12 @@ export class ProfileEditModalComponent implements OnInit {
     private userService: UserService,
     private authService: AuthenticationService,
     private dataService: DataService
-  ) {}
+  ) {
+    this.sendUpdatedUserData = new EventEmitter<string>();
+  }
 
-  @Input() userProfileCard: UserProfileCardDTO;
-  @Output() sendUpdatedUserData: EventEmitter<string> = new EventEmitter<string>();
+  @Input() userProfileCard: UserProfileCard;
+  @Output() sendUpdatedUserData: EventEmitter<string>;
   profileEditForm: FormGroup;
   @ViewChild('editModal') modalContent: TemplateRef<ProfileEditModalComponent>;
   modalRef: NgbModalRef;

@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { FollowListDTO } from 'src/dtos/FollowListDTO';
 import { FollowService } from 'src/services/follow.service';
 import { Location } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
+import { FollowList } from 'src/models/FollowList';
 
 @Component({
   selector: 'app-follow-list',
@@ -16,10 +16,13 @@ export class FollowListComponent implements OnInit {
     private router: Router,
     private activatedRoute: ActivatedRoute,
     private location: Location
-  ) {}
+  ) {
+    this.followList = null;
+    this.displaySection = null;
+  }
 
-  followList: FollowListDTO | null = null;
-  displaySection: string | null = null;
+  followList: FollowList | null;
+  displaySection: string | null;
   incomingUsername: string;
   mainUrl: string;
 

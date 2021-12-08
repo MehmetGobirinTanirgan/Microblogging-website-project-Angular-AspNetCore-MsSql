@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { TweetDisplayDTO } from 'src/dtos/TweetDisplayDTO';
-import { UserProfileCardDTO } from 'src/dtos/UserProfileCardDTO';
-import { UserProfileDTO } from 'src/dtos/UserProfileDTO';
 import { AuthenticationService } from 'src/services/authentication.service';
 import { UserService } from 'src/services/user.service';
 import { Location } from '@angular/common';
+import { UserProfile } from 'src/models/UserProfile';
+import { UserProfileCard } from 'src/models/UserProfileCard';
+import { TweetDisplay } from 'src/models/TweetDisplay';
 
 @Component({
   selector: 'app-profile',
@@ -22,17 +22,22 @@ export class ProfileComponent implements OnInit {
     private location: Location
   ) {
     this.router.routeReuseStrategy.shouldReuseRoute = () => false;
+    this.username = null;
+    this.incomingUsername = null;
+    this.userProfile = new UserProfile();
+    this.userProfileCard = null;
+    this.displaySection = '';
   }
 
-  username: string | null = null;
-  incomingUsername: string | null = null;
-  userProfile: UserProfileDTO = new UserProfileDTO();
-  userProfileCard: UserProfileCardDTO | null = null;
-  tweetsAndReplies: Array<TweetDisplayDTO>;
-  tweets: Array<TweetDisplayDTO>;
-  media: Array<TweetDisplayDTO>;
-  likes: Array<TweetDisplayDTO>;
-  displaySection: string = '';
+  username: string | null ;
+  incomingUsername: string | null;
+  userProfile: UserProfile;
+  userProfileCard: UserProfileCard | null;
+  tweetsAndReplies: Array<TweetDisplay>;
+  tweets: Array<TweetDisplay>;
+  media: Array<TweetDisplay>;
+  likes: Array<TweetDisplay>;
+  displaySection: string;
   mainUrl: string;
 
   ngOnInit(): void {

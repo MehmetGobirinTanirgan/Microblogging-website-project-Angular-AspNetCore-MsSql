@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { TweetDisplayDTO } from 'src/dtos/TweetDisplayDTO';
+import { TweetDisplay } from 'src/models/TweetDisplay';
 import { AuthenticationService } from 'src/services/authentication.service';
 import { DataService } from 'src/services/data.service';
 import { TweetService } from 'src/services/tweet.service';
@@ -11,10 +11,13 @@ import { TweetService } from 'src/services/tweet.service';
   providers: [TweetService],
 })
 export class HomeComponent implements OnInit {
-  constructor(private tweetService: TweetService, private authService: AuthenticationService, private dataService: DataService) {}
+  constructor(private tweetService: TweetService, private authService: AuthenticationService, private dataService: DataService) {
+    this.tweets = null;
+    this.loadingFlag = false;
+  }
 
-  tweets: Array<TweetDisplayDTO> | null = null;
-  loadingFlag: boolean = false;
+  tweets: Array<TweetDisplay> | null;
+  loadingFlag: boolean;
   followFlag: boolean | null;
 
   ngOnInit(): void {
@@ -50,9 +53,9 @@ export class HomeComponent implements OnInit {
     }
   }
 
-  addNewTweet(tweet: TweetDisplayDTO) {
+  addNewTweet(tweet: TweetDisplay) {
     if (this.tweets == null) {
-      this.tweets = new Array<TweetDisplayDTO>();
+      this.tweets = new Array<TweetDisplay>();
     }
     this.tweets.unshift(tweet);
   }

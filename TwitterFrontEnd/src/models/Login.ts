@@ -1,5 +1,5 @@
-export class LoginDTO {
-  constructor(source?: Partial<LoginDTO>) {
+export class Login{
+  constructor(source?: Partial<Login>) {
     Object.assign(this, source);
   }
   usernameOrPhoneOrEmail: string;

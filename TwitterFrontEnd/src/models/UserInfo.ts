@@ -1,4 +1,4 @@
-export class UserInfoDTO {
+export class UserInfo {
   username: string;
   fullname: string;
   profilePicPath: string;

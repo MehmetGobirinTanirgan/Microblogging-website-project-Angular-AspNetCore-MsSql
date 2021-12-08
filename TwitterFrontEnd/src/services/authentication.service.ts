@@ -2,8 +2,8 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { tap } from 'rxjs/operators';
-import { LoginDTO } from 'src/dtos/LoginDTO';
-import { UserInfoDTO } from 'src/dtos/UserInfoDTO';
+import { Login } from 'src/models/Login';
+import { UserInfo } from 'src/models/UserInfo';
 
 @Injectable()
 export class AuthenticationService {
@@ -11,22 +11,22 @@ export class AuthenticationService {
 
   jwtHelper: JwtHelperService = new JwtHelperService();
 
-  login(loginDTO: LoginDTO) {
-    return this.httpClient.post<UserInfoDTO>('Login/Authentication', loginDTO).pipe(
+  login(loginDTO: Login) {
+    return this.httpClient.post<UserInfo>('Login/Authentication', loginDTO).pipe(
       tap((response) => {
         this.saveUserInfos(response);
       })
     );
   }
 
-  saveUserInfos(userInfo: UserInfoDTO) {
+  saveUserInfos(userInfo: UserInfo) {
     localStorage.setItem('userInfo', JSON.stringify(userInfo));
   }
 
-  getAuthenticatedUserInfos(): UserInfoDTO | null {
+  getAuthenticatedUserInfos(): UserInfo | null {
     const userInfoJson = localStorage.getItem('userInfo');
     if (userInfoJson != null) {
-      const userInfo: UserInfoDTO = JSON.parse(userInfoJson);
+      const userInfo: UserInfo = JSON.parse(userInfoJson);
       return userInfo;
     }
     this.logOut();

@@ -1,10 +1,10 @@
 import { Component, ElementRef, EventEmitter, OnInit, Output, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { UserInfoDTO } from 'src/dtos/UserInfoDTO';
 import { AuthenticationService } from 'src/services/authentication.service';
 import { ValidatorService } from 'src/services/validator.service';
 import { TweetService } from 'src/services/tweet.service';
-import { TweetDisplayDTO } from 'src/dtos/TweetDisplayDTO';
+import { TweetDisplay } from 'src/models/TweetDisplay';
+import { UserInfo } from 'src/models/UserInfo';
 
 @Component({
   selector: 'app-tweet-editor',
@@ -18,13 +18,16 @@ export class TweetEditorComponent implements OnInit {
     private formBuilder: FormBuilder,
     private tweetService: TweetService,
     private validatorService: ValidatorService
-  ) {}
+  ) {
+    this.addedNewTweet = new EventEmitter();
+    this.tweetTextLength = 0;
+  }
 
-  @Output() addedNewTweet: EventEmitter<TweetDisplayDTO> = new EventEmitter();
+  @Output() addedNewTweet: EventEmitter<TweetDisplay>;
   tweetSubmitForm: FormGroup;
-  userInfo: UserInfoDTO;
+  userInfo: UserInfo;
   imageFiles: FileList;
-  tweetTextLength: number = 0;
+  tweetTextLength: number;
   circleColor: string;
   @ViewChild('circleProg') circleBar: ElementRef;
 

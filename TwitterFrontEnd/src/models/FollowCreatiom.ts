@@ -1,4 +1,4 @@
-export class FollowCreationDTO {
+export class FollowCreation{
   constructor(followerUsername: string, followingUsername: string) {
     this.followerUsername = followerUsername;
     this.followingUsername = followingUsername;

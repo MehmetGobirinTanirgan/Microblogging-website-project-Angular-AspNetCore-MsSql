@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { NgbDropdown } from '@ng-bootstrap/ng-bootstrap';
-import { SearchUserDTO } from 'src/dtos/SearchUserDTO';
+import { SearchUser } from 'src/models/SearchUser';
 import { SearchService } from 'src/services/search.service';
 
 @Component({
@@ -10,12 +10,15 @@ import { SearchService } from 'src/services/search.service';
   providers: [SearchService],
 })
 export class SearchBarComponent implements OnInit {
-  constructor(private searchService: SearchService) {}
+  constructor(private searchService: SearchService) {
+    this.searchResults = new Array<SearchUser>();
+    this.focusFlag = false;
+  }
 
-  searchResults: Array<SearchUserDTO> = new Array<SearchUserDTO>();
+  searchResults: Array<SearchUser>;
   @ViewChild('dropdownRef', { static: false, read: NgbDropdown })
   dropdown: NgbDropdown;
-  focusFlag: boolean = false;
+  focusFlag: boolean;
 
   ngOnInit(): void {}
 

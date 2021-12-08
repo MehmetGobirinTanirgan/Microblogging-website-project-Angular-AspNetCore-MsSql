@@ -1,11 +1,11 @@
-import { TweetImageDTO } from 'src/dtos/TweetImageDTO';
+import { TweetImage } from "./TweetImage";
 
-export class ReplyModalModel {
+export class ReplyModal {
   constructor(
     mainTweetCreatedDate: Date,
     mainTweetDetail: string,
     mainTweetID: string,
-    mainTweetImageInfos: Array<TweetImageDTO>,
+    mainTweetImageInfos: Array<TweetImage>,
     mainTweetFullname: string,
     mainTweetUsername: string,
     replyTweetUserProfilePicPath: string,

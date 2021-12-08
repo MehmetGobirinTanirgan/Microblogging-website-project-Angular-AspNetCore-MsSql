@@ -1,7 +1,7 @@
 import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
-import { UserInfoDTO } from 'src/dtos/UserInfoDTO';
-import { UserProfileCardDTO } from 'src/dtos/UserProfileCardDTO';
+import { UserInfo } from 'src/models/UserInfo';
+import { UserProfileCard } from 'src/models/UserProfileCard';
 import { AuthenticationService } from 'src/services/authentication.service';
 import { DataService } from 'src/services/data.service';
 import { FollowService } from 'src/services/follow.service';
@@ -19,11 +19,15 @@ export class ProfileCardComponent implements OnInit {
     private authService: AuthenticationService,
     private router: Router,
     private dataService: DataService
-  ) {}
-  @Input() userProfileCard: UserProfileCardDTO;
+  ) {
+    this.dataServiceUsername = null;
+  }
+
+  @Input() userProfileCard: UserProfileCard;
   @ViewChild('editModal') modalComponent: ProfileEditModalComponent;
   authenticatedUsername: string;
-  dataServiceUsername: string | null = null;
+  dataServiceUsername: string | null;
+
   ngOnInit(): void {
     const authenticatedUsername = this.authService.getAuthenticatedUserInfos()?.username;
     if (authenticatedUsername != null) {
@@ -85,9 +89,9 @@ export class ProfileCardComponent implements OnInit {
   }
 
   updateProfile(updatedProfileStr: string) {
-    const updatedUserProfileCard: UserProfileCardDTO = JSON.parse(updatedProfileStr);
+    const updatedUserProfileCard: UserProfileCard = JSON.parse(updatedProfileStr);
     this.userProfileCard = updatedUserProfileCard;
-    const updatedUserInfo: UserInfoDTO = {
+    const updatedUserInfo: UserInfo = {
       profilePicPath: updatedUserProfileCard.profilePicPath,
       username: updatedUserProfileCard.username,
       fullname: updatedUserProfileCard.fullname,

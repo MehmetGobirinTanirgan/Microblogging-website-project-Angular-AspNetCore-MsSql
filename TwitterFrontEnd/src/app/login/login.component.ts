@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { LoginDTO } from 'src/dtos/LoginDTO';
+import { Login } from 'src/models/Login';
 import { AuthenticationService } from 'src/services/authentication.service';
 import { DataService } from 'src/services/data.service';
 
@@ -16,10 +16,12 @@ export class LoginComponent implements OnInit {
     private router: Router,
     private authService: AuthenticationService,
     private dataService: DataService
-  ) {}
+  ) {
+    this.loadingFlag = false;
+  }
 
   loginForm: FormGroup;
-  loadingFlag: boolean = false;
+  loadingFlag: boolean;
 
   ngOnInit() {
     this.createLoginForm();
@@ -35,7 +37,7 @@ export class LoginComponent implements OnInit {
   login() {
     if (this.loginForm.valid) {
       this.dataService.setLoadingFlag(true);
-      this.authService.login(new LoginDTO(this.loginForm.value)).subscribe(
+      this.authService.login(new Login(this.loginForm.value)).subscribe(
         (success) => {
           this.dataService.setLoadingFlag(false);
           this.router.navigate(['home']);

@@ -1,5 +1,5 @@
-export class SignUpDTO {
-  constructor(source?: Partial<SignUpDTO>) {
+export class SignUp {
+  constructor(source?: Partial<SignUp>) {
     Object.assign(this, source);
   }
 

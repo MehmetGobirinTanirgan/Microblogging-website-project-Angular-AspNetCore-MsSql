@@ -2,9 +2,9 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { SignUpDTO } from 'src/dtos/SignUpDTO';
 import { ValidatorService } from 'src/services/validator.service';
 import { UserService } from 'src/services/user.service';
+import { SignUp } from 'src/models/SignUp';
 
 @Component({
   selector: 'app-front-page',
@@ -19,30 +19,36 @@ export class FrontPageComponent implements OnInit {
     private ngbModal: NgbModal,
     private router: Router,
     private validatorService: ValidatorService
-  ) {}
+  ) {
+    this.days = new Array(31);
+    this.currentYear = new Date().getFullYear();
+    this.years = new Array(this.currentYear - 1969);
+    this.months = [
+      'January',
+      'February',
+      'March',
+      'April ',
+      'May',
+      'June',
+      'July',
+      'August',
+      'September',
+      'October',
+      'November',
+      'December',
+    ];
+    this.emailOrPhoneFlag = true;
+  }
 
   @ViewChild('signupModal') signupModal: any;
-  days: Array<number> = new Array(31);
-  currentYear: number = new Date().getFullYear();
-  years: Array<number> = new Array(this.currentYear - 1969);
-  months: Array<string> = [
-    'January',
-    'February',
-    'March',
-    'April ',
-    'May',
-    'June',
-    'July',
-    'August',
-    'September',
-    'October',
-    'November',
-    'December',
-  ];
+  days: Array<number>;
+  currentYear: number;
+  years: Array<number>;
+  months: Array<string>;
   isLeapYear: boolean;
   selectedMonth: string;
   signUpForm: FormGroup;
-  emailOrPhoneFlag: boolean = true;
+  emailOrPhoneFlag: boolean;
 
   ngOnInit() {
     this.createSignUpForm();
@@ -68,7 +74,7 @@ export class FrontPageComponent implements OnInit {
 
   signUp() {
     if (this.signUpForm.valid) {
-      this.userService.signUp(new SignUpDTO(this.signUpForm.value)).subscribe(
+      this.userService.signUp(new SignUp(this.signUpForm.value)).subscribe(
         (success) => {
           this.router.navigate(['login']);
         },

@@ -1,4 +1,4 @@
-export class LikeCreationDTO {
+export class LikeCreation {
   constructor(tweetID: string, username: string) {
     this.tweetID = tweetID;
     this.username = username;

@@ -1,14 +1,15 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { FollowListDTO } from 'src/dtos/FollowListDTO';
-import { FollowCreationDTO } from 'src/dtos/FollowCreationDTO';
+import { FollowCreation } from 'src/models/FollowCreatiom';
+import { FollowList } from 'src/models/FollowList';
+
 
 @Injectable()
 export class FollowService {
   constructor(private httpClient: HttpClient) {}
 
   follow(foreignUsername: string, username: string) {
-    return this.httpClient.post('Follow/Follow', new FollowCreationDTO(username, foreignUsername));
+    return this.httpClient.post('Follow/Follow', new FollowCreation(username, foreignUsername));
   }
 
   unfollow(foreignUsername: string, username: string) {
@@ -16,6 +17,6 @@ export class FollowService {
   }
 
   getFollowList(username: string) {
-    return this.httpClient.get<FollowListDTO>('Follow/GetAllFollowersFollowings/' + username);
+    return this.httpClient.get<FollowList>('Follow/GetAllFollowersFollowings/' + username);
   }
 }

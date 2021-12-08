@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { UserInfoDTO } from 'src/dtos/UserInfoDTO';
+import { UserInfo } from 'src/models/UserInfo';
 import { AuthenticationService } from 'src/services/authentication.service';
 
 @Component({
@@ -11,7 +11,7 @@ import { AuthenticationService } from 'src/services/authentication.service';
 export class LogoutComponent implements OnInit {
   constructor(public authService: AuthenticationService, private router: Router) {}
 
-  userInfo: UserInfoDTO;
+  userInfo: UserInfo;
 
   ngOnInit(): void {
     const authenticatedUserInfos = this.authService.getAuthenticatedUserInfos();

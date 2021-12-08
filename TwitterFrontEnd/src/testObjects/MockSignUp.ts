@@ -1,6 +1,6 @@
-import { SignUpDTO } from 'src/dtos/SignUpDTO';
+import { SignUp } from "src/models/SignUp";
 
-export class MockSignUp extends SignUpDTO {
+export class MockSignUp extends SignUp {
   fullname: string = 'mockFullname';
   emailAddress: string = 'mock@gmail.com';
   password: string = '12345678';

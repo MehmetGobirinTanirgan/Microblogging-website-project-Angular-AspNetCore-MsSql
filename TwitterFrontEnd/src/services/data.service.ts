@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
-import { TweetDisplayDTO } from 'src/dtos/TweetDisplayDTO';
+import { TweetDisplay } from 'src/models/TweetDisplay';
 
 @Injectable()
 export class DataService {
@@ -8,7 +8,7 @@ export class DataService {
   replyModalData: string;
   private followUsername: BehaviorSubject<string | null> = new BehaviorSubject<string | null>(null);
   private followFlag: BehaviorSubject<boolean | null> = new BehaviorSubject<boolean | null>(null);
-  private newReplyTweet: BehaviorSubject<TweetDisplayDTO | null> = new BehaviorSubject<TweetDisplayDTO | null>(null);
+  private newReplyTweet: BehaviorSubject<TweetDisplay | null> = new BehaviorSubject<TweetDisplay | null>(null);
   private loadingFlag: BehaviorSubject<boolean | null> = new BehaviorSubject<boolean | null>(null);
 
   getFollowFlag(): Observable<boolean | null> {
@@ -27,11 +27,11 @@ export class DataService {
     this.followUsername.next(username);
   }
 
-  getNewReplyTweet(): Observable<TweetDisplayDTO | null> {
+  getNewReplyTweet(): Observable<TweetDisplay | null> {
     return this.newReplyTweet.asObservable();
   }
 
-  setNewReplyTweet(newReplyTweet: TweetDisplayDTO): void {
+  setNewReplyTweet(newReplyTweet: TweetDisplay): void {
     this.newReplyTweet.next(newReplyTweet);
   }
 

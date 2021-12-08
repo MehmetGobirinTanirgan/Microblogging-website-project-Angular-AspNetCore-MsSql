@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { TweetDisplayDTO } from 'src/dtos/TweetDisplayDTO';
+import { TweetDisplay } from 'src/models/TweetDisplay';
 import { AuthenticationService } from 'src/services/authentication.service';
 import { TweetService } from 'src/services/tweet.service';
 
@@ -11,9 +11,11 @@ import { TweetService } from 'src/services/tweet.service';
   providers: [TweetService],
 })
 export class TweetReplyStreamComponent implements OnInit {
-  constructor(private tweetService: TweetService, private authService: AuthenticationService, private activatedRoute: ActivatedRoute) {}
+  constructor(private tweetService: TweetService, private authService: AuthenticationService, private activatedRoute: ActivatedRoute) {
+    this.tweetReplyStream = null;
+  }
 
-  tweetReplyStream: Array<TweetDisplayDTO> | null = null;
+  tweetReplyStream: Array<TweetDisplay> | null;
   tweetID: string;
 
   ngOnInit(): void {

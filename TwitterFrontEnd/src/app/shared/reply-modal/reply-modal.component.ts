@@ -1,11 +1,11 @@
 import { Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
-import { ReplyModalModel } from 'src/models/ReplyModalModel';
 import { AuthenticationService } from 'src/services/authentication.service';
 import { ValidatorService } from 'src/services/validator.service';
 import { DataService } from 'src/services/data.service';
 import { TweetService } from 'src/services/tweet.service';
+import { ReplyModal } from 'src/models/ReplyModal';
 
 @Component({
   selector: 'app-reply-modal',
@@ -26,7 +26,7 @@ export class ReplyModalComponent implements OnInit {
   @ViewChild('replyModal')
   private modalContent: TemplateRef<ReplyModalComponent>;
   private modalRef: NgbModalRef;
-  replyModalData: ReplyModalModel;
+  replyModalData: ReplyModal;
   replyForm: FormGroup;
   imageFiles: FileList;
   tweetImgWidth: number;

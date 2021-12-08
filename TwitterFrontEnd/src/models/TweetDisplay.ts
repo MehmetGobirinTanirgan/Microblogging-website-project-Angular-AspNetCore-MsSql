@@ -1,10 +1,10 @@
-import { TweetImageDTO } from './TweetImageDTO';
+import { TweetImage } from './TweetImage';
 
-export class TweetDisplayDTO {
+export class TweetDisplay {
   id: string;
   createdDate: Date;
   tweetDetail: string;
-  tweetImageInfos: Array<TweetImageDTO>;
+  tweetImageInfos: Array<TweetImage>;
   profilePicPath: string;
   fullname: string;
   username: string;

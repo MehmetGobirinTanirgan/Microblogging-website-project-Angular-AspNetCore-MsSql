@@ -1,8 +1,8 @@
 import { Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
-import { LikeCreationDTO } from 'src/dtos/LikeCreationDTO';
-import { ReplyModalModel } from 'src/models/ReplyModalModel';
-import { TweetDisplayDTO } from 'src/dtos/TweetDisplayDTO';
+import { LikeCreation } from 'src/models/LikeCreation';
+import { ReplyModal } from 'src/models/ReplyModal';
+import { TweetDisplay } from 'src/models/TweetDisplay';
 import { AuthenticationService } from 'src/services/authentication.service';
 import { DataService } from 'src/services/data.service';
 import { FollowService } from 'src/services/follow.service';
@@ -22,17 +22,19 @@ export class TweetComponent implements OnInit {
     public dataService: DataService,
     private followService: FollowService,
     private router: Router
-  ) {}
+  ) {
+    this.dataServiceUsername = null;
+  }
 
   username: string;
   userProfilePicPath: string;
-  @Input() tweet: TweetDisplayDTO;
+  @Input() tweet: TweetDisplay;
   @ViewChild('replyModal') modalComponent: ReplyModalComponent;
   @ViewChild('likeBtn') likeBtn: ElementRef;
   @ViewChild('dislikeBtn') dislikeBtn: ElementRef;
   @ViewChild('heart') heart: ElementRef;
-  replyModalModel: ReplyModalModel;
-  dataServiceUsername: string | null = null;
+  replyModal: ReplyModal;
+  dataServiceUsername: string | null;
 
   ngOnInit(): void {
     const userInfos = this.authService.getAuthenticatedUserInfos();
@@ -60,7 +62,7 @@ export class TweetComponent implements OnInit {
   }
 
   openModal() {
-    this.replyModalModel = new ReplyModalModel(
+    this.replyModal = new ReplyModal(
       this.tweet.createdDate,
       this.tweet.tweetDetail,
       this.tweet.id,
@@ -71,7 +73,7 @@ export class TweetComponent implements OnInit {
       this.userProfilePicPath,
       this.username
     );
-    this.dataService.replyModalData = JSON.stringify(this.replyModalModel);
+    this.dataService.replyModalData = JSON.stringify(this.replyModal);
     this.modalComponent.open();
   }
 
@@ -93,7 +95,7 @@ export class TweetComponent implements OnInit {
   }
 
   like() {
-    const like = new LikeCreationDTO(this.tweet.id, this.username);
+    const like = new LikeCreation(this.tweet.id, this.username);
     this.tweetService.addLike(like).subscribe(
       (data) => {
         this.tweet.likeCounter++;
