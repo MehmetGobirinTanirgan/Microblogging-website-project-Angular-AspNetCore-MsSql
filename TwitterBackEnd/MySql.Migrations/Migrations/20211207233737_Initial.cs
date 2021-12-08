@@ -328,6 +328,11 @@ namespace MySql.Migrations.Migrations
                 })
                 .Annotation("MySql:CharSet", "utf8mb4");
 
+            migrationBuilder.InsertData(
+                table: "Users",
+                columns: new[] { "ID", "BackgroundPath", "Birthday", "CreatedDate", "EmailAddress", "FollowerCounter", "FollowingCounter", "Fullname", "Location", "ModifiedDate", "Password", "PersonalInfo", "PersonalWebSiteURL", "PhoneNumber", "ProfilePicPath", "Status", "Username" },
+                values: new object[] { new Guid("16e570d7-d78c-4bb1-8514-158cbc177c3e"), "https://res.cloudinary.com/dt107fl3n/image/upload/v1628593807/Default_ir2ky0.jpg", new DateTime(1990, 10, 2, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(2021, 12, 8, 2, 37, 36, 159, DateTimeKind.Local).AddTicks(2012), "max@gmail.com", 0, 0, "Mad Max", null, null, "1", null, null, null, "https://res.cloudinary.com/dt107fl3n/image/upload/v1628593796/Default_klqavt.jpg", 1, "Max87654812" });
+
             migrationBuilder.CreateIndex(
                 name: "IX_Follows_FollowingUserID",
                 table: "Follows",

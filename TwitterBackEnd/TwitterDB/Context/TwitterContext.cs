@@ -11,6 +11,7 @@ namespace TwitterDB.Context
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
+            modelBuilder.Seed();
         }
 
         public DbSet<Admin> Admins { get; set; }

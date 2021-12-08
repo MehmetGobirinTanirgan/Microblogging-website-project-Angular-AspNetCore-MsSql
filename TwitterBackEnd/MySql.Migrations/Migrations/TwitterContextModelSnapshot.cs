@@ -357,6 +357,23 @@ namespace MySql.Migrations.Migrations
                     b.HasKey("ID");
 
                     b.ToTable("Users");
+
+                    b.HasData(
+                        new
+                        {
+                            ID = new Guid("16e570d7-d78c-4bb1-8514-158cbc177c3e"),
+                            BackgroundPath = "https://res.cloudinary.com/dt107fl3n/image/upload/v1628593807/Default_ir2ky0.jpg",
+                            Birthday = new DateTime(1990, 10, 2, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedDate = new DateTime(2021, 12, 8, 2, 37, 36, 159, DateTimeKind.Local).AddTicks(2012),
+                            EmailAddress = "max@gmail.com",
+                            FollowerCounter = 0,
+                            FollowingCounter = 0,
+                            Fullname = "Mad Max",
+                            Password = "1",
+                            ProfilePicPath = "https://res.cloudinary.com/dt107fl3n/image/upload/v1628593796/Default_klqavt.jpg",
+                            Status = 1,
+                            Username = "Max87654812"
+                        });
                 });
 
             modelBuilder.Entity("TwitterCore.Models.Follow", b =>
